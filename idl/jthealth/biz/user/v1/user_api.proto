@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+
+package jthealth.biz.user.v1;
+
+option csharp_namespace = "Jthealth.Biz.User.V1";
+option go_package =
+    "github.com/jinmukeji/jt-proto/gen/go/jthealth/biz/user/v1;userv1";
+option java_multiple_files = true;
+option java_outer_classname = "UserProto";
+option java_package = "com.jthealth.biz.user.v1";
+option objc_class_prefix = "JBU";
+option php_namespace = "Jthealth\\Biz\\User\\V1";
+
+// UserAPI 用户模块.
+service UserAPI {
+  // SignInByPhoneCode 手机号验证码登录.
+  rpc SignInByPhoneCode(SignInByPhoneCodeRequest)returns(SignInByPhoneCodeResponse);
+}
+
+// 手机号验证码登录请求
+message SignInByPhoneCodeRequest {
+  // 国家区号
+  string nation_code = 1;
+  // 手机号
+  string phone = 2;
+  // 验证码
+  string sms_code = 3;
+
+  // 是否获取登陆角色 1:获取，（0）默认不获取
+  int32  sign_in_role = 5;
+  bool  is_distribution = 6;
+  string ds_yz_open_id = 7;
+  string machine_id = 8;
+  //来源渠道
+  string source_channel = 9;
+}
+
+// 手机号验证码登录响应
+message SignInByPhoneCodeResponse {
+  // 是否设置密码
+  bool has_set_password = 6;
+}
