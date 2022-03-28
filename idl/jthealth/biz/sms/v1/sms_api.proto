@@ -1,0 +1,119 @@
+//
+// 常州金姆健康科技有限公司. (c) 2019
+//
+
+syntax = "proto3";
+
+package jthealth.biz.sms.v1;
+
+option csharp_namespace = "Jthealth.Biz.Sms.V1";
+option go_package =
+    "github.com/jinmukeji/jt-proto/gen/go/jthealth/biz/sms/v1;smsv1";
+option java_multiple_files = true;
+option java_outer_classname = "SmsApiProto";
+option java_package = "com.jthealth.biz.sms.v1";
+option objc_class_prefix = "JBS";
+option php_namespace = "Jthealth\\Biz\\Sms\\V1";
+
+import "google/protobuf/timestamp.proto";
+
+// SmsAPI 短信模块API.
+service SmsAPI {
+  // SendVerificationCode 发送手机验证码.
+  rpc SendVerificationCode(SendVerificationCodeRequest)
+      returns(SendVerificationCodeResponse);
+  // ListVerificationCodesByTimeRange 查看时间区间内的短信.
+  rpc ListVerificationCodesByTimeRange(ListVerificationCodesByTimeRangeRequest)
+      returns(ListVerificationCodesByTimeRangeResponse);
+  // GetLastestVerificationCode 获取最新的短信.
+  rpc GetLastestVerificationCode(GetLastestVerificationCodeRequest)
+      returns(GetLastestVerificationCodeResponse);
+}
+
+// 发送消息的请求
+message SendVerificationCodeRequest {
+  // 电话号码
+  string phone = 1;
+  // 短信模板行为
+  TemplateAction template_action = 2;
+  // 国际代码
+  string nation_code = 3;
+  // 语言
+  Language language = 4;
+}
+
+// 发送消息的响应
+message SendVerificationCodeResponse {}
+
+// 查看时间区间内的短信请求
+message ListVerificationCodesByTimeRangeRequest {
+  // 手机区号
+  string nation_code = 1;
+  // 手机号
+  string phone = 2;
+  // 开始时间
+  google.protobuf.Timestamp start_time = 3;
+  // 结束时间
+  google.protobuf.Timestamp end_time = 4;
+}
+
+// 查看时间区间内的短信响应
+message ListVerificationCodesByTimeRangeResponse {
+  // 短信信息
+  repeated SmsInfo sms_info = 1;
+}
+
+// 获取最新的短信请求
+message GetLastestVerificationCodeRequest {
+  // 手机区号
+  string nation_code = 1;
+  // 手机号
+  string phone = 2;
+}
+
+// 获取最新的短信响应
+message GetLastestVerificationCodeResponse {
+  // 短信信息
+  SmsInfo sms_info = 1;
+}
+
+
+// Language 语言.
+enum Language {
+  // 无效的语言
+  LANGUAGE_INVALID = 0;
+  // 未设置语言
+  LANGUAGE_UNSET = 1;
+  // 简体中文
+  LANGUAGE_SIMPLIFIED_CHINESE = 2;
+  // 繁体中文
+  LANGUAGE_TRADITIONAL_CHINESE = 3;
+  // 英文
+  LANGUAGE_ENGLISH = 4;
+}
+
+// SmsInfo 短信信息.
+message SmsInfo {
+  // 验证码ID
+  string sms_id = 1;
+  // 验证码信息
+  string template_param = 2;
+  // 运营商
+  string platform_type = 3;
+  // 创建时间
+  google.protobuf.Timestamp create_time = 4;
+}
+
+// TemplateAction 短信验证码类型.
+enum TemplateAction {
+  // 无效的类型
+  TEMPLATE_ACTION_INVALID = 0;
+  // 未设置类型
+  TEMPLATE_ACTION_UNSET = 1;
+  // 注册模版
+  TEMPLATE_ACTION_SIGNUP = 2;
+  // 重置密码模版
+  TEMPLATE_ACTION_RESET_PASSWORD = 3;
+  // 修改手机号
+  TEMPLATE_ACTION_RESET_PHONE = 4;
+}
