@@ -1,0 +1,253 @@
+//
+// 常州金姆健康科技有限公司. (c) 2019
+//
+
+syntax = "proto3";
+
+package jthealth.biz.device.v1;
+
+option csharp_namespace = "Jthealth.Biz.Device.V1";
+option go_package =
+    "github.com/jinmukeji/jt-proto/gen/go/jthealth/biz/device/v1;devicev1";
+option java_multiple_files = true;
+option java_outer_classname = "DeviceApiProto";
+option java_package = "com.jthealth.biz.device.v1";
+option objc_class_prefix = "JBD";
+option php_namespace = "Jthealth\\Biz\\Device\\V1";
+
+import "google/protobuf/timestamp.proto";
+
+// DeviceAPI 设备API.
+service DeviceAPI {
+  // CheckDeviceIsUsable 判断试用设备是否可用.
+  rpc CheckDeviceIsUsable(CheckDeviceIsUsableRequest)
+      returns(CheckDeviceIsUsableResponse);
+  // ListTrialDevices 试用版硬件清单.
+  rpc ListTrialDevices(ListTrialDevicesRequest)
+      returns(ListTrialDevicesResponse);
+  // CreateTrialDevice 添加试用版设备(正式版->试用版).
+  rpc CreateTrialDevice(CreateTrialDeviceRequest)
+      returns(CreateTrialDeviceResponse);
+  // DeleteTrialDevice 删除试用版设备(试用版->正式版).
+  rpc DeleteTrialDevice(DeleteTrialDeviceRequest)
+      returns(DeleteTrialDeviceResponse);
+  // UpgradeTrialDevice 升级试用版设备(试用版->正式版).
+  rpc UpgradeTrialDevice(UpgradeTrialDeviceRequest)
+      returns(UpgradeTrialDeviceResponse);
+  // GetDeviceByID 通过设备ID获取设备信息.
+  rpc GetDeviceByID(GetDeviceByIDRequest) returns(GetDeviceByIDResponse);
+  // GetDeviceBySnOrMac 通过sn或mac获取设备.
+  rpc GetDeviceBySnOrMac(GetDeviceBySnOrMacRequest)
+      returns(GetDeviceBySnOrMacResponse);
+  //增加设备
+  rpc AddDevice(AddDeviceRequest) returns (AddDeviceResponse);
+  //删除设备
+  rpc DeleteDevice(DeleteDeviceRequest) returns (DeleteDeviceResponse);
+  //更新设备
+  rpc UpdateDevice(UpdateDeviceRequest) returns (UpdateDeviceResponse);
+  //上传设备文件
+  rpc UploadExcel(UploadExcelRequest) returns (UploadExcelResponse);
+  //设置设备为有赞的销售员
+  rpc SetDistributors(SetDistributorsReq) returns (SetDistributorsRsp);
+
+}
+
+// 判断试用设备是否可用请求
+message CheckDeviceIsUsableRequest {
+  // 设备mac地址
+  string mac = 1;
+  // 设备序列号
+  string sn = 2;
+  // 用户ID
+  string user_id = 3;
+}
+
+// 判断试用设备是否可用响应
+message CheckDeviceIsUsableResponse {
+  // 设备ID
+  string device_id = 1;
+  // 是否可用
+  bool is_usable = 2;
+  // 不可用原因
+  string reason = 3;
+}
+
+// 试用版硬件清单请求
+message ListTrialDevicesRequest {
+  // 分页
+  int32 page_num = 1;
+  int32 page_size = 2;
+  string mac =4;
+  //Pagination pagination = 1;
+}
+
+// 试用版硬件清单响应
+message ListTrialDevicesResponse {
+  // 试用版设备信息清单.
+  int32 page_num = 1 ;
+  int32 page_size = 2 ;
+  int32 total =3;
+  repeated Device trial_devices = 4;
+}
+
+// 添加试用版设备请求
+message CreateTrialDeviceRequest {
+  // sn号
+  string sn = 1;
+  // mac地址
+  string mac = 2;
+}
+
+// 添加试用版设备响应
+message CreateTrialDeviceResponse {
+  // 设备信息
+  Device trial_device = 1;
+}
+
+// 删除试用版设备请求
+message DeleteTrialDeviceRequest {
+  // 设备ID
+  string device_id = 1;
+}
+
+// 删除试用版设备响应
+message DeleteTrialDeviceResponse {}
+
+// 升级试用版设备请求
+message UpgradeTrialDeviceRequest {
+  // 设备ID
+  string device_id = 1;
+}
+
+// 升级试用版设备响应
+message UpgradeTrialDeviceResponse {}
+
+// 通过设备ID获取设备信息请求
+message GetDeviceByIDRequest {
+  // 设备ID
+  string device_id = 1;
+}
+
+// 通过设备ID获取设备信息响应
+message GetDeviceByIDResponse {
+  // 设备信息
+  Device device = 1;
+}
+
+// 通过sn或mac获取设备请求
+message GetDeviceBySnOrMacRequest {
+  // 设备的mac地址
+  string mac = 1;
+  // 设备的sn号
+  string sn = 2;
+}
+
+// 通过sn或mac获取设备响应
+message GetDeviceBySnOrMacResponse {
+  // 设备信息
+  Device device = 1;
+}
+
+//增加设备
+message AddDeviceRequest{
+  // 设备mac地址
+  string mac = 2;
+  // 设备sn号
+  string sn = 3;
+  // 设备型号
+  string model = 4;
+  // 设备类型
+  DeviceUsage device_usage = 5;
+  // 设备备注
+  string remark = 6;
+}
+message  AddDeviceResponse{
+  // 设备ID
+  string device_id = 1;
+  google.protobuf.Timestamp created_at=2;
+}
+
+//删除设备
+message DeleteDeviceRequest{
+  string device_id = 1;
+}
+
+message DeleteDeviceResponse{
+  string device_id = 1;
+  google.protobuf.Timestamp deleted_at=2;
+
+}
+
+//更新设备
+message UpdateDeviceRequest{
+  Device device = 1;
+
+}
+message UpdateDeviceResponse{
+  Device device = 1;
+//  google.protobuf.Timestamp updated_at=2;
+}
+
+/**表格对象*/
+message UploadExl {
+  //媒体类型
+  string mime =1;
+  //二进制文件
+  bytes excel =2;
+  //名称
+  string file_name =3;
+
+}
+message UploadExcelRequest{
+  UploadExl uploadExcel =1;
+}
+message UploadExcelResponse{
+  string msg =1;
+}
+
+message SetDistributorsReq{
+  string mac =1;
+  string mobile=2;
+    }
+message SetDistributorsRsp {
+  string mess =1;
+}
+
+
+// DeviceUsage 设备类型.
+enum DeviceUsage {
+  // 无效的设备
+  DEVICE_USAGE_INVALID = 0;
+  // 未设置的设备
+  DEVICE_USAGE_UNSET = 1;
+  // 未定义类型
+  DEVICE_USAGE_UNDEFINED = 2;
+  // 试用机
+  DEVICE_USAGE_TRIAL = 3;
+  // 正式机
+  DEVICE_USAGE_NORMAL = 4;
+}
+
+// Pagination 分页.
+message Pagination {
+  // 分页偏移量
+  int32 offset = 1;
+  // 期望分页查询记录的数量
+  int32 size = 2;
+}
+
+// Device 设备信息.
+message Device {
+  // 设备ID
+  string device_id = 1;
+  // 设备mac地址
+  string mac = 2;
+  // 设备sn号
+  string sn = 3;
+  // 设备型号
+  string model = 4;
+  // 设备类型
+  DeviceUsage device_usage = 5;
+  // 设备备注
+  string remark = 6;
+}
