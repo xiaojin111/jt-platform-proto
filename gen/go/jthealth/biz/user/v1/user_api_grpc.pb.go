@@ -19,6 +19,12 @@ const _ = grpc.SupportPackageIsVersion6
 type UserAPIClient interface {
 	// SignInByPhoneCode 手机号验证码登录.
 	SignInByPhoneCode(ctx context.Context, in *SignInByPhoneCodeRequest, opts ...grpc.CallOption) (*SignInByPhoneCodeResponse, error)
+	//SignInByPassWord 账号密码登录
+	SignInByPassWord(ctx context.Context, in *SignInByPassWordRequest, opts ...grpc.CallOption) (*SignInByPassWordResponse, error)
+	//GetUserInfosById 获取用户信息
+	GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, opts ...grpc.CallOption) (*GetUserInfosByIdResponse, error)
+	//UpdateUserInfos  更改用户信息
+	UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...grpc.CallOption) (*UpdateUserInfosResponse, error)
 }
 
 type userAPIClient struct {
@@ -38,12 +44,45 @@ func (c *userAPIClient) SignInByPhoneCode(ctx context.Context, in *SignInByPhone
 	return out, nil
 }
 
+func (c *userAPIClient) SignInByPassWord(ctx context.Context, in *SignInByPassWordRequest, opts ...grpc.CallOption) (*SignInByPassWordResponse, error) {
+	out := new(SignInByPassWordResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/SignInByPassWord", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIClient) GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, opts ...grpc.CallOption) (*GetUserInfosByIdResponse, error) {
+	out := new(GetUserInfosByIdResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetUserInfosById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIClient) UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...grpc.CallOption) (*UpdateUserInfosResponse, error) {
+	out := new(UpdateUserInfosResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/UpdateUserInfos", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserAPIServer is the server API for UserAPI service.
 // All implementations must embed UnimplementedUserAPIServer
 // for forward compatibility
 type UserAPIServer interface {
 	// SignInByPhoneCode 手机号验证码登录.
 	SignInByPhoneCode(context.Context, *SignInByPhoneCodeRequest) (*SignInByPhoneCodeResponse, error)
+	//SignInByPassWord 账号密码登录
+	SignInByPassWord(context.Context, *SignInByPassWordRequest) (*SignInByPassWordResponse, error)
+	//GetUserInfosById 获取用户信息
+	GetUserInfosById(context.Context, *GetUserInfosByIdRequest) (*GetUserInfosByIdResponse, error)
+	//UpdateUserInfos  更改用户信息
+	UpdateUserInfos(context.Context, *UpdateUserInfosRequest) (*UpdateUserInfosResponse, error)
 	mustEmbedUnimplementedUserAPIServer()
 }
 
@@ -53,6 +92,15 @@ type UnimplementedUserAPIServer struct {
 
 func (UnimplementedUserAPIServer) SignInByPhoneCode(context.Context, *SignInByPhoneCodeRequest) (*SignInByPhoneCodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignInByPhoneCode not implemented")
+}
+func (UnimplementedUserAPIServer) SignInByPassWord(context.Context, *SignInByPassWordRequest) (*SignInByPassWordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignInByPassWord not implemented")
+}
+func (UnimplementedUserAPIServer) GetUserInfosById(context.Context, *GetUserInfosByIdRequest) (*GetUserInfosByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfosById not implemented")
+}
+func (UnimplementedUserAPIServer) UpdateUserInfos(context.Context, *UpdateUserInfosRequest) (*UpdateUserInfosResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfos not implemented")
 }
 func (UnimplementedUserAPIServer) mustEmbedUnimplementedUserAPIServer() {}
 
@@ -85,6 +133,60 @@ func _UserAPI_SignInByPhoneCode_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_SignInByPassWord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignInByPassWordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).SignInByPassWord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/SignInByPassWord",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).SignInByPassWord(ctx, req.(*SignInByPassWordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAPI_GetUserInfosById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInfosByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).GetUserInfosById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/GetUserInfosById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).GetUserInfosById(ctx, req.(*GetUserInfosByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAPI_UpdateUserInfos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserInfosRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).UpdateUserInfos(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/UpdateUserInfos",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).UpdateUserInfos(ctx, req.(*UpdateUserInfosRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.UserAPI",
 	HandlerType: (*UserAPIServer)(nil),
@@ -92,6 +194,18 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SignInByPhoneCode",
 			Handler:    _UserAPI_SignInByPhoneCode_Handler,
+		},
+		{
+			MethodName: "SignInByPassWord",
+			Handler:    _UserAPI_SignInByPassWord_Handler,
+		},
+		{
+			MethodName: "GetUserInfosById",
+			Handler:    _UserAPI_GetUserInfosById_Handler,
+		},
+		{
+			MethodName: "UpdateUserInfos",
+			Handler:    _UserAPI_UpdateUserInfos_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

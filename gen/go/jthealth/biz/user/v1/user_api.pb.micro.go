@@ -44,6 +44,12 @@ func NewUserAPIEndpoints() []*api.Endpoint {
 type UserAPIService interface {
 	// SignInByPhoneCode 手机号验证码登录.
 	SignInByPhoneCode(ctx context.Context, in *SignInByPhoneCodeRequest, opts ...client.CallOption) (*SignInByPhoneCodeResponse, error)
+	//SignInByPassWord 账号密码登录
+	SignInByPassWord(ctx context.Context, in *SignInByPassWordRequest, opts ...client.CallOption) (*SignInByPassWordResponse, error)
+	//GetUserInfosById 获取用户信息
+	GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, opts ...client.CallOption) (*GetUserInfosByIdResponse, error)
+	//UpdateUserInfos  更改用户信息
+	UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...client.CallOption) (*UpdateUserInfosResponse, error)
 }
 
 type userAPIService struct {
@@ -68,16 +74,55 @@ func (c *userAPIService) SignInByPhoneCode(ctx context.Context, in *SignInByPhon
 	return out, nil
 }
 
+func (c *userAPIService) SignInByPassWord(ctx context.Context, in *SignInByPassWordRequest, opts ...client.CallOption) (*SignInByPassWordResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.SignInByPassWord", in)
+	out := new(SignInByPassWordResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIService) GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, opts ...client.CallOption) (*GetUserInfosByIdResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.GetUserInfosById", in)
+	out := new(GetUserInfosByIdResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIService) UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...client.CallOption) (*UpdateUserInfosResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.UpdateUserInfos", in)
+	out := new(UpdateUserInfosResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
 	// SignInByPhoneCode 手机号验证码登录.
 	SignInByPhoneCode(context.Context, *SignInByPhoneCodeRequest, *SignInByPhoneCodeResponse) error
+	//SignInByPassWord 账号密码登录
+	SignInByPassWord(context.Context, *SignInByPassWordRequest, *SignInByPassWordResponse) error
+	//GetUserInfosById 获取用户信息
+	GetUserInfosById(context.Context, *GetUserInfosByIdRequest, *GetUserInfosByIdResponse) error
+	//UpdateUserInfos  更改用户信息
+	UpdateUserInfos(context.Context, *UpdateUserInfosRequest, *UpdateUserInfosResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
 	type userAPI interface {
 		SignInByPhoneCode(ctx context.Context, in *SignInByPhoneCodeRequest, out *SignInByPhoneCodeResponse) error
+		SignInByPassWord(ctx context.Context, in *SignInByPassWordRequest, out *SignInByPassWordResponse) error
+		GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, out *GetUserInfosByIdResponse) error
+		UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, out *UpdateUserInfosResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -92,4 +137,16 @@ type userAPIHandler struct {
 
 func (h *userAPIHandler) SignInByPhoneCode(ctx context.Context, in *SignInByPhoneCodeRequest, out *SignInByPhoneCodeResponse) error {
 	return h.UserAPIHandler.SignInByPhoneCode(ctx, in, out)
+}
+
+func (h *userAPIHandler) SignInByPassWord(ctx context.Context, in *SignInByPassWordRequest, out *SignInByPassWordResponse) error {
+	return h.UserAPIHandler.SignInByPassWord(ctx, in, out)
+}
+
+func (h *userAPIHandler) GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, out *GetUserInfosByIdResponse) error {
+	return h.UserAPIHandler.GetUserInfosById(ctx, in, out)
+}
+
+func (h *userAPIHandler) UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, out *UpdateUserInfosResponse) error {
+	return h.UserAPIHandler.UpdateUserInfos(ctx, in, out)
 }
