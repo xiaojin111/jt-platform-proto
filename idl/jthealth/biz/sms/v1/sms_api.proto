@@ -19,6 +19,7 @@ import "google/protobuf/timestamp.proto";
 
 // SmsAPI 短信模块API.
 service SmsAPI {
+
   // SendVerificationCode 发送手机验证码.
   rpc SendVerificationCode(SendVerificationCodeRequest)
       returns(SendVerificationCodeResponse);
@@ -28,6 +29,10 @@ service SmsAPI {
   // GetLastestVerificationCode 获取最新的短信.
   rpc GetLastestVerificationCode(GetLastestVerificationCodeRequest)
       returns(GetLastestVerificationCodeResponse);
+
+  //SendVerificationPhoneCode 发送手机验证码登录
+  rpc SendVerificationPhoneCode(SendVerificationPhoneCodeRequest)
+      returns(SendVerificationPhoneCodeResponse);
 }
 
 // 发送消息的请求
@@ -116,4 +121,14 @@ enum TemplateAction {
   TEMPLATE_ACTION_RESET_PASSWORD = 3;
   // 修改手机号
   TEMPLATE_ACTION_RESET_PHONE = 4;
+}
+
+
+//SendVerificationPhoneCode 发送手机验证码登录请求
+message SendVerificationPhoneCodeRequest{
+  string phone = 1;
+}
+//SendVerificationPhoneCode 发送手机验证码登录响应
+message SendVerificationPhoneCodeResponse{
+  string status = 1;
 }

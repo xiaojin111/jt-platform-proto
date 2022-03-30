@@ -23,6 +23,8 @@ type SmsAPIClient interface {
 	ListVerificationCodesByTimeRange(ctx context.Context, in *ListVerificationCodesByTimeRangeRequest, opts ...grpc.CallOption) (*ListVerificationCodesByTimeRangeResponse, error)
 	// GetLastestVerificationCode 获取最新的短信.
 	GetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, opts ...grpc.CallOption) (*GetLastestVerificationCodeResponse, error)
+	//SendVerificationPhoneCode 发送手机验证码登录
+	SendVerificationPhoneCode(ctx context.Context, in *SendVerificationPhoneCodeRequest, opts ...grpc.CallOption) (*SendVerificationPhoneCodeResponse, error)
 }
 
 type smsAPIClient struct {
@@ -60,6 +62,15 @@ func (c *smsAPIClient) GetLastestVerificationCode(ctx context.Context, in *GetLa
 	return out, nil
 }
 
+func (c *smsAPIClient) SendVerificationPhoneCode(ctx context.Context, in *SendVerificationPhoneCodeRequest, opts ...grpc.CallOption) (*SendVerificationPhoneCodeResponse, error) {
+	out := new(SendVerificationPhoneCodeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.sms.v1.SmsAPI/SendVerificationPhoneCode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SmsAPIServer is the server API for SmsAPI service.
 // All implementations must embed UnimplementedSmsAPIServer
 // for forward compatibility
@@ -70,6 +81,8 @@ type SmsAPIServer interface {
 	ListVerificationCodesByTimeRange(context.Context, *ListVerificationCodesByTimeRangeRequest) (*ListVerificationCodesByTimeRangeResponse, error)
 	// GetLastestVerificationCode 获取最新的短信.
 	GetLastestVerificationCode(context.Context, *GetLastestVerificationCodeRequest) (*GetLastestVerificationCodeResponse, error)
+	//SendVerificationPhoneCode 发送手机验证码登录
+	SendVerificationPhoneCode(context.Context, *SendVerificationPhoneCodeRequest) (*SendVerificationPhoneCodeResponse, error)
 	mustEmbedUnimplementedSmsAPIServer()
 }
 
@@ -85,6 +98,9 @@ func (UnimplementedSmsAPIServer) ListVerificationCodesByTimeRange(context.Contex
 }
 func (UnimplementedSmsAPIServer) GetLastestVerificationCode(context.Context, *GetLastestVerificationCodeRequest) (*GetLastestVerificationCodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLastestVerificationCode not implemented")
+}
+func (UnimplementedSmsAPIServer) SendVerificationPhoneCode(context.Context, *SendVerificationPhoneCodeRequest) (*SendVerificationPhoneCodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendVerificationPhoneCode not implemented")
 }
 func (UnimplementedSmsAPIServer) mustEmbedUnimplementedSmsAPIServer() {}
 
@@ -153,6 +169,24 @@ func _SmsAPI_GetLastestVerificationCode_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SmsAPI_SendVerificationPhoneCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendVerificationPhoneCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SmsAPIServer).SendVerificationPhoneCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.sms.v1.SmsAPI/SendVerificationPhoneCode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SmsAPIServer).SendVerificationPhoneCode(ctx, req.(*SendVerificationPhoneCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _SmsAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.sms.v1.SmsAPI",
 	HandlerType: (*SmsAPIServer)(nil),
@@ -168,6 +202,10 @@ var _SmsAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLastestVerificationCode",
 			Handler:    _SmsAPI_GetLastestVerificationCode_Handler,
+		},
+		{
+			MethodName: "SendVerificationPhoneCode",
+			Handler:    _SmsAPI_SendVerificationPhoneCode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
