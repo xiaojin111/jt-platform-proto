@@ -17,6 +17,19 @@ option php_namespace = "Jthealth\\Biz\\Sms\\V1";
 
 import "google/protobuf/timestamp.proto";
 
+// TemplateAction 短信验证码类型.
+enum TemplateAction {
+  // 无效的类型
+  TEMPLATE_ACTION_INVALID = 0;
+  // 未设置类型
+  TEMPLATE_ACTION_UNSET = 1;
+  // 注册模版
+  TEMPLATE_ACTION_SIGNUP = 2;
+  // 重置密码模版
+  TEMPLATE_ACTION_RESET_PASSWORD = 3;
+  // 修改手机号
+  TEMPLATE_ACTION_RESET_PHONE = 4;
+}
 // SmsAPI 短信模块API.
 service SmsAPI {
 
@@ -82,7 +95,6 @@ message GetLastestVerificationCodeResponse {
   SmsInfo sms_info = 1;
 }
 
-
 // Language 语言.
 enum Language {
   // 无效的语言
@@ -109,19 +121,7 @@ message SmsInfo {
   google.protobuf.Timestamp create_time = 4;
 }
 
-// TemplateAction 短信验证码类型.
-enum TemplateAction {
-  // 无效的类型
-  TEMPLATE_ACTION_INVALID = 0;
-  // 未设置类型
-  TEMPLATE_ACTION_UNSET = 1;
-  // 注册模版
-  TEMPLATE_ACTION_SIGNUP = 2;
-  // 重置密码模版
-  TEMPLATE_ACTION_RESET_PASSWORD = 3;
-  // 修改手机号
-  TEMPLATE_ACTION_RESET_PHONE = 4;
-}
+
 
 
 //SendVerificationPhoneCode 发送手机验证码登录请求
@@ -130,5 +130,5 @@ message SendVerificationPhoneCodeRequest{
 }
 //SendVerificationPhoneCode 发送手机验证码登录响应
 message SendVerificationPhoneCodeResponse{
-  string status = 1;
+  string message = 1;
 }
