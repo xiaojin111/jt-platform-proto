@@ -50,6 +50,11 @@ type UserAPIService interface {
 	GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, opts ...client.CallOption) (*GetUserInfosByIdResponse, error)
 	//UpdateUserInfos  更改用户信息
 	UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...client.CallOption) (*UpdateUserInfosResponse, error)
+	//----------------------应用详情-------------------------------
+	//应用申请
+	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...client.CallOption) (*ApplyApplicationResponse, error)
+	//获取应用详情
+	GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...client.CallOption) (*GetApplicationInfoResponse, error)
 }
 
 type userAPIService struct {
@@ -104,6 +109,26 @@ func (c *userAPIService) UpdateUserInfos(ctx context.Context, in *UpdateUserInfo
 	return out, nil
 }
 
+func (c *userAPIService) ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...client.CallOption) (*ApplyApplicationResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.ApplyApplication", in)
+	out := new(ApplyApplicationResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIService) GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...client.CallOption) (*GetApplicationInfoResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.GetApplicationInfo", in)
+	out := new(GetApplicationInfoResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
@@ -115,6 +140,11 @@ type UserAPIHandler interface {
 	GetUserInfosById(context.Context, *GetUserInfosByIdRequest, *GetUserInfosByIdResponse) error
 	//UpdateUserInfos  更改用户信息
 	UpdateUserInfos(context.Context, *UpdateUserInfosRequest, *UpdateUserInfosResponse) error
+	//----------------------应用详情-------------------------------
+	//应用申请
+	ApplyApplication(context.Context, *ApplyApplicationRequest, *ApplyApplicationResponse) error
+	//获取应用详情
+	GetApplicationInfo(context.Context, *GetApplicationInfoRequest, *GetApplicationInfoResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
@@ -123,6 +153,8 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		SignInByPassWord(ctx context.Context, in *SignInByPassWordRequest, out *SignInByPassWordResponse) error
 		GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, out *GetUserInfosByIdResponse) error
 		UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, out *UpdateUserInfosResponse) error
+		ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, out *ApplyApplicationResponse) error
+		GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, out *GetApplicationInfoResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -149,4 +181,12 @@ func (h *userAPIHandler) GetUserInfosById(ctx context.Context, in *GetUserInfosB
 
 func (h *userAPIHandler) UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, out *UpdateUserInfosResponse) error {
 	return h.UserAPIHandler.UpdateUserInfos(ctx, in, out)
+}
+
+func (h *userAPIHandler) ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, out *ApplyApplicationResponse) error {
+	return h.UserAPIHandler.ApplyApplication(ctx, in, out)
+}
+
+func (h *userAPIHandler) GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, out *GetApplicationInfoResponse) error {
+	return h.UserAPIHandler.GetApplicationInfo(ctx, in, out)
 }

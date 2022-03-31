@@ -25,6 +25,11 @@ type UserAPIClient interface {
 	GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, opts ...grpc.CallOption) (*GetUserInfosByIdResponse, error)
 	//UpdateUserInfos  更改用户信息
 	UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...grpc.CallOption) (*UpdateUserInfosResponse, error)
+	//----------------------应用详情-------------------------------
+	//应用申请
+	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error)
+	//获取应用详情
+	GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...grpc.CallOption) (*GetApplicationInfoResponse, error)
 }
 
 type userAPIClient struct {
@@ -71,6 +76,24 @@ func (c *userAPIClient) UpdateUserInfos(ctx context.Context, in *UpdateUserInfos
 	return out, nil
 }
 
+func (c *userAPIClient) ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error) {
+	out := new(ApplyApplicationResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/ApplyApplication", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIClient) GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...grpc.CallOption) (*GetApplicationInfoResponse, error) {
+	out := new(GetApplicationInfoResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetApplicationInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserAPIServer is the server API for UserAPI service.
 // All implementations must embed UnimplementedUserAPIServer
 // for forward compatibility
@@ -83,6 +106,11 @@ type UserAPIServer interface {
 	GetUserInfosById(context.Context, *GetUserInfosByIdRequest) (*GetUserInfosByIdResponse, error)
 	//UpdateUserInfos  更改用户信息
 	UpdateUserInfos(context.Context, *UpdateUserInfosRequest) (*UpdateUserInfosResponse, error)
+	//----------------------应用详情-------------------------------
+	//应用申请
+	ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error)
+	//获取应用详情
+	GetApplicationInfo(context.Context, *GetApplicationInfoRequest) (*GetApplicationInfoResponse, error)
 	mustEmbedUnimplementedUserAPIServer()
 }
 
@@ -101,6 +129,12 @@ func (UnimplementedUserAPIServer) GetUserInfosById(context.Context, *GetUserInfo
 }
 func (UnimplementedUserAPIServer) UpdateUserInfos(context.Context, *UpdateUserInfosRequest) (*UpdateUserInfosResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfos not implemented")
+}
+func (UnimplementedUserAPIServer) ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApplyApplication not implemented")
+}
+func (UnimplementedUserAPIServer) GetApplicationInfo(context.Context, *GetApplicationInfoRequest) (*GetApplicationInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApplicationInfo not implemented")
 }
 func (UnimplementedUserAPIServer) mustEmbedUnimplementedUserAPIServer() {}
 
@@ -187,6 +221,42 @@ func _UserAPI_UpdateUserInfos_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_ApplyApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).ApplyApplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/ApplyApplication",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).ApplyApplication(ctx, req.(*ApplyApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAPI_GetApplicationInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetApplicationInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).GetApplicationInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/GetApplicationInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).GetApplicationInfo(ctx, req.(*GetApplicationInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.UserAPI",
 	HandlerType: (*UserAPIServer)(nil),
@@ -206,6 +276,14 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateUserInfos",
 			Handler:    _UserAPI_UpdateUserInfos_Handler,
+		},
+		{
+			MethodName: "ApplyApplication",
+			Handler:    _UserAPI_ApplyApplication_Handler,
+		},
+		{
+			MethodName: "GetApplicationInfo",
+			Handler:    _UserAPI_GetApplicationInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

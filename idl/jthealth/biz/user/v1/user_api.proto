@@ -22,6 +22,12 @@ service UserAPI {
   rpc GetUserInfosById(GetUserInfosByIdRequest)returns(GetUserInfosByIdResponse);
   //UpdateUserInfos  更改用户信息
   rpc UpdateUserInfos(UpdateUserInfosRequest)returns(UpdateUserInfosResponse);
+
+  //----------------------应用详情-------------------------------
+  //应用申请
+  rpc ApplyApplication(ApplyApplicationRequest)returns(ApplyApplicationResponse);
+  //获取应用详情
+  rpc GetApplicationInfo(GetApplicationInfoRequest)returns(GetApplicationInfoResponse);
 }
 
 // 手机号验证码登录请求
@@ -59,12 +65,14 @@ message UpdateUserInfosRequest{
   string user_name =3;
   string phone =4;
   string sms_code =5;
+  string email =6;
 }
 message UpdateUserInfosResponse{
   string user_id =1;
   string avatar_url = 2;
   string user_name =3;
   string phone = 4;
+  string email =5;
 }
 //SignInByPassWord 账号密码登录
 message SignInByPassWordRequest{
@@ -74,4 +82,31 @@ message SignInByPassWordRequest{
 message SignInByPassWordResponse{
   string user_id = 1;
   string role = 2;
+}
+
+//应用申请
+message ApplyApplicationRequest{
+  string user_id =1;
+  string logo_url =2;
+  string app_name = 3;
+  string app_type = 4;
+}
+message ApplyApplicationResponse{
+  string status =1;
+}
+//获取应用列表
+message GetApplicationInfoRequest{
+  string user_id =1;
+}
+message GetApplicationInfoResponse{
+  repeated ApplicationList list =1;
+}
+message ApplicationList{
+  string application_id =1;
+  string app_logo =2;
+  string app_name =3;
+  string app_status =4;
+  string app_role = 5;
+  string app_id =6;
+
 }
