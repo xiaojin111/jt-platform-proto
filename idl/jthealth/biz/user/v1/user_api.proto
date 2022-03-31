@@ -50,14 +50,21 @@ message GetUserInfosByIdResponse{
   string email = 5;
   string created_at = 6;
   string user_id = 7;
+  string is_completed = 8;
 }
 //UpdateUserInfos  更改用户信息
 message UpdateUserInfosRequest{
   string user_id = 1;
   string avatar_url = 2;
+  string user_name =3;
+  string phone =4;
+  string sms_code =5;
 }
 message UpdateUserInfosResponse{
-  string avatar_url = 1;
+  string user_id =1;
+  string avatar_url = 2;
+  string user_name =3;
+  string phone = 4;
 }
 //SignInByPassWord 账号密码登录
 message SignInByPassWordRequest{
