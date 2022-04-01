@@ -1,0 +1,98 @@
+//
+// 常州金姆健康科技有限公司. (c) 2019
+//
+
+syntax = "proto3";
+
+package jthealth.biz.subscription.v1;
+
+option csharp_namespace = "Jthealth.Biz.Subscription.V1";
+option go_package = "github.com/jinmukeji/jt-proto/gen/go/jthealth/biz/"
+    "subscription/v1;subscriptionv1";
+option java_multiple_files = true;
+option java_outer_classname = "SubscriptionApiProto";
+option java_package = "com.jthealth.biz.subscription.v1";
+option objc_class_prefix = "JBS";
+option php_namespace = "Jthealth\\Biz\\Subscription\\V1";
+
+import "google/protobuf/timestamp.proto";
+
+// SubscriptionAPI 订阅模块API.
+service SubscriptionAPI {
+  //创建体质卡组
+  rpc CreatePhysiqueCardGroup(CreatePhysiqueCardGroupRequest)returns(CreatePhysiqueCardGroupResponse);
+  //获取体质卡组列表
+  rpc GetPhysiqueCardGroupList(GetPhysiqueCardGroupListRequest)returns(GetPhysiqueCardGroupListResponse);
+  //获取体质卡列表
+  rpc GetPhysiqueCardList(GetPhysiqueCardListRequest)returns(GetPhysiqueCardListResponse);
+  // 获取用户增值服务信息
+  rpc GetUserVasInfo(GetUserVasInfoRequest) returns(GetUserVasInfoResponse);
+}
+
+//创建体质卡组请求
+message CreatePhysiqueCardGroupRequest{
+  int32 batch_num = 1;
+  string user_id = 2;
+}
+//创建体质卡组响应
+message CreatePhysiqueCardGroupResponse{
+  string physique_card_group_id = 1;
+}
+
+//获取体质卡组列表请求
+message GetPhysiqueCardGroupListRequest{
+  int32 page_num = 1 ;
+  int32 page_size = 2 ;
+  string user_id = 3;
+}
+//获取体质卡组列表响应
+message GetPhysiqueCardGroupListResponse{
+  int32 page_num = 1;
+  int32 page_size = 2;
+  int32 total = 3;
+  //用户列表
+  repeated PhysiqueCardGroupMsg list = 4;
+}
+message PhysiqueCardGroupMsg {
+  //体制卡组id
+  string physique_card_group_id = 1;
+  //批次
+  string batch = 2;
+  //卡组中体质卡数量
+  int32 batch_num = 3;
+  //状态 0 生成中 1 已生成
+  string status = 4;
+}
+
+
+//获取体质卡列表请求
+message GetPhysiqueCardListRequest{
+  int32 page_num = 1 ;
+  int32 page_size = 2 ;
+  //体制卡组id
+  string physique_card_group_id = 3;
+}
+//获取体质卡列表响应
+message GetPhysiqueCardListResponse{
+  int32 page_num = 1;
+  int32 page_size = 2;
+  int32 total = 3;
+  //体质卡列表
+  repeated PhysiqueCardMsg list = 4;
+}
+message PhysiqueCardMsg{
+  string card_number = 1;
+  string card_password = 2;
+}
+
+message GetUserVasInfoRequest {
+  // 用户ID
+  string user_id = 1;
+}
+
+message GetUserVasInfoResponse {
+  // 类型 1-正常有效 2-购买已失效 3-未购买
+  int32 type = 1;
+  // 天数
+  int32 day_num = 2;
+}
