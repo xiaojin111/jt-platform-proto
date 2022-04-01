@@ -25,6 +25,8 @@ type UserAPIClient interface {
 	GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, opts ...grpc.CallOption) (*GetUserInfosByIdResponse, error)
 	//UpdateUserInfos  更改用户信息
 	UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...grpc.CallOption) (*UpdateUserInfosResponse, error)
+	//CreatedUserProfile 创建用户档案
+	CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, opts ...grpc.CallOption) (*CreatedUserProfileResponse, error)
 	//----------------------应用详情-------------------------------
 	//应用申请
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error)
@@ -76,6 +78,15 @@ func (c *userAPIClient) UpdateUserInfos(ctx context.Context, in *UpdateUserInfos
 	return out, nil
 }
 
+func (c *userAPIClient) CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, opts ...grpc.CallOption) (*CreatedUserProfileResponse, error) {
+	out := new(CreatedUserProfileResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/CreatedUserProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAPIClient) ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error) {
 	out := new(ApplyApplicationResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/ApplyApplication", in, out, opts...)
@@ -106,6 +117,8 @@ type UserAPIServer interface {
 	GetUserInfosById(context.Context, *GetUserInfosByIdRequest) (*GetUserInfosByIdResponse, error)
 	//UpdateUserInfos  更改用户信息
 	UpdateUserInfos(context.Context, *UpdateUserInfosRequest) (*UpdateUserInfosResponse, error)
+	//CreatedUserProfile 创建用户档案
+	CreatedUserProfile(context.Context, *CreatedUserProfileRequest) (*CreatedUserProfileResponse, error)
 	//----------------------应用详情-------------------------------
 	//应用申请
 	ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error)
@@ -129,6 +142,9 @@ func (UnimplementedUserAPIServer) GetUserInfosById(context.Context, *GetUserInfo
 }
 func (UnimplementedUserAPIServer) UpdateUserInfos(context.Context, *UpdateUserInfosRequest) (*UpdateUserInfosResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfos not implemented")
+}
+func (UnimplementedUserAPIServer) CreatedUserProfile(context.Context, *CreatedUserProfileRequest) (*CreatedUserProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatedUserProfile not implemented")
 }
 func (UnimplementedUserAPIServer) ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyApplication not implemented")
@@ -221,6 +237,24 @@ func _UserAPI_UpdateUserInfos_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_CreatedUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatedUserProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).CreatedUserProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/CreatedUserProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).CreatedUserProfile(ctx, req.(*CreatedUserProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserAPI_ApplyApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ApplyApplicationRequest)
 	if err := dec(in); err != nil {
@@ -276,6 +310,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateUserInfos",
 			Handler:    _UserAPI_UpdateUserInfos_Handler,
+		},
+		{
+			MethodName: "CreatedUserProfile",
+			Handler:    _UserAPI_CreatedUserProfile_Handler,
 		},
 		{
 			MethodName: "ApplyApplication",

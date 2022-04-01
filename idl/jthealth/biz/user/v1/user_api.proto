@@ -22,6 +22,10 @@ service UserAPI {
   rpc GetUserInfosById(GetUserInfosByIdRequest)returns(GetUserInfosByIdResponse);
   //UpdateUserInfos  更改用户信息
   rpc UpdateUserInfos(UpdateUserInfosRequest)returns(UpdateUserInfosResponse);
+  //CreatedUserProfile 创建用户档案
+  rpc CreatedUserProfile(CreatedUserProfileRequest)returns(CreatedUserProfileResponse);
+
+
 
   //----------------------应用详情-------------------------------
   //应用申请
@@ -57,22 +61,42 @@ message GetUserInfosByIdResponse{
   string created_at = 6;
   string user_id = 7;
   string is_completed = 8;
+  //微信号
+  string wx_number = 9;
+  //公司地址
+  string company_address = 10;
+  //法人
+  string legal_name = 11;
+  //纳税号
+  string identification_number = 12;
+  //银行账号
+  string card_number = 13;
+  //开户行
+  string account_bank = 14;
+  //营业执照
+  string business_license = 15;
+  //食品许可证
+  string food_license = 16;
+  //身份证正面
+  string id_card_front = 17;
+  //身份证反面
+  string id_card_reverse = 18;
 }
 //UpdateUserInfos  更改用户信息
 message UpdateUserInfosRequest{
   string user_id = 1;
   string avatar_url = 2;
-  string user_name =3;
-  string phone =4;
-  string sms_code =5;
-  string email =6;
+  string user_name = 3;
+  string phone = 4;
+  string sms_code = 5;
+  string email = 6;
 }
 message UpdateUserInfosResponse{
-  string user_id =1;
+  string user_id = 1;
   string avatar_url = 2;
-  string user_name =3;
+  string user_name = 3;
   string phone = 4;
-  string email =5;
+  string email = 5;
 }
 //SignInByPassWord 账号密码登录
 message SignInByPassWordRequest{
@@ -86,27 +110,58 @@ message SignInByPassWordResponse{
 
 //应用申请
 message ApplyApplicationRequest{
-  string user_id =1;
-  string logo_url =2;
+  string user_id = 1;
+  string logo_url = 2;
   string app_name = 3;
   string app_type = 4;
 }
 message ApplyApplicationResponse{
-  string status =1;
+  string status = 1;
 }
 //获取应用列表
 message GetApplicationInfoRequest{
-  string user_id =1;
+  string user_id = 1;
 }
 message GetApplicationInfoResponse{
-  repeated ApplicationList list =1;
+  repeated ApplicationList list = 1;
 }
 message ApplicationList{
-  string application_id =1;
-  string app_logo =2;
-  string app_name =3;
-  string app_status =4;
+  string application_id = 1;
+  string app_logo = 2;
+  string app_name = 3;
+  string app_status = 4;
   string app_role = 5;
-  string app_id =6;
+  string app_id = 6;
 
+}
+//创建用户档案
+message CreatedUserProfileRequest{
+  string user_id = 1;
+  //企业名称
+  string user_name = 2;
+  //邮箱
+  string email = 3;
+  //微信号
+  string wx_number = 4;
+  //公司地址
+  string company_address = 5;
+  //法人
+  string legal_name = 6;
+  //纳税号
+  string identification_number = 7;
+  //银行账号
+  string card_number = 8;
+  //开户行
+  string account_bank = 9;
+  //营业执照
+  string business_license = 10;
+  //食品许可证
+  string food_license = 11;
+  //身份证正面
+  string id_card_front = 12;
+  //身份证反面
+  string id_card_reverse = 13;
+}
+message CreatedUserProfileResponse{
+  string status = 1;
 }
