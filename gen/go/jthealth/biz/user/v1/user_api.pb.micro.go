@@ -57,6 +57,8 @@ type UserAPIService interface {
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...client.CallOption) (*ApplyApplicationResponse, error)
 	//获取应用详情
 	GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...client.CallOption) (*GetApplicationInfoResponse, error)
+	//应用功能申请
+	ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...client.CallOption) (*ApplyFeatureAuditResponse, error)
 }
 
 type userAPIService struct {
@@ -141,6 +143,16 @@ func (c *userAPIService) GetApplicationInfo(ctx context.Context, in *GetApplicat
 	return out, nil
 }
 
+func (c *userAPIService) ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...client.CallOption) (*ApplyFeatureAuditResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.ApplyFeatureAudit", in)
+	out := new(ApplyFeatureAuditResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
@@ -159,6 +171,8 @@ type UserAPIHandler interface {
 	ApplyApplication(context.Context, *ApplyApplicationRequest, *ApplyApplicationResponse) error
 	//获取应用详情
 	GetApplicationInfo(context.Context, *GetApplicationInfoRequest, *GetApplicationInfoResponse) error
+	//应用功能申请
+	ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest, *ApplyFeatureAuditResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
@@ -170,6 +184,7 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, out *CreatedUserProfileResponse) error
 		ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, out *ApplyApplicationResponse) error
 		GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, out *GetApplicationInfoResponse) error
+		ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, out *ApplyFeatureAuditResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -208,4 +223,8 @@ func (h *userAPIHandler) ApplyApplication(ctx context.Context, in *ApplyApplicat
 
 func (h *userAPIHandler) GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, out *GetApplicationInfoResponse) error {
 	return h.UserAPIHandler.GetApplicationInfo(ctx, in, out)
+}
+
+func (h *userAPIHandler) ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, out *ApplyFeatureAuditResponse) error {
+	return h.UserAPIHandler.ApplyFeatureAudit(ctx, in, out)
 }

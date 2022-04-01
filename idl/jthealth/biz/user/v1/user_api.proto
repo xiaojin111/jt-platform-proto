@@ -32,6 +32,9 @@ service UserAPI {
   rpc ApplyApplication(ApplyApplicationRequest)returns(ApplyApplicationResponse);
   //获取应用详情
   rpc GetApplicationInfo(GetApplicationInfoRequest)returns(GetApplicationInfoResponse);
+
+  //应用功能申请
+  rpc ApplyFeatureAudit(ApplyFeatureAuditRequest)returns(ApplyFeatureAuditResponse);
 }
 
 // 手机号验证码登录请求
@@ -161,7 +164,18 @@ message CreatedUserProfileRequest{
   string id_card_front = 12;
   //身份证反面
   string id_card_reverse = 13;
+  //手机号
+  string phone = 14;
 }
 message CreatedUserProfileResponse{
   string status = 1;
+}
+
+
+message ApplyFeatureAuditRequest{
+  string user_id =1;
+  string feature_type =2;
+}
+message ApplyFeatureAuditResponse{
+  string status =1;
 }

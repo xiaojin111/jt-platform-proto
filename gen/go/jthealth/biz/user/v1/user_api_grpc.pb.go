@@ -32,6 +32,8 @@ type UserAPIClient interface {
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error)
 	//获取应用详情
 	GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...grpc.CallOption) (*GetApplicationInfoResponse, error)
+	//应用功能申请
+	ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...grpc.CallOption) (*ApplyFeatureAuditResponse, error)
 }
 
 type userAPIClient struct {
@@ -105,6 +107,15 @@ func (c *userAPIClient) GetApplicationInfo(ctx context.Context, in *GetApplicati
 	return out, nil
 }
 
+func (c *userAPIClient) ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...grpc.CallOption) (*ApplyFeatureAuditResponse, error) {
+	out := new(ApplyFeatureAuditResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/ApplyFeatureAudit", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserAPIServer is the server API for UserAPI service.
 // All implementations must embed UnimplementedUserAPIServer
 // for forward compatibility
@@ -124,6 +135,8 @@ type UserAPIServer interface {
 	ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error)
 	//获取应用详情
 	GetApplicationInfo(context.Context, *GetApplicationInfoRequest) (*GetApplicationInfoResponse, error)
+	//应用功能申请
+	ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest) (*ApplyFeatureAuditResponse, error)
 	mustEmbedUnimplementedUserAPIServer()
 }
 
@@ -151,6 +164,9 @@ func (UnimplementedUserAPIServer) ApplyApplication(context.Context, *ApplyApplic
 }
 func (UnimplementedUserAPIServer) GetApplicationInfo(context.Context, *GetApplicationInfoRequest) (*GetApplicationInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplicationInfo not implemented")
+}
+func (UnimplementedUserAPIServer) ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest) (*ApplyFeatureAuditResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApplyFeatureAudit not implemented")
 }
 func (UnimplementedUserAPIServer) mustEmbedUnimplementedUserAPIServer() {}
 
@@ -291,6 +307,24 @@ func _UserAPI_GetApplicationInfo_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_ApplyFeatureAudit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyFeatureAuditRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).ApplyFeatureAudit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/ApplyFeatureAudit",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).ApplyFeatureAudit(ctx, req.(*ApplyFeatureAuditRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.UserAPI",
 	HandlerType: (*UserAPIServer)(nil),
@@ -322,6 +356,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetApplicationInfo",
 			Handler:    _UserAPI_GetApplicationInfo_Handler,
+		},
+		{
+			MethodName: "ApplyFeatureAudit",
+			Handler:    _UserAPI_ApplyFeatureAudit_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
