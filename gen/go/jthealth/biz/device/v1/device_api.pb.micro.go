@@ -47,6 +47,10 @@ type DeviceAPIService interface {
 	CreateDeviceGroup(ctx context.Context, in *CreateDeviceGroupRequest, opts ...client.CallOption) (*CreateDeviceGroupResponse, error)
 	//获取设备组列表
 	GetDeviceGroupList(ctx context.Context, in *GetDeviceGroupListRequest, opts ...client.CallOption) (*GetDeviceGroupListResponse, error)
+	//导入设备列表
+	ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, opts ...client.CallOption) (*ImportDeviceListResponse, error)
+	//获取设备列表
+	GetDeviceList(ctx context.Context, in *GetDeviceListRequest, opts ...client.CallOption) (*GetDeviceListResponse, error)
 }
 
 type deviceAPIService struct {
@@ -81,6 +85,26 @@ func (c *deviceAPIService) GetDeviceGroupList(ctx context.Context, in *GetDevice
 	return out, nil
 }
 
+func (c *deviceAPIService) ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, opts ...client.CallOption) (*ImportDeviceListResponse, error) {
+	req := c.c.NewRequest(c.name, "DeviceAPI.ImportDeviceList", in)
+	out := new(ImportDeviceListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceAPIService) GetDeviceList(ctx context.Context, in *GetDeviceListRequest, opts ...client.CallOption) (*GetDeviceListResponse, error) {
+	req := c.c.NewRequest(c.name, "DeviceAPI.GetDeviceList", in)
+	out := new(GetDeviceListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DeviceAPI service
 
 type DeviceAPIHandler interface {
@@ -88,12 +112,18 @@ type DeviceAPIHandler interface {
 	CreateDeviceGroup(context.Context, *CreateDeviceGroupRequest, *CreateDeviceGroupResponse) error
 	//获取设备组列表
 	GetDeviceGroupList(context.Context, *GetDeviceGroupListRequest, *GetDeviceGroupListResponse) error
+	//导入设备列表
+	ImportDeviceList(context.Context, *ImportDeviceListRequest, *ImportDeviceListResponse) error
+	//获取设备列表
+	GetDeviceList(context.Context, *GetDeviceListRequest, *GetDeviceListResponse) error
 }
 
 func RegisterDeviceAPIHandler(s server.Server, hdlr DeviceAPIHandler, opts ...server.HandlerOption) error {
 	type deviceAPI interface {
 		CreateDeviceGroup(ctx context.Context, in *CreateDeviceGroupRequest, out *CreateDeviceGroupResponse) error
 		GetDeviceGroupList(ctx context.Context, in *GetDeviceGroupListRequest, out *GetDeviceGroupListResponse) error
+		ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, out *ImportDeviceListResponse) error
+		GetDeviceList(ctx context.Context, in *GetDeviceListRequest, out *GetDeviceListResponse) error
 	}
 	type DeviceAPI struct {
 		deviceAPI
@@ -112,4 +142,12 @@ func (h *deviceAPIHandler) CreateDeviceGroup(ctx context.Context, in *CreateDevi
 
 func (h *deviceAPIHandler) GetDeviceGroupList(ctx context.Context, in *GetDeviceGroupListRequest, out *GetDeviceGroupListResponse) error {
 	return h.DeviceAPIHandler.GetDeviceGroupList(ctx, in, out)
+}
+
+func (h *deviceAPIHandler) ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, out *ImportDeviceListResponse) error {
+	return h.DeviceAPIHandler.ImportDeviceList(ctx, in, out)
+}
+
+func (h *deviceAPIHandler) GetDeviceList(ctx context.Context, in *GetDeviceListRequest, out *GetDeviceListResponse) error {
+	return h.DeviceAPIHandler.GetDeviceList(ctx, in, out)
 }

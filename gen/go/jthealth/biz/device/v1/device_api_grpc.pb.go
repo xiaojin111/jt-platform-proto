@@ -21,6 +21,10 @@ type DeviceAPIClient interface {
 	CreateDeviceGroup(ctx context.Context, in *CreateDeviceGroupRequest, opts ...grpc.CallOption) (*CreateDeviceGroupResponse, error)
 	//获取设备组列表
 	GetDeviceGroupList(ctx context.Context, in *GetDeviceGroupListRequest, opts ...grpc.CallOption) (*GetDeviceGroupListResponse, error)
+	//导入设备列表
+	ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, opts ...grpc.CallOption) (*ImportDeviceListResponse, error)
+	//获取设备列表
+	GetDeviceList(ctx context.Context, in *GetDeviceListRequest, opts ...grpc.CallOption) (*GetDeviceListResponse, error)
 }
 
 type deviceAPIClient struct {
@@ -49,6 +53,24 @@ func (c *deviceAPIClient) GetDeviceGroupList(ctx context.Context, in *GetDeviceG
 	return out, nil
 }
 
+func (c *deviceAPIClient) ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, opts ...grpc.CallOption) (*ImportDeviceListResponse, error) {
+	out := new(ImportDeviceListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.device.v1.DeviceAPI/ImportDeviceList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceAPIClient) GetDeviceList(ctx context.Context, in *GetDeviceListRequest, opts ...grpc.CallOption) (*GetDeviceListResponse, error) {
+	out := new(GetDeviceListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.device.v1.DeviceAPI/GetDeviceList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeviceAPIServer is the server API for DeviceAPI service.
 // All implementations must embed UnimplementedDeviceAPIServer
 // for forward compatibility
@@ -57,6 +79,10 @@ type DeviceAPIServer interface {
 	CreateDeviceGroup(context.Context, *CreateDeviceGroupRequest) (*CreateDeviceGroupResponse, error)
 	//获取设备组列表
 	GetDeviceGroupList(context.Context, *GetDeviceGroupListRequest) (*GetDeviceGroupListResponse, error)
+	//导入设备列表
+	ImportDeviceList(context.Context, *ImportDeviceListRequest) (*ImportDeviceListResponse, error)
+	//获取设备列表
+	GetDeviceList(context.Context, *GetDeviceListRequest) (*GetDeviceListResponse, error)
 	mustEmbedUnimplementedDeviceAPIServer()
 }
 
@@ -69,6 +95,12 @@ func (UnimplementedDeviceAPIServer) CreateDeviceGroup(context.Context, *CreateDe
 }
 func (UnimplementedDeviceAPIServer) GetDeviceGroupList(context.Context, *GetDeviceGroupListRequest) (*GetDeviceGroupListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceGroupList not implemented")
+}
+func (UnimplementedDeviceAPIServer) ImportDeviceList(context.Context, *ImportDeviceListRequest) (*ImportDeviceListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportDeviceList not implemented")
+}
+func (UnimplementedDeviceAPIServer) GetDeviceList(context.Context, *GetDeviceListRequest) (*GetDeviceListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceList not implemented")
 }
 func (UnimplementedDeviceAPIServer) mustEmbedUnimplementedDeviceAPIServer() {}
 
@@ -119,6 +151,42 @@ func _DeviceAPI_GetDeviceGroupList_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeviceAPI_ImportDeviceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportDeviceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceAPIServer).ImportDeviceList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.device.v1.DeviceAPI/ImportDeviceList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceAPIServer).ImportDeviceList(ctx, req.(*ImportDeviceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeviceAPI_GetDeviceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeviceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceAPIServer).GetDeviceList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.device.v1.DeviceAPI/GetDeviceList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceAPIServer).GetDeviceList(ctx, req.(*GetDeviceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _DeviceAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.device.v1.DeviceAPI",
 	HandlerType: (*DeviceAPIServer)(nil),
@@ -130,6 +198,14 @@ var _DeviceAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDeviceGroupList",
 			Handler:    _DeviceAPI_GetDeviceGroupList_Handler,
+		},
+		{
+			MethodName: "ImportDeviceList",
+			Handler:    _DeviceAPI_ImportDeviceList_Handler,
+		},
+		{
+			MethodName: "GetDeviceList",
+			Handler:    _DeviceAPI_GetDeviceList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

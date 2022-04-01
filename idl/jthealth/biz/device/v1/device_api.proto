@@ -23,6 +23,10 @@ service DeviceAPI {
   rpc CreateDeviceGroup(CreateDeviceGroupRequest)returns(CreateDeviceGroupResponse);
   //获取设备组列表
   rpc GetDeviceGroupList(GetDeviceGroupListRequest)returns(GetDeviceGroupListResponse);
+  //导入设备列表
+  rpc ImportDeviceList(ImportDeviceListRequest)returns(ImportDeviceListResponse);
+  //获取设备列表
+  rpc GetDeviceList(GetDeviceListRequest)returns(GetDeviceListResponse);
 
 }
 //创建设备组请求
@@ -59,4 +63,39 @@ message DeviceGroupMsg{
   //状态 0 生成中 1 已生成
   string status = 4;
 
+}
+
+//导入设备列表请求
+message ImportDeviceListRequest{
+  //设备组id
+  string device_group_id = 1;
+  //数据文件流
+  bytes data = 2;
+}
+//导入设备列表响应
+message ImportDeviceListResponse{
+  //设备组id
+  string device_group_id = 1;
+}
+
+//获取设备列表请求
+message GetDeviceListRequest{
+  int32 page_num = 1 ;
+  int32 page_size = 2 ;
+  //设备组id
+  string device_group_id = 3;
+  string mac = 4;
+  string sn = 5;
+}
+//获取设备列表响应
+message GetDeviceListResponse{
+  int32 page_num = 1;
+  int32 page_size = 2;
+  int32 total = 3;
+  //用户列表
+  repeated DeviceMsg list = 4;
+}
+message DeviceMsg {
+  string mac = 1;
+  string sn = 2;
 }
