@@ -24,7 +24,8 @@ service UserAPI {
   rpc UpdateUserInfos(UpdateUserInfosRequest)returns(UpdateUserInfosResponse);
   //CreatedUserProfile 创建用户档案
   rpc CreatedUserProfile(CreatedUserProfileRequest)returns(CreatedUserProfileResponse);
-
+  //GetUserInfosList 获取用户信息列表
+  rpc GetUserInfosList(GetUserInfosListRequest)returns(GetGetUserInfosListResponse);
 
 
   //----------------------应用详情-------------------------------
@@ -166,6 +167,8 @@ message CreatedUserProfileRequest{
   string id_card_reverse = 13;
   //手机号
   string phone = 14;
+  //用户类型
+  string  user_type = 15;
 }
 message CreatedUserProfileResponse{
   string status = 1;
@@ -173,9 +176,43 @@ message CreatedUserProfileResponse{
 
 
 message ApplyFeatureAuditRequest{
-  string user_id =1;
-  string feature_type =2;
+  string user_id = 1;
+  string feature_type = 2;
 }
 message ApplyFeatureAuditResponse{
-  string status =1;
+  string status = 1;
+}
+
+//GetUserInfosList 获取用户信息列表
+message GetUserInfosListRequest{
+  int32 page_num = 1 ;
+  int32 page_size = 2 ;
+  string user_id = 3;
+  string search_name = 4;
+}
+message GetGetUserInfosListResponse{
+  int32 page_num = 1;
+  int32 page_size = 2;
+  int32 total = 3;
+  //用户列表
+  repeated UserMsg list = 4;
+}
+message UserMsg {
+  string user_id = 1;
+  //企业名称
+  string user_name = 2;
+  //姓名/法人
+  string legal_name = 3;
+  //用户类型
+  string  user_type = 4;
+  //合同编号
+  string contract_number = 5;
+  //状态
+  int32 status = 6;
+  //开放期限
+  string open_time = 7;
+  //小阶数量
+  int32 device_num = 8;
+  string app_key = 9;
+
 }

@@ -27,6 +27,8 @@ type UserAPIClient interface {
 	UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...grpc.CallOption) (*UpdateUserInfosResponse, error)
 	//CreatedUserProfile 创建用户档案
 	CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, opts ...grpc.CallOption) (*CreatedUserProfileResponse, error)
+	//GetUserInfosList 获取用户信息列表
+	GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...grpc.CallOption) (*GetGetUserInfosListResponse, error)
 	//----------------------应用详情-------------------------------
 	//应用申请
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error)
@@ -89,6 +91,15 @@ func (c *userAPIClient) CreatedUserProfile(ctx context.Context, in *CreatedUserP
 	return out, nil
 }
 
+func (c *userAPIClient) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...grpc.CallOption) (*GetGetUserInfosListResponse, error) {
+	out := new(GetGetUserInfosListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetUserInfosList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAPIClient) ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error) {
 	out := new(ApplyApplicationResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/ApplyApplication", in, out, opts...)
@@ -130,6 +141,8 @@ type UserAPIServer interface {
 	UpdateUserInfos(context.Context, *UpdateUserInfosRequest) (*UpdateUserInfosResponse, error)
 	//CreatedUserProfile 创建用户档案
 	CreatedUserProfile(context.Context, *CreatedUserProfileRequest) (*CreatedUserProfileResponse, error)
+	//GetUserInfosList 获取用户信息列表
+	GetUserInfosList(context.Context, *GetUserInfosListRequest) (*GetGetUserInfosListResponse, error)
 	//----------------------应用详情-------------------------------
 	//应用申请
 	ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error)
@@ -158,6 +171,9 @@ func (UnimplementedUserAPIServer) UpdateUserInfos(context.Context, *UpdateUserIn
 }
 func (UnimplementedUserAPIServer) CreatedUserProfile(context.Context, *CreatedUserProfileRequest) (*CreatedUserProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatedUserProfile not implemented")
+}
+func (UnimplementedUserAPIServer) GetUserInfosList(context.Context, *GetUserInfosListRequest) (*GetGetUserInfosListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfosList not implemented")
 }
 func (UnimplementedUserAPIServer) ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyApplication not implemented")
@@ -271,6 +287,24 @@ func _UserAPI_CreatedUserProfile_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_GetUserInfosList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInfosListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).GetUserInfosList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/GetUserInfosList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).GetUserInfosList(ctx, req.(*GetUserInfosListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserAPI_ApplyApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ApplyApplicationRequest)
 	if err := dec(in); err != nil {
@@ -348,6 +382,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreatedUserProfile",
 			Handler:    _UserAPI_CreatedUserProfile_Handler,
+		},
+		{
+			MethodName: "GetUserInfosList",
+			Handler:    _UserAPI_GetUserInfosList_Handler,
 		},
 		{
 			MethodName: "ApplyApplication",

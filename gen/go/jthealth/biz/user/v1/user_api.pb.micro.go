@@ -52,6 +52,8 @@ type UserAPIService interface {
 	UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, opts ...client.CallOption) (*UpdateUserInfosResponse, error)
 	//CreatedUserProfile 创建用户档案
 	CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, opts ...client.CallOption) (*CreatedUserProfileResponse, error)
+	//GetUserInfosList 获取用户信息列表
+	GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...client.CallOption) (*GetGetUserInfosListResponse, error)
 	//----------------------应用详情-------------------------------
 	//应用申请
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...client.CallOption) (*ApplyApplicationResponse, error)
@@ -123,6 +125,16 @@ func (c *userAPIService) CreatedUserProfile(ctx context.Context, in *CreatedUser
 	return out, nil
 }
 
+func (c *userAPIService) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...client.CallOption) (*GetGetUserInfosListResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.GetUserInfosList", in)
+	out := new(GetGetUserInfosListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAPIService) ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...client.CallOption) (*ApplyApplicationResponse, error) {
 	req := c.c.NewRequest(c.name, "UserAPI.ApplyApplication", in)
 	out := new(ApplyApplicationResponse)
@@ -166,6 +178,8 @@ type UserAPIHandler interface {
 	UpdateUserInfos(context.Context, *UpdateUserInfosRequest, *UpdateUserInfosResponse) error
 	//CreatedUserProfile 创建用户档案
 	CreatedUserProfile(context.Context, *CreatedUserProfileRequest, *CreatedUserProfileResponse) error
+	//GetUserInfosList 获取用户信息列表
+	GetUserInfosList(context.Context, *GetUserInfosListRequest, *GetGetUserInfosListResponse) error
 	//----------------------应用详情-------------------------------
 	//应用申请
 	ApplyApplication(context.Context, *ApplyApplicationRequest, *ApplyApplicationResponse) error
@@ -182,6 +196,7 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, out *GetUserInfosByIdResponse) error
 		UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, out *UpdateUserInfosResponse) error
 		CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, out *CreatedUserProfileResponse) error
+		GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, out *GetGetUserInfosListResponse) error
 		ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, out *ApplyApplicationResponse) error
 		GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, out *GetApplicationInfoResponse) error
 		ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, out *ApplyFeatureAuditResponse) error
@@ -215,6 +230,10 @@ func (h *userAPIHandler) UpdateUserInfos(ctx context.Context, in *UpdateUserInfo
 
 func (h *userAPIHandler) CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, out *CreatedUserProfileResponse) error {
 	return h.UserAPIHandler.CreatedUserProfile(ctx, in, out)
+}
+
+func (h *userAPIHandler) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, out *GetGetUserInfosListResponse) error {
+	return h.UserAPIHandler.GetUserInfosList(ctx, in, out)
 }
 
 func (h *userAPIHandler) ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, out *ApplyApplicationResponse) error {
