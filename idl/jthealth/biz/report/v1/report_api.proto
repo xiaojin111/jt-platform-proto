@@ -1,0 +1,211 @@
+//
+// 常州金姆健康科技有限公司. (c) 2019
+//
+
+syntax = "proto3";
+
+package jthealth.biz.report.v1;
+
+option csharp_namespace = "Jthealth.Biz.Report.V1";
+option go_package =
+    "github.com/jinmukeji/jt-proto/gen/go/jthealth/biz/report/v1;reportv1";
+option java_multiple_files = true;
+option java_outer_classname = "ReportApiProto";
+option java_package = "com.jthealth.biz.report.v1";
+option objc_class_prefix = "JBR";
+option php_namespace = "Jthealth\\Biz\\Report\\V1";
+
+import "google/protobuf/timestamp.proto";
+
+// ReportAPI 报告API.
+service ReportAPI {
+  // GetReport 获取阶梯报告.
+  rpc GetReport(GetReportRequest) returns(GetReportResponse);
+
+}
+
+// 获取阶梯报告请求
+message GetReportRequest {
+  // 报告ID
+  string report_id = 1;
+
+  // 语言
+  string language_code = 2;
+
+  // 回答的问题，是模块名到回答的问题的映射关系
+  map<string, AnswerList> module_answers = 3;
+}
+// 一个模块的回答清单
+message AnswerList {
+  // 回答的问题列表
+  repeated Answer answers = 1;
+}
+
+// Answer 单个问题的回答.
+message Answer {
+  // 问题
+  string question_key = 1;
+  // 答案
+  repeated string answer_keys = 2;
+}
+
+// 获取阶梯报告响应
+message GetReportResponse {
+  // 是否是完整的报告
+  bool is_complete_report = 1;
+
+  // 是否还需要回答问题
+  bool has_questions = 2;
+
+  // 提问的问题，是模块名到提问的问题的映射关系
+  map<string, QuestionList> module_questions = 3;
+
+  // 报告内容
+  HealthReport report = 4;
+}
+// 一个模块提问的问题清单
+message QuestionList {
+  // 提问的问题列表
+  repeated Question questions = 1;
+}
+
+// Question 问的问题.
+message Question {
+  // 问题的 key
+  string question_key = 1;
+  // 内容
+  string content = 2;
+  // 类型
+  string type = 3;
+  // 选项
+  repeated QuestionChoice choices = 4;
+}
+// QuestionChoice 选项.
+message QuestionChoice {
+  // 选项的 key
+  string choice_key = 1;
+  // 内容
+  string content = 2;
+  // 冲突选项
+  repeated string conflict_keys = 3;
+  // 是否默认选中
+  bool selected = 4;
+}
+
+// HealthReport 健康报告内容.
+message HealthReport {
+  // 分析报告ID
+  string health_report_id = 1;
+  // 报告创建时间
+  google.protobuf.Timestamp create_time = 2;
+  // 综合风险指数
+  RiskInfo health_risk_index = 3;
+  // 报告总结
+  string report_summary = 4;
+  // 体质类型说明
+  string physique_explain = 5;
+  // 心率
+  int32 heart_rate = 6;
+  // 18种疾病风险信息
+  repeated RiskInfo risk = 7;
+  // 体质类型
+  string physique = 8;
+  // 膳食建议
+  string meal_suggestion = 9;
+  // 膳食商品
+  repeated MealProduct meal_products = 10;
+  // 是否参与分析,为true时不参与周报月报分析,和对比分析
+  bool enable_statistics = 11;
+  // 健康年龄
+  int32 health_age = 12;
+  // 备注
+  string remark = 13;
+  // 波形图数据
+  repeated uint32 wave_data = 14;
+  // 测量用户档案快照信息
+  UserProfileSnapshot user_profile = 15;
+}
+// UserProfileSnapshot 测量用户档案快照信息
+message UserProfileSnapshot {
+  // 档案ID
+  string user_profile_id = 1;
+  // 昵称
+  string nickname = 2;
+  // 年龄
+  int32 age = 3;
+  // 测量手
+  Hand hand = 4;
+  // 用户性别
+  Gender gender = 5;
+  // 身高
+  int32 height = 6;
+  // 体重
+  int32 weight = 7;
+  // 昵称首字母
+  string nickname_initial = 8;
+  // 区号
+  string nation_code = 9;
+  // 手机号
+  string phone = 10;
+}
+
+// RiskInfo 风险信息.
+message RiskInfo {
+  // 风险名称
+  string risk_name = 1;
+  // 风险指数
+  int32 index_value = 2;
+}
+
+// MealProduct 膳食商品.
+message MealProduct {
+  // 膳食商品跳转链接
+  string product_link = 1;
+  // 膳食标题
+  string product_title = 2;
+  // 膳食商品图片
+  ImageResource image = 3;
+}
+// ImageResource 静态图片资源.
+message ImageResource {
+  // 资源池图片ID
+  string image_id = 1;
+  // 页面关键字
+  string key = 2;
+  // 图片格式
+  string mime = 3;
+  // 页面在S3保存路径
+  string store_path = 4;
+  // 公共访问路径
+  string public_access_url = 5;
+  // 发布者ID(系统用户)
+  string editor_id = 6;
+  // 公开访问路径
+  string title = 7;
+  // 预览路径
+  string preview_url = 8;
+}
+
+// Gender 性别.
+enum Gender {
+  // 无效的性别
+  GENDER_INVALID = 0;
+  // 未设置性别
+  GENDER_UNSET = 1;
+  // 男
+  GENDER_MALE = 2;
+  // 女
+  GENDER_FEMALE = 3;
+}
+
+// Hand 测量手.
+enum Hand {
+  // 无效的手
+  HAND_INVALID = 0;
+  // 未设置左右手
+  HAND_UNSET = 1;
+  // 左手
+  HAND_LEFT = 2;
+  // 右手
+  HAND_RIGHT = 3;
+}
