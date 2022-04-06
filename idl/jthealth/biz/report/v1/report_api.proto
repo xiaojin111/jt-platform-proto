@@ -16,11 +16,19 @@ option objc_class_prefix = "JBR";
 option php_namespace = "Jthealth\\Biz\\Report\\V1";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 // ReportAPI 报告API.
 service ReportAPI {
   // GetReport 获取阶梯报告.
   rpc GetReport(GetReportRequest) returns(GetReportResponse);
+
+  //创建风险推荐商品
+  rpc CreateRiskCommodity(CreateRiskCommodityRequest)returns(CreateRiskCommodityResponse);
+  //获取风险列表
+  rpc GetRiskList(google.protobuf.Empty)returns(GetRiskListResponse);
+  //获取推荐商品列表
+  rpc GetRiskCommodityList(GetRiskCommodityListRequest)returns(GetRiskCommodityListResponse);
 
 }
 
@@ -208,4 +216,47 @@ enum Hand {
   HAND_LEFT = 2;
   // 右手
   HAND_RIGHT = 3;
+}
+
+//创建风险推荐商品请求
+message CreateRiskCommodityRequest{
+  string application_id = 1;
+  string risk_id = 2;
+  int32 degree = 3;
+  int32 location = 4;
+  string image = 5;
+  string url = 6;
+}
+//创建风险推荐商品响应
+message CreateRiskCommodityResponse{
+  string risk_commodity_id = 1;
+}
+
+//获取风险列表请求
+message GetRiskListRequest{}
+//获取风险列表响应
+message GetRiskListResponse{
+  repeated RiskMsg list = 1;
+}
+message RiskMsg{
+  string risk_id = 1;
+  string risk_name = 2;
+}
+
+//获取推荐商品列表请求
+message GetRiskCommodityListRequest{
+  string risk_id = 1;
+  string application_id = 2;
+}
+//获取推荐商品列表响应
+message GetRiskCommodityListResponse{
+  repeated RiskCommodityMsg list = 1;
+}
+message RiskCommodityMsg{
+  string risk_id = 1;
+  string risk_name = 2;
+  int32 degree = 3;
+  int32 location = 4;
+  string image = 5;
+  string url = 6;
 }

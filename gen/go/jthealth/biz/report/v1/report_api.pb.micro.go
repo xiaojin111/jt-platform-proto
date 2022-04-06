@@ -6,6 +6,7 @@ package reportv1
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	math "math"
 )
@@ -45,6 +46,12 @@ func NewReportAPIEndpoints() []*api.Endpoint {
 type ReportAPIService interface {
 	// GetReport 获取阶梯报告.
 	GetReport(ctx context.Context, in *GetReportRequest, opts ...client.CallOption) (*GetReportResponse, error)
+	//创建风险推荐商品
+	CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, opts ...client.CallOption) (*CreateRiskCommodityResponse, error)
+	//获取风险列表
+	GetRiskList(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*GetRiskListResponse, error)
+	//获取推荐商品列表
+	GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...client.CallOption) (*GetRiskCommodityListResponse, error)
 }
 
 type reportAPIService struct {
@@ -69,16 +76,55 @@ func (c *reportAPIService) GetReport(ctx context.Context, in *GetReportRequest, 
 	return out, nil
 }
 
+func (c *reportAPIService) CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, opts ...client.CallOption) (*CreateRiskCommodityResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.CreateRiskCommodity", in)
+	out := new(CreateRiskCommodityResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetRiskList(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*GetRiskListResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetRiskList", in)
+	out := new(GetRiskListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...client.CallOption) (*GetRiskCommodityListResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetRiskCommodityList", in)
+	out := new(GetRiskCommodityListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ReportAPI service
 
 type ReportAPIHandler interface {
 	// GetReport 获取阶梯报告.
 	GetReport(context.Context, *GetReportRequest, *GetReportResponse) error
+	//创建风险推荐商品
+	CreateRiskCommodity(context.Context, *CreateRiskCommodityRequest, *CreateRiskCommodityResponse) error
+	//获取风险列表
+	GetRiskList(context.Context, *emptypb.Empty, *GetRiskListResponse) error
+	//获取推荐商品列表
+	GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest, *GetRiskCommodityListResponse) error
 }
 
 func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...server.HandlerOption) error {
 	type reportAPI interface {
 		GetReport(ctx context.Context, in *GetReportRequest, out *GetReportResponse) error
+		CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, out *CreateRiskCommodityResponse) error
+		GetRiskList(ctx context.Context, in *emptypb.Empty, out *GetRiskListResponse) error
+		GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, out *GetRiskCommodityListResponse) error
 	}
 	type ReportAPI struct {
 		reportAPI
@@ -93,4 +139,16 @@ type reportAPIHandler struct {
 
 func (h *reportAPIHandler) GetReport(ctx context.Context, in *GetReportRequest, out *GetReportResponse) error {
 	return h.ReportAPIHandler.GetReport(ctx, in, out)
+}
+
+func (h *reportAPIHandler) CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, out *CreateRiskCommodityResponse) error {
+	return h.ReportAPIHandler.CreateRiskCommodity(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetRiskList(ctx context.Context, in *emptypb.Empty, out *GetRiskListResponse) error {
+	return h.ReportAPIHandler.GetRiskList(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, out *GetRiskCommodityListResponse) error {
+	return h.ReportAPIHandler.GetRiskCommodityList(ctx, in, out)
 }

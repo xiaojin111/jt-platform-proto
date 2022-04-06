@@ -7,6 +7,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,6 +20,12 @@ const _ = grpc.SupportPackageIsVersion6
 type ReportAPIClient interface {
 	// GetReport 获取阶梯报告.
 	GetReport(ctx context.Context, in *GetReportRequest, opts ...grpc.CallOption) (*GetReportResponse, error)
+	//创建风险推荐商品
+	CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, opts ...grpc.CallOption) (*CreateRiskCommodityResponse, error)
+	//获取风险列表
+	GetRiskList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetRiskListResponse, error)
+	//获取推荐商品列表
+	GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...grpc.CallOption) (*GetRiskCommodityListResponse, error)
 }
 
 type reportAPIClient struct {
@@ -38,12 +45,45 @@ func (c *reportAPIClient) GetReport(ctx context.Context, in *GetReportRequest, o
 	return out, nil
 }
 
+func (c *reportAPIClient) CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, opts ...grpc.CallOption) (*CreateRiskCommodityResponse, error) {
+	out := new(CreateRiskCommodityResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/CreateRiskCommodity", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetRiskList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetRiskListResponse, error) {
+	out := new(GetRiskListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetRiskList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...grpc.CallOption) (*GetRiskCommodityListResponse, error) {
+	out := new(GetRiskCommodityListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetRiskCommodityList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReportAPIServer is the server API for ReportAPI service.
 // All implementations must embed UnimplementedReportAPIServer
 // for forward compatibility
 type ReportAPIServer interface {
 	// GetReport 获取阶梯报告.
 	GetReport(context.Context, *GetReportRequest) (*GetReportResponse, error)
+	//创建风险推荐商品
+	CreateRiskCommodity(context.Context, *CreateRiskCommodityRequest) (*CreateRiskCommodityResponse, error)
+	//获取风险列表
+	GetRiskList(context.Context, *emptypb.Empty) (*GetRiskListResponse, error)
+	//获取推荐商品列表
+	GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest) (*GetRiskCommodityListResponse, error)
 	mustEmbedUnimplementedReportAPIServer()
 }
 
@@ -53,6 +93,15 @@ type UnimplementedReportAPIServer struct {
 
 func (UnimplementedReportAPIServer) GetReport(context.Context, *GetReportRequest) (*GetReportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReport not implemented")
+}
+func (UnimplementedReportAPIServer) CreateRiskCommodity(context.Context, *CreateRiskCommodityRequest) (*CreateRiskCommodityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRiskCommodity not implemented")
+}
+func (UnimplementedReportAPIServer) GetRiskList(context.Context, *emptypb.Empty) (*GetRiskListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRiskList not implemented")
+}
+func (UnimplementedReportAPIServer) GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest) (*GetRiskCommodityListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRiskCommodityList not implemented")
 }
 func (UnimplementedReportAPIServer) mustEmbedUnimplementedReportAPIServer() {}
 
@@ -85,6 +134,60 @@ func _ReportAPI_GetReport_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportAPI_CreateRiskCommodity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRiskCommodityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).CreateRiskCommodity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/CreateRiskCommodity",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).CreateRiskCommodity(ctx, req.(*CreateRiskCommodityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetRiskList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetRiskList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetRiskList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetRiskList(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetRiskCommodityList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRiskCommodityListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetRiskCommodityList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetRiskCommodityList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetRiskCommodityList(ctx, req.(*GetRiskCommodityListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.report.v1.ReportAPI",
 	HandlerType: (*ReportAPIServer)(nil),
@@ -92,6 +195,18 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetReport",
 			Handler:    _ReportAPI_GetReport_Handler,
+		},
+		{
+			MethodName: "CreateRiskCommodity",
+			Handler:    _ReportAPI_CreateRiskCommodity_Handler,
+		},
+		{
+			MethodName: "GetRiskList",
+			Handler:    _ReportAPI_GetRiskList_Handler,
+		},
+		{
+			MethodName: "GetRiskCommodityList",
+			Handler:    _ReportAPI_GetRiskCommodityList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
