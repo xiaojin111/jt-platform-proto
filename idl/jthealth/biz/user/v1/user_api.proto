@@ -237,6 +237,7 @@ message GetFeatureAuditListResponse{
   repeated FeatureAuditMsg list = 4;
 }
 message FeatureAuditMsg{
+  string feature_audit_id =5;
   string user_name =1;
   string feature_type =2;
   string status =3;
@@ -244,7 +245,7 @@ message FeatureAuditMsg{
 }
 //应用功能审核
 message UpdateFeatureAuditRequest{
-  string application_id =1;
+  string feature_audit_id =1;
   //状态 1-待审核 2-审核通过 3-拒绝
   string status =2;
   string denial_reason =3;
