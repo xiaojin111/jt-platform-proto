@@ -34,6 +34,8 @@ type UserAPIClient interface {
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error)
 	//获取应用详情
 	GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...grpc.CallOption) (*GetApplicationInfoResponse, error)
+	//重置app_secret
+	RestAppSecretById(ctx context.Context, in *RestAppSecretByIdRequest, opts ...grpc.CallOption) (*RestAppSecretByIdResponse, error)
 	//应用功能申请
 	ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...grpc.CallOption) (*ApplyFeatureAuditResponse, error)
 	//获取审核列表
@@ -122,6 +124,15 @@ func (c *userAPIClient) GetApplicationInfo(ctx context.Context, in *GetApplicati
 	return out, nil
 }
 
+func (c *userAPIClient) RestAppSecretById(ctx context.Context, in *RestAppSecretByIdRequest, opts ...grpc.CallOption) (*RestAppSecretByIdResponse, error) {
+	out := new(RestAppSecretByIdResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/RestAppSecretById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAPIClient) ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...grpc.CallOption) (*ApplyFeatureAuditResponse, error) {
 	out := new(ApplyFeatureAuditResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/ApplyFeatureAudit", in, out, opts...)
@@ -170,6 +181,8 @@ type UserAPIServer interface {
 	ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error)
 	//获取应用详情
 	GetApplicationInfo(context.Context, *GetApplicationInfoRequest) (*GetApplicationInfoResponse, error)
+	//重置app_secret
+	RestAppSecretById(context.Context, *RestAppSecretByIdRequest) (*RestAppSecretByIdResponse, error)
 	//应用功能申请
 	ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest) (*ApplyFeatureAuditResponse, error)
 	//获取审核列表
@@ -206,6 +219,9 @@ func (UnimplementedUserAPIServer) ApplyApplication(context.Context, *ApplyApplic
 }
 func (UnimplementedUserAPIServer) GetApplicationInfo(context.Context, *GetApplicationInfoRequest) (*GetApplicationInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplicationInfo not implemented")
+}
+func (UnimplementedUserAPIServer) RestAppSecretById(context.Context, *RestAppSecretByIdRequest) (*RestAppSecretByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RestAppSecretById not implemented")
 }
 func (UnimplementedUserAPIServer) ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest) (*ApplyFeatureAuditResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyFeatureAudit not implemented")
@@ -373,6 +389,24 @@ func _UserAPI_GetApplicationInfo_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_RestAppSecretById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RestAppSecretByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).RestAppSecretById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/RestAppSecretById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).RestAppSecretById(ctx, req.(*RestAppSecretByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserAPI_ApplyFeatureAudit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ApplyFeatureAuditRequest)
 	if err := dec(in); err != nil {
@@ -462,6 +496,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetApplicationInfo",
 			Handler:    _UserAPI_GetApplicationInfo_Handler,
+		},
+		{
+			MethodName: "RestAppSecretById",
+			Handler:    _UserAPI_RestAppSecretById_Handler,
 		},
 		{
 			MethodName: "ApplyFeatureAudit",
