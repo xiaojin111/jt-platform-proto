@@ -53,14 +53,18 @@ type UserAPIService interface {
 	//CreatedUserProfile 创建用户档案
 	CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, opts ...client.CallOption) (*CreatedUserProfileResponse, error)
 	//GetUserInfosList 获取用户信息列表
-	GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...client.CallOption) (*GetGetUserInfosListResponse, error)
-	//----------------------应用详情-------------------------------
+	GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...client.CallOption) (*GetUserInfosListResponse, error)
+	//----------------------应用-------------------------------
 	//应用申请
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...client.CallOption) (*ApplyApplicationResponse, error)
 	//获取应用详情
 	GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...client.CallOption) (*GetApplicationInfoResponse, error)
 	//应用功能申请
 	ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...client.CallOption) (*ApplyFeatureAuditResponse, error)
+	//获取审核列表
+	GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, opts ...client.CallOption) (*GetFeatureAuditListResponse, error)
+	//应用功能审核
+	UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, opts ...client.CallOption) (*UpdateFeatureAuditResponse, error)
 }
 
 type userAPIService struct {
@@ -125,9 +129,9 @@ func (c *userAPIService) CreatedUserProfile(ctx context.Context, in *CreatedUser
 	return out, nil
 }
 
-func (c *userAPIService) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...client.CallOption) (*GetGetUserInfosListResponse, error) {
+func (c *userAPIService) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...client.CallOption) (*GetUserInfosListResponse, error) {
 	req := c.c.NewRequest(c.name, "UserAPI.GetUserInfosList", in)
-	out := new(GetGetUserInfosListResponse)
+	out := new(GetUserInfosListResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -165,6 +169,26 @@ func (c *userAPIService) ApplyFeatureAudit(ctx context.Context, in *ApplyFeature
 	return out, nil
 }
 
+func (c *userAPIService) GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, opts ...client.CallOption) (*GetFeatureAuditListResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.GetFeatureAuditList", in)
+	out := new(GetFeatureAuditListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIService) UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, opts ...client.CallOption) (*UpdateFeatureAuditResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.UpdateFeatureAudit", in)
+	out := new(UpdateFeatureAuditResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
@@ -179,14 +203,18 @@ type UserAPIHandler interface {
 	//CreatedUserProfile 创建用户档案
 	CreatedUserProfile(context.Context, *CreatedUserProfileRequest, *CreatedUserProfileResponse) error
 	//GetUserInfosList 获取用户信息列表
-	GetUserInfosList(context.Context, *GetUserInfosListRequest, *GetGetUserInfosListResponse) error
-	//----------------------应用详情-------------------------------
+	GetUserInfosList(context.Context, *GetUserInfosListRequest, *GetUserInfosListResponse) error
+	//----------------------应用-------------------------------
 	//应用申请
 	ApplyApplication(context.Context, *ApplyApplicationRequest, *ApplyApplicationResponse) error
 	//获取应用详情
 	GetApplicationInfo(context.Context, *GetApplicationInfoRequest, *GetApplicationInfoResponse) error
 	//应用功能申请
 	ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest, *ApplyFeatureAuditResponse) error
+	//获取审核列表
+	GetFeatureAuditList(context.Context, *GetFeatureAuditListRequest, *GetFeatureAuditListResponse) error
+	//应用功能审核
+	UpdateFeatureAudit(context.Context, *UpdateFeatureAuditRequest, *UpdateFeatureAuditResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
@@ -196,10 +224,12 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		GetUserInfosById(ctx context.Context, in *GetUserInfosByIdRequest, out *GetUserInfosByIdResponse) error
 		UpdateUserInfos(ctx context.Context, in *UpdateUserInfosRequest, out *UpdateUserInfosResponse) error
 		CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, out *CreatedUserProfileResponse) error
-		GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, out *GetGetUserInfosListResponse) error
+		GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, out *GetUserInfosListResponse) error
 		ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, out *ApplyApplicationResponse) error
 		GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, out *GetApplicationInfoResponse) error
 		ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, out *ApplyFeatureAuditResponse) error
+		GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, out *GetFeatureAuditListResponse) error
+		UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, out *UpdateFeatureAuditResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -232,7 +262,7 @@ func (h *userAPIHandler) CreatedUserProfile(ctx context.Context, in *CreatedUser
 	return h.UserAPIHandler.CreatedUserProfile(ctx, in, out)
 }
 
-func (h *userAPIHandler) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, out *GetGetUserInfosListResponse) error {
+func (h *userAPIHandler) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, out *GetUserInfosListResponse) error {
 	return h.UserAPIHandler.GetUserInfosList(ctx, in, out)
 }
 
@@ -246,4 +276,12 @@ func (h *userAPIHandler) GetApplicationInfo(ctx context.Context, in *GetApplicat
 
 func (h *userAPIHandler) ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, out *ApplyFeatureAuditResponse) error {
 	return h.UserAPIHandler.ApplyFeatureAudit(ctx, in, out)
+}
+
+func (h *userAPIHandler) GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, out *GetFeatureAuditListResponse) error {
+	return h.UserAPIHandler.GetFeatureAuditList(ctx, in, out)
+}
+
+func (h *userAPIHandler) UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, out *UpdateFeatureAuditResponse) error {
+	return h.UserAPIHandler.UpdateFeatureAudit(ctx, in, out)
 }

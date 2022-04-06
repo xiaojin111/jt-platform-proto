@@ -28,14 +28,18 @@ type UserAPIClient interface {
 	//CreatedUserProfile 创建用户档案
 	CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, opts ...grpc.CallOption) (*CreatedUserProfileResponse, error)
 	//GetUserInfosList 获取用户信息列表
-	GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...grpc.CallOption) (*GetGetUserInfosListResponse, error)
-	//----------------------应用详情-------------------------------
+	GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...grpc.CallOption) (*GetUserInfosListResponse, error)
+	//----------------------应用-------------------------------
 	//应用申请
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error)
 	//获取应用详情
 	GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...grpc.CallOption) (*GetApplicationInfoResponse, error)
 	//应用功能申请
 	ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...grpc.CallOption) (*ApplyFeatureAuditResponse, error)
+	//获取审核列表
+	GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, opts ...grpc.CallOption) (*GetFeatureAuditListResponse, error)
+	//应用功能审核
+	UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, opts ...grpc.CallOption) (*UpdateFeatureAuditResponse, error)
 }
 
 type userAPIClient struct {
@@ -91,8 +95,8 @@ func (c *userAPIClient) CreatedUserProfile(ctx context.Context, in *CreatedUserP
 	return out, nil
 }
 
-func (c *userAPIClient) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...grpc.CallOption) (*GetGetUserInfosListResponse, error) {
-	out := new(GetGetUserInfosListResponse)
+func (c *userAPIClient) GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...grpc.CallOption) (*GetUserInfosListResponse, error) {
+	out := new(GetUserInfosListResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetUserInfosList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -127,6 +131,24 @@ func (c *userAPIClient) ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureA
 	return out, nil
 }
 
+func (c *userAPIClient) GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, opts ...grpc.CallOption) (*GetFeatureAuditListResponse, error) {
+	out := new(GetFeatureAuditListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetFeatureAuditList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIClient) UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, opts ...grpc.CallOption) (*UpdateFeatureAuditResponse, error) {
+	out := new(UpdateFeatureAuditResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/UpdateFeatureAudit", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserAPIServer is the server API for UserAPI service.
 // All implementations must embed UnimplementedUserAPIServer
 // for forward compatibility
@@ -142,14 +164,18 @@ type UserAPIServer interface {
 	//CreatedUserProfile 创建用户档案
 	CreatedUserProfile(context.Context, *CreatedUserProfileRequest) (*CreatedUserProfileResponse, error)
 	//GetUserInfosList 获取用户信息列表
-	GetUserInfosList(context.Context, *GetUserInfosListRequest) (*GetGetUserInfosListResponse, error)
-	//----------------------应用详情-------------------------------
+	GetUserInfosList(context.Context, *GetUserInfosListRequest) (*GetUserInfosListResponse, error)
+	//----------------------应用-------------------------------
 	//应用申请
 	ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error)
 	//获取应用详情
 	GetApplicationInfo(context.Context, *GetApplicationInfoRequest) (*GetApplicationInfoResponse, error)
 	//应用功能申请
 	ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest) (*ApplyFeatureAuditResponse, error)
+	//获取审核列表
+	GetFeatureAuditList(context.Context, *GetFeatureAuditListRequest) (*GetFeatureAuditListResponse, error)
+	//应用功能审核
+	UpdateFeatureAudit(context.Context, *UpdateFeatureAuditRequest) (*UpdateFeatureAuditResponse, error)
 	mustEmbedUnimplementedUserAPIServer()
 }
 
@@ -172,7 +198,7 @@ func (UnimplementedUserAPIServer) UpdateUserInfos(context.Context, *UpdateUserIn
 func (UnimplementedUserAPIServer) CreatedUserProfile(context.Context, *CreatedUserProfileRequest) (*CreatedUserProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatedUserProfile not implemented")
 }
-func (UnimplementedUserAPIServer) GetUserInfosList(context.Context, *GetUserInfosListRequest) (*GetGetUserInfosListResponse, error) {
+func (UnimplementedUserAPIServer) GetUserInfosList(context.Context, *GetUserInfosListRequest) (*GetUserInfosListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfosList not implemented")
 }
 func (UnimplementedUserAPIServer) ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error) {
@@ -183,6 +209,12 @@ func (UnimplementedUserAPIServer) GetApplicationInfo(context.Context, *GetApplic
 }
 func (UnimplementedUserAPIServer) ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest) (*ApplyFeatureAuditResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyFeatureAudit not implemented")
+}
+func (UnimplementedUserAPIServer) GetFeatureAuditList(context.Context, *GetFeatureAuditListRequest) (*GetFeatureAuditListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFeatureAuditList not implemented")
+}
+func (UnimplementedUserAPIServer) UpdateFeatureAudit(context.Context, *UpdateFeatureAuditRequest) (*UpdateFeatureAuditResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFeatureAudit not implemented")
 }
 func (UnimplementedUserAPIServer) mustEmbedUnimplementedUserAPIServer() {}
 
@@ -359,6 +391,42 @@ func _UserAPI_ApplyFeatureAudit_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_GetFeatureAuditList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFeatureAuditListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).GetFeatureAuditList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/GetFeatureAuditList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).GetFeatureAuditList(ctx, req.(*GetFeatureAuditListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAPI_UpdateFeatureAudit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFeatureAuditRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).UpdateFeatureAudit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/UpdateFeatureAudit",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).UpdateFeatureAudit(ctx, req.(*UpdateFeatureAuditRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.UserAPI",
 	HandlerType: (*UserAPIServer)(nil),
@@ -398,6 +466,14 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ApplyFeatureAudit",
 			Handler:    _UserAPI_ApplyFeatureAudit_Handler,
+		},
+		{
+			MethodName: "GetFeatureAuditList",
+			Handler:    _UserAPI_GetFeatureAuditList_Handler,
+		},
+		{
+			MethodName: "UpdateFeatureAudit",
+			Handler:    _UserAPI_UpdateFeatureAudit_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

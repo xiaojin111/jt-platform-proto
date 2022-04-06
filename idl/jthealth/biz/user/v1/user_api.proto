@@ -25,10 +25,10 @@ service UserAPI {
   //CreatedUserProfile 创建用户档案
   rpc CreatedUserProfile(CreatedUserProfileRequest)returns(CreatedUserProfileResponse);
   //GetUserInfosList 获取用户信息列表
-  rpc GetUserInfosList(GetUserInfosListRequest)returns(GetGetUserInfosListResponse);
+  rpc GetUserInfosList(GetUserInfosListRequest)returns(GetUserInfosListResponse);
 
 
-  //----------------------应用详情-------------------------------
+  //----------------------应用-------------------------------
   //应用申请
   rpc ApplyApplication(ApplyApplicationRequest)returns(ApplyApplicationResponse);
   //获取应用详情
@@ -36,6 +36,10 @@ service UserAPI {
 
   //应用功能申请
   rpc ApplyFeatureAudit(ApplyFeatureAuditRequest)returns(ApplyFeatureAuditResponse);
+  //获取审核列表
+  rpc GetFeatureAuditList(GetFeatureAuditListRequest)returns(GetFeatureAuditListResponse);
+  //应用功能审核
+  rpc UpdateFeatureAudit(UpdateFeatureAuditRequest)returns(UpdateFeatureAuditResponse);
 }
 
 // 手机号验证码登录请求
@@ -178,6 +182,7 @@ message CreatedUserProfileResponse{
 message ApplyFeatureAuditRequest{
   string user_id = 1;
   string feature_type = 2;
+  string application_id =3;
 }
 message ApplyFeatureAuditResponse{
   string status = 1;
@@ -190,7 +195,7 @@ message GetUserInfosListRequest{
   string user_id = 3;
   string search_name = 4;
 }
-message GetGetUserInfosListResponse{
+message GetUserInfosListResponse{
   int32 page_num = 1;
   int32 page_size = 2;
   int32 total = 3;
@@ -214,5 +219,36 @@ message UserMsg {
   //小阶数量
   int32 device_num = 8;
   string app_key = 9;
+
+}
+
+//获取审核列表
+message GetFeatureAuditListRequest{
+  int32 page_num = 1 ;
+  int32 page_size = 2 ;
+  string user_id =3;
+  string audit_status =4;
+}
+message GetFeatureAuditListResponse{
+  int32 page_num = 1;
+  int32 page_size = 2;
+  int32 total = 3;
+  //用户列表
+  repeated FeatureAuditMsg list = 4;
+}
+message FeatureAuditMsg{
+  string user_name =1;
+  string feature_type =2;
+  string status =3;
+  string created_at =4;
+}
+//应用功能审核
+message UpdateFeatureAuditRequest{
+  string application_id =1;
+  //状态 1-待审核 2-审核通过 3-拒绝
+  string status =2;
+  string denial_reason =3;
+}
+message UpdateFeatureAuditResponse{
 
 }
