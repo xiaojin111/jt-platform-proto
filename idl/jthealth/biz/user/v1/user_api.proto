@@ -96,6 +96,8 @@ message GetUserInfosByIdResponse{
   string contract_number =19;
   //开放时间
   string open_time = 20;
+  //账号
+  string user_number =21;
 }
 //UpdateUserInfos  更改用户信息
 message UpdateUserInfosRequest{
