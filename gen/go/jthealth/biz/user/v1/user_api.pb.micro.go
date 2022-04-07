@@ -67,6 +67,8 @@ type UserAPIService interface {
 	GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, opts ...client.CallOption) (*GetFeatureAuditListResponse, error)
 	//应用功能审核
 	UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, opts ...client.CallOption) (*UpdateFeatureAuditResponse, error)
+	//获取消息通知
+	GetNotifyList(ctx context.Context, in *GetNotifyListRequest, opts ...client.CallOption) (*GetNotifyListResponse, error)
 }
 
 type userAPIService struct {
@@ -201,6 +203,16 @@ func (c *userAPIService) UpdateFeatureAudit(ctx context.Context, in *UpdateFeatu
 	return out, nil
 }
 
+func (c *userAPIService) GetNotifyList(ctx context.Context, in *GetNotifyListRequest, opts ...client.CallOption) (*GetNotifyListResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.GetNotifyList", in)
+	out := new(GetNotifyListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
@@ -229,6 +241,8 @@ type UserAPIHandler interface {
 	GetFeatureAuditList(context.Context, *GetFeatureAuditListRequest, *GetFeatureAuditListResponse) error
 	//应用功能审核
 	UpdateFeatureAudit(context.Context, *UpdateFeatureAuditRequest, *UpdateFeatureAuditResponse) error
+	//获取消息通知
+	GetNotifyList(context.Context, *GetNotifyListRequest, *GetNotifyListResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
@@ -245,6 +259,7 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, out *ApplyFeatureAuditResponse) error
 		GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, out *GetFeatureAuditListResponse) error
 		UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, out *UpdateFeatureAuditResponse) error
+		GetNotifyList(ctx context.Context, in *GetNotifyListRequest, out *GetNotifyListResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -303,4 +318,8 @@ func (h *userAPIHandler) GetFeatureAuditList(ctx context.Context, in *GetFeature
 
 func (h *userAPIHandler) UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, out *UpdateFeatureAuditResponse) error {
 	return h.UserAPIHandler.UpdateFeatureAudit(ctx, in, out)
+}
+
+func (h *userAPIHandler) GetNotifyList(ctx context.Context, in *GetNotifyListRequest, out *GetNotifyListResponse) error {
+	return h.UserAPIHandler.GetNotifyList(ctx, in, out)
 }

@@ -43,6 +43,9 @@ service UserAPI {
   //应用功能审核
   rpc UpdateFeatureAudit(UpdateFeatureAuditRequest)returns(UpdateFeatureAuditResponse);
 
+  //获取消息通知
+  rpc GetNotifyList(GetNotifyListRequest)returns(GetNotifyListResponse);
+
 }
 
 // 手机号验证码登录请求
@@ -93,11 +96,11 @@ message GetUserInfosByIdResponse{
   //身份证反面
   string id_card_reverse = 18;
   //合同编号
-  string contract_number =19;
+  string contract_number = 19;
   //开放时间
   string open_time = 20;
   //账号
-  string user_number =21;
+  string user_number = 21;
 }
 //UpdateUserInfos  更改用户信息
 message UpdateUserInfosRequest{
@@ -149,7 +152,7 @@ message ApplicationList{
   string app_status = 4;
   string app_role = 5;
   string app_id = 6;
-  string app_secret =7;
+  string app_secret = 7;
 
 }
 //创建用户档案
@@ -184,7 +187,7 @@ message CreatedUserProfileRequest{
   //用户类型
   string  user_type = 15;
   //合同编号
-  string contract_number =19;
+  string contract_number = 19;
   //开放时间
   int64 start_time = 20;
   //结束时间
@@ -198,7 +201,7 @@ message CreatedUserProfileResponse{
 message ApplyFeatureAuditRequest{
   string user_id = 1;
   string feature_type = 2;
-  string application_id =3;
+  string application_id = 3;
 }
 message ApplyFeatureAuditResponse{
   string status = 1;
@@ -242,8 +245,8 @@ message UserMsg {
 message GetFeatureAuditListRequest{
   int32 page_num = 1 ;
   int32 page_size = 2 ;
-  string user_id =3;
-  string audit_status =4;
+  string user_id = 3;
+  string audit_status = 4;
 }
 message GetFeatureAuditListResponse{
   int32 page_num = 1;
@@ -253,18 +256,18 @@ message GetFeatureAuditListResponse{
   repeated FeatureAuditMsg list = 4;
 }
 message FeatureAuditMsg{
-  string feature_audit_id =5;
-  string user_name =1;
-  string feature_type =2;
-  string status =3;
-  string created_at =4;
+  string feature_audit_id = 5;
+  string user_name = 1;
+  string feature_type = 2;
+  string status = 3;
+  string created_at = 4;
 }
 //应用功能审核
 message UpdateFeatureAuditRequest{
-  string feature_audit_id =1;
+  string feature_audit_id = 1;
   //状态 1-待审核 2-审核通过 3-拒绝
-  string status =2;
-  string denial_reason =3;
+  string status = 2;
+  string denial_reason = 3;
 }
 message UpdateFeatureAuditResponse{
 
@@ -272,8 +275,26 @@ message UpdateFeatureAuditResponse{
 
 //重置app_secret
 message RestAppSecretByIdRequest{
-  string application_id =1;
+  string application_id = 1;
 }
 message RestAppSecretByIdResponse{
-  string app_secret =1;
+  string app_secret = 1;
+}
+
+//获取消息通知请求
+message GetNotifyListRequest{
+  int32 page_num = 1 ;
+  int32 page_size = 2 ;
+  string user_id = 3;
+}
+//获取消息通知响应
+message GetNotifyListResponse{
+  int32 page_num = 1;
+  int32 page_size = 2;
+  int32 total = 3;
+  //用户列表
+  repeated NotifyMsg list = 4;
+}
+message NotifyMsg{
+  string content = 1;
 }

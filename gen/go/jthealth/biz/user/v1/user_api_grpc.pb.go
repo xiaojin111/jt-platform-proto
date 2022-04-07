@@ -42,6 +42,8 @@ type UserAPIClient interface {
 	GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, opts ...grpc.CallOption) (*GetFeatureAuditListResponse, error)
 	//应用功能审核
 	UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, opts ...grpc.CallOption) (*UpdateFeatureAuditResponse, error)
+	//获取消息通知
+	GetNotifyList(ctx context.Context, in *GetNotifyListRequest, opts ...grpc.CallOption) (*GetNotifyListResponse, error)
 }
 
 type userAPIClient struct {
@@ -160,6 +162,15 @@ func (c *userAPIClient) UpdateFeatureAudit(ctx context.Context, in *UpdateFeatur
 	return out, nil
 }
 
+func (c *userAPIClient) GetNotifyList(ctx context.Context, in *GetNotifyListRequest, opts ...grpc.CallOption) (*GetNotifyListResponse, error) {
+	out := new(GetNotifyListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetNotifyList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserAPIServer is the server API for UserAPI service.
 // All implementations must embed UnimplementedUserAPIServer
 // for forward compatibility
@@ -189,6 +200,8 @@ type UserAPIServer interface {
 	GetFeatureAuditList(context.Context, *GetFeatureAuditListRequest) (*GetFeatureAuditListResponse, error)
 	//应用功能审核
 	UpdateFeatureAudit(context.Context, *UpdateFeatureAuditRequest) (*UpdateFeatureAuditResponse, error)
+	//获取消息通知
+	GetNotifyList(context.Context, *GetNotifyListRequest) (*GetNotifyListResponse, error)
 	mustEmbedUnimplementedUserAPIServer()
 }
 
@@ -231,6 +244,9 @@ func (UnimplementedUserAPIServer) GetFeatureAuditList(context.Context, *GetFeatu
 }
 func (UnimplementedUserAPIServer) UpdateFeatureAudit(context.Context, *UpdateFeatureAuditRequest) (*UpdateFeatureAuditResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFeatureAudit not implemented")
+}
+func (UnimplementedUserAPIServer) GetNotifyList(context.Context, *GetNotifyListRequest) (*GetNotifyListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNotifyList not implemented")
 }
 func (UnimplementedUserAPIServer) mustEmbedUnimplementedUserAPIServer() {}
 
@@ -461,6 +477,24 @@ func _UserAPI_UpdateFeatureAudit_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_GetNotifyList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNotifyListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).GetNotifyList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/GetNotifyList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).GetNotifyList(ctx, req.(*GetNotifyListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.UserAPI",
 	HandlerType: (*UserAPIServer)(nil),
@@ -512,6 +546,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateFeatureAudit",
 			Handler:    _UserAPI_UpdateFeatureAudit_Handler,
+		},
+		{
+			MethodName: "GetNotifyList",
+			Handler:    _UserAPI_GetNotifyList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
