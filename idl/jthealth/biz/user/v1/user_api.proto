@@ -297,4 +297,5 @@ message GetNotifyListResponse{
 }
 message NotifyMsg{
   string content = 1;
+  string denial_reason = 2;
 }
