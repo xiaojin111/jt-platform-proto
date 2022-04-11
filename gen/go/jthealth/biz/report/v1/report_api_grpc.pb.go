@@ -26,6 +26,10 @@ type ReportAPIClient interface {
 	GetRiskList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetRiskListResponse, error)
 	//获取推荐商品列表
 	GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...grpc.CallOption) (*GetRiskCommodityListResponse, error)
+	//编辑报告显示内容
+	EditReportShow(ctx context.Context, in *EditReportShowRequest, opts ...grpc.CallOption) (*EditReportShowResponse, error)
+	//获取报告显示内容
+	GetReportShow(ctx context.Context, in *GetReportShowRequest, opts ...grpc.CallOption) (*GetReportShowResponse, error)
 }
 
 type reportAPIClient struct {
@@ -72,6 +76,24 @@ func (c *reportAPIClient) GetRiskCommodityList(ctx context.Context, in *GetRiskC
 	return out, nil
 }
 
+func (c *reportAPIClient) EditReportShow(ctx context.Context, in *EditReportShowRequest, opts ...grpc.CallOption) (*EditReportShowResponse, error) {
+	out := new(EditReportShowResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/EditReportShow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetReportShow(ctx context.Context, in *GetReportShowRequest, opts ...grpc.CallOption) (*GetReportShowResponse, error) {
+	out := new(GetReportShowResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetReportShow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReportAPIServer is the server API for ReportAPI service.
 // All implementations must embed UnimplementedReportAPIServer
 // for forward compatibility
@@ -84,6 +106,10 @@ type ReportAPIServer interface {
 	GetRiskList(context.Context, *emptypb.Empty) (*GetRiskListResponse, error)
 	//获取推荐商品列表
 	GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest) (*GetRiskCommodityListResponse, error)
+	//编辑报告显示内容
+	EditReportShow(context.Context, *EditReportShowRequest) (*EditReportShowResponse, error)
+	//获取报告显示内容
+	GetReportShow(context.Context, *GetReportShowRequest) (*GetReportShowResponse, error)
 	mustEmbedUnimplementedReportAPIServer()
 }
 
@@ -102,6 +128,12 @@ func (UnimplementedReportAPIServer) GetRiskList(context.Context, *emptypb.Empty)
 }
 func (UnimplementedReportAPIServer) GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest) (*GetRiskCommodityListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRiskCommodityList not implemented")
+}
+func (UnimplementedReportAPIServer) EditReportShow(context.Context, *EditReportShowRequest) (*EditReportShowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditReportShow not implemented")
+}
+func (UnimplementedReportAPIServer) GetReportShow(context.Context, *GetReportShowRequest) (*GetReportShowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetReportShow not implemented")
 }
 func (UnimplementedReportAPIServer) mustEmbedUnimplementedReportAPIServer() {}
 
@@ -188,6 +220,42 @@ func _ReportAPI_GetRiskCommodityList_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportAPI_EditReportShow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditReportShowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).EditReportShow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/EditReportShow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).EditReportShow(ctx, req.(*EditReportShowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetReportShow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetReportShowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetReportShow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetReportShow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetReportShow(ctx, req.(*GetReportShowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.report.v1.ReportAPI",
 	HandlerType: (*ReportAPIServer)(nil),
@@ -207,6 +275,14 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRiskCommodityList",
 			Handler:    _ReportAPI_GetRiskCommodityList_Handler,
+		},
+		{
+			MethodName: "EditReportShow",
+			Handler:    _ReportAPI_EditReportShow_Handler,
+		},
+		{
+			MethodName: "GetReportShow",
+			Handler:    _ReportAPI_GetReportShow_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

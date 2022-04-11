@@ -52,6 +52,10 @@ type ReportAPIService interface {
 	GetRiskList(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*GetRiskListResponse, error)
 	//获取推荐商品列表
 	GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...client.CallOption) (*GetRiskCommodityListResponse, error)
+	//编辑报告显示内容
+	EditReportShow(ctx context.Context, in *EditReportShowRequest, opts ...client.CallOption) (*EditReportShowResponse, error)
+	//获取报告显示内容
+	GetReportShow(ctx context.Context, in *GetReportShowRequest, opts ...client.CallOption) (*GetReportShowResponse, error)
 }
 
 type reportAPIService struct {
@@ -106,6 +110,26 @@ func (c *reportAPIService) GetRiskCommodityList(ctx context.Context, in *GetRisk
 	return out, nil
 }
 
+func (c *reportAPIService) EditReportShow(ctx context.Context, in *EditReportShowRequest, opts ...client.CallOption) (*EditReportShowResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.EditReportShow", in)
+	out := new(EditReportShowResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetReportShow(ctx context.Context, in *GetReportShowRequest, opts ...client.CallOption) (*GetReportShowResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetReportShow", in)
+	out := new(GetReportShowResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ReportAPI service
 
 type ReportAPIHandler interface {
@@ -117,6 +141,10 @@ type ReportAPIHandler interface {
 	GetRiskList(context.Context, *emptypb.Empty, *GetRiskListResponse) error
 	//获取推荐商品列表
 	GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest, *GetRiskCommodityListResponse) error
+	//编辑报告显示内容
+	EditReportShow(context.Context, *EditReportShowRequest, *EditReportShowResponse) error
+	//获取报告显示内容
+	GetReportShow(context.Context, *GetReportShowRequest, *GetReportShowResponse) error
 }
 
 func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...server.HandlerOption) error {
@@ -125,6 +153,8 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 		CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, out *CreateRiskCommodityResponse) error
 		GetRiskList(ctx context.Context, in *emptypb.Empty, out *GetRiskListResponse) error
 		GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, out *GetRiskCommodityListResponse) error
+		EditReportShow(ctx context.Context, in *EditReportShowRequest, out *EditReportShowResponse) error
+		GetReportShow(ctx context.Context, in *GetReportShowRequest, out *GetReportShowResponse) error
 	}
 	type ReportAPI struct {
 		reportAPI
@@ -151,4 +181,12 @@ func (h *reportAPIHandler) GetRiskList(ctx context.Context, in *emptypb.Empty, o
 
 func (h *reportAPIHandler) GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, out *GetRiskCommodityListResponse) error {
 	return h.ReportAPIHandler.GetRiskCommodityList(ctx, in, out)
+}
+
+func (h *reportAPIHandler) EditReportShow(ctx context.Context, in *EditReportShowRequest, out *EditReportShowResponse) error {
+	return h.ReportAPIHandler.EditReportShow(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetReportShow(ctx context.Context, in *GetReportShowRequest, out *GetReportShowResponse) error {
+	return h.ReportAPIHandler.GetReportShow(ctx, in, out)
 }

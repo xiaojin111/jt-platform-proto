@@ -29,6 +29,10 @@ service ReportAPI {
   rpc GetRiskList(google.protobuf.Empty)returns(GetRiskListResponse);
   //获取推荐商品列表
   rpc GetRiskCommodityList(GetRiskCommodityListRequest)returns(GetRiskCommodityListResponse);
+  //编辑报告显示内容
+  rpc EditReportShow(EditReportShowRequest)returns(EditReportShowResponse);
+  //获取报告显示内容
+  rpc GetReportShow(GetReportShowRequest)returns(GetReportShowResponse);
 
 }
 
@@ -259,4 +263,72 @@ message RiskCommodityMsg{
   int32 location = 4;
   string image = 5;
   string url = 6;
+}
+
+//编辑报告显示内容请求
+message EditReportShowRequest{
+  string application_id = 1;
+  string is_body_condition = 2;
+  string is_heart_rate = 3;
+  string is_blood_oxygen = 4;
+  string is_comprehensive_risk = 5;
+  string is_comprehensive_reviews = 6;
+  string is_wave = 7;
+  string is_risk_1 = 8;
+  string is_risk_2 = 9;
+  string is_risk_3 = 10;
+  string is_risk_4 = 11;
+  string is_risk_5 = 12;
+  string is_risk_6 = 13;
+  string is_risk_7 = 14;
+  string is_risk_8 = 15;
+  string is_risk_9 = 16;
+  string is_risk_10 = 17;
+  string is_risk_11 = 18;
+  string is_risk_12 = 19;
+  string is_risk_13 = 20;
+  string is_risk_14 = 21;
+  string is_risk_15 = 22;
+  string is_risk_16 = 23;
+  string is_risk_17 = 24;
+  string is_risk_18 = 25;
+  string is_suggest = 26;
+}
+//编辑报告显示内容响应
+message EditReportShowResponse{
+  string application_id = 1;
+}
+
+//获取报告显示内容请求
+message GetReportShowRequest{
+  string application_id = 1;
+}
+//获取报告显示内容响应
+message GetReportShowResponse{
+  string application_id = 1;
+  string is_body_condition = 2;
+  string is_heart_rate = 3;
+  string is_blood_oxygen = 4;
+  string is_comprehensive_risk = 5;
+  string is_comprehensive_reviews = 6;
+  string is_wave = 7;
+  string is_risk_1 = 8;
+  string is_risk_2 = 9;
+  string is_risk_3 = 10;
+  string is_risk_4 = 11;
+  string is_risk_5 = 12;
+  string is_risk_6 = 13;
+  string is_risk_7 = 14;
+  string is_risk_8 = 15;
+  string is_risk_9 = 16;
+  string is_risk_10 = 17;
+  string is_risk_11 = 18;
+  string is_risk_12 = 19;
+  string is_risk_13 = 20;
+  string is_risk_14 = 21;
+  string is_risk_15 = 22;
+  string is_risk_16 = 23;
+  string is_risk_17 = 24;
+  string is_risk_18 = 25;
+  string is_suggest = 26;
 }
