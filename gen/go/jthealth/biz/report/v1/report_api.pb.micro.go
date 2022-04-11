@@ -56,6 +56,10 @@ type ReportAPIService interface {
 	EditReportShow(ctx context.Context, in *EditReportShowRequest, opts ...client.CallOption) (*EditReportShowResponse, error)
 	//获取报告显示内容
 	GetReportShow(ctx context.Context, in *GetReportShowRequest, opts ...client.CallOption) (*GetReportShowResponse, error)
+	//编辑报告对比显示功能
+	EditReportComparedShow(ctx context.Context, in *EditReportComparedShowRequest, opts ...client.CallOption) (*EditReportComparedShowResponse, error)
+	//获取报告对比显示功能
+	GetReportComparedShow(ctx context.Context, in *GetReportComparedShowRequest, opts ...client.CallOption) (*GetReportComparedShowResponse, error)
 }
 
 type reportAPIService struct {
@@ -130,6 +134,26 @@ func (c *reportAPIService) GetReportShow(ctx context.Context, in *GetReportShowR
 	return out, nil
 }
 
+func (c *reportAPIService) EditReportComparedShow(ctx context.Context, in *EditReportComparedShowRequest, opts ...client.CallOption) (*EditReportComparedShowResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.EditReportComparedShow", in)
+	out := new(EditReportComparedShowResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetReportComparedShow(ctx context.Context, in *GetReportComparedShowRequest, opts ...client.CallOption) (*GetReportComparedShowResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetReportComparedShow", in)
+	out := new(GetReportComparedShowResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ReportAPI service
 
 type ReportAPIHandler interface {
@@ -145,6 +169,10 @@ type ReportAPIHandler interface {
 	EditReportShow(context.Context, *EditReportShowRequest, *EditReportShowResponse) error
 	//获取报告显示内容
 	GetReportShow(context.Context, *GetReportShowRequest, *GetReportShowResponse) error
+	//编辑报告对比显示功能
+	EditReportComparedShow(context.Context, *EditReportComparedShowRequest, *EditReportComparedShowResponse) error
+	//获取报告对比显示功能
+	GetReportComparedShow(context.Context, *GetReportComparedShowRequest, *GetReportComparedShowResponse) error
 }
 
 func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...server.HandlerOption) error {
@@ -155,6 +183,8 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 		GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, out *GetRiskCommodityListResponse) error
 		EditReportShow(ctx context.Context, in *EditReportShowRequest, out *EditReportShowResponse) error
 		GetReportShow(ctx context.Context, in *GetReportShowRequest, out *GetReportShowResponse) error
+		EditReportComparedShow(ctx context.Context, in *EditReportComparedShowRequest, out *EditReportComparedShowResponse) error
+		GetReportComparedShow(ctx context.Context, in *GetReportComparedShowRequest, out *GetReportComparedShowResponse) error
 	}
 	type ReportAPI struct {
 		reportAPI
@@ -189,4 +219,12 @@ func (h *reportAPIHandler) EditReportShow(ctx context.Context, in *EditReportSho
 
 func (h *reportAPIHandler) GetReportShow(ctx context.Context, in *GetReportShowRequest, out *GetReportShowResponse) error {
 	return h.ReportAPIHandler.GetReportShow(ctx, in, out)
+}
+
+func (h *reportAPIHandler) EditReportComparedShow(ctx context.Context, in *EditReportComparedShowRequest, out *EditReportComparedShowResponse) error {
+	return h.ReportAPIHandler.EditReportComparedShow(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetReportComparedShow(ctx context.Context, in *GetReportComparedShowRequest, out *GetReportComparedShowResponse) error {
+	return h.ReportAPIHandler.GetReportComparedShow(ctx, in, out)
 }

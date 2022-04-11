@@ -66,6 +66,8 @@ message PhysiqueCardGroupMsg {
   int32 batch_num = 3;
   //状态 0 生成中 1 已生成
   string status = 4;
+  //创建时间
+  string created_at = 5;
 }
 
 

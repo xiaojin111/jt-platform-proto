@@ -33,6 +33,10 @@ service ReportAPI {
   rpc EditReportShow(EditReportShowRequest)returns(EditReportShowResponse);
   //获取报告显示内容
   rpc GetReportShow(GetReportShowRequest)returns(GetReportShowResponse);
+  //编辑报告对比显示功能
+  rpc EditReportComparedShow(EditReportComparedShowRequest)returns(EditReportComparedShowResponse);
+  //获取报告对比显示功能
+  rpc GetReportComparedShow(GetReportComparedShowRequest)returns(GetReportComparedShowResponse);
 
 }
 
@@ -331,4 +335,26 @@ message GetReportShowResponse{
   string is_risk_17 = 24;
   string is_risk_18 = 25;
   string is_suggest = 26;
+}
+
+//编辑报告对比显示功能请求
+message EditReportComparedShowRequest{
+  string application_id = 1;
+  string is_recent = 2;
+  string is_week = 3;
+}
+//编辑报告对比显示功能响应
+message EditReportComparedShowResponse{
+  string application_id = 1;
+}
+
+//获取报告对比显示功能请求
+message GetReportComparedShowRequest{
+  string application_id = 1;
+}
+//获取报告对比显示功能响应
+message GetReportComparedShowResponse{
+  string application_id = 1;
+  string is_recent = 2;
+  string is_week = 3;
 }

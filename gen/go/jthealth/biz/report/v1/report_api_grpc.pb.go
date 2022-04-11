@@ -30,6 +30,10 @@ type ReportAPIClient interface {
 	EditReportShow(ctx context.Context, in *EditReportShowRequest, opts ...grpc.CallOption) (*EditReportShowResponse, error)
 	//获取报告显示内容
 	GetReportShow(ctx context.Context, in *GetReportShowRequest, opts ...grpc.CallOption) (*GetReportShowResponse, error)
+	//编辑报告对比显示功能
+	EditReportComparedShow(ctx context.Context, in *EditReportComparedShowRequest, opts ...grpc.CallOption) (*EditReportComparedShowResponse, error)
+	//获取报告对比显示功能
+	GetReportComparedShow(ctx context.Context, in *GetReportComparedShowRequest, opts ...grpc.CallOption) (*GetReportComparedShowResponse, error)
 }
 
 type reportAPIClient struct {
@@ -94,6 +98,24 @@ func (c *reportAPIClient) GetReportShow(ctx context.Context, in *GetReportShowRe
 	return out, nil
 }
 
+func (c *reportAPIClient) EditReportComparedShow(ctx context.Context, in *EditReportComparedShowRequest, opts ...grpc.CallOption) (*EditReportComparedShowResponse, error) {
+	out := new(EditReportComparedShowResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/EditReportComparedShow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetReportComparedShow(ctx context.Context, in *GetReportComparedShowRequest, opts ...grpc.CallOption) (*GetReportComparedShowResponse, error) {
+	out := new(GetReportComparedShowResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetReportComparedShow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReportAPIServer is the server API for ReportAPI service.
 // All implementations must embed UnimplementedReportAPIServer
 // for forward compatibility
@@ -110,6 +132,10 @@ type ReportAPIServer interface {
 	EditReportShow(context.Context, *EditReportShowRequest) (*EditReportShowResponse, error)
 	//获取报告显示内容
 	GetReportShow(context.Context, *GetReportShowRequest) (*GetReportShowResponse, error)
+	//编辑报告对比显示功能
+	EditReportComparedShow(context.Context, *EditReportComparedShowRequest) (*EditReportComparedShowResponse, error)
+	//获取报告对比显示功能
+	GetReportComparedShow(context.Context, *GetReportComparedShowRequest) (*GetReportComparedShowResponse, error)
 	mustEmbedUnimplementedReportAPIServer()
 }
 
@@ -134,6 +160,12 @@ func (UnimplementedReportAPIServer) EditReportShow(context.Context, *EditReportS
 }
 func (UnimplementedReportAPIServer) GetReportShow(context.Context, *GetReportShowRequest) (*GetReportShowResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReportShow not implemented")
+}
+func (UnimplementedReportAPIServer) EditReportComparedShow(context.Context, *EditReportComparedShowRequest) (*EditReportComparedShowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditReportComparedShow not implemented")
+}
+func (UnimplementedReportAPIServer) GetReportComparedShow(context.Context, *GetReportComparedShowRequest) (*GetReportComparedShowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetReportComparedShow not implemented")
 }
 func (UnimplementedReportAPIServer) mustEmbedUnimplementedReportAPIServer() {}
 
@@ -256,6 +288,42 @@ func _ReportAPI_GetReportShow_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportAPI_EditReportComparedShow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditReportComparedShowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).EditReportComparedShow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/EditReportComparedShow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).EditReportComparedShow(ctx, req.(*EditReportComparedShowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetReportComparedShow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetReportComparedShowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetReportComparedShow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetReportComparedShow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetReportComparedShow(ctx, req.(*GetReportComparedShowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.report.v1.ReportAPI",
 	HandlerType: (*ReportAPIServer)(nil),
@@ -283,6 +351,14 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetReportShow",
 			Handler:    _ReportAPI_GetReportShow_Handler,
+		},
+		{
+			MethodName: "EditReportComparedShow",
+			Handler:    _ReportAPI_EditReportComparedShow_Handler,
+		},
+		{
+			MethodName: "GetReportComparedShow",
+			Handler:    _ReportAPI_GetReportComparedShow_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
