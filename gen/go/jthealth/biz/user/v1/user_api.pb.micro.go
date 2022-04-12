@@ -58,10 +58,12 @@ type UserAPIService interface {
 	//----------------------应用-------------------------------
 	//应用申请
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...client.CallOption) (*ApplyApplicationResponse, error)
-	//获取应用详情
+	//获取应用列表
 	GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, opts ...client.CallOption) (*GetApplicationInfoResponse, error)
 	//重置app_secret
 	RestAppSecretById(ctx context.Context, in *RestAppSecretByIdRequest, opts ...client.CallOption) (*RestAppSecretByIdResponse, error)
+	//获取单个应用详情
+	GetApplicationDetails(ctx context.Context, in *GetApplicationDetailsRequest, opts ...client.CallOption) (*GetApplicationDetailsResponse, error)
 	//应用功能申请
 	ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...client.CallOption) (*ApplyFeatureAuditResponse, error)
 	//获取审核列表
@@ -177,6 +179,16 @@ func (c *userAPIService) RestAppSecretById(ctx context.Context, in *RestAppSecre
 	return out, nil
 }
 
+func (c *userAPIService) GetApplicationDetails(ctx context.Context, in *GetApplicationDetailsRequest, opts ...client.CallOption) (*GetApplicationDetailsResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.GetApplicationDetails", in)
+	out := new(GetApplicationDetailsResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAPIService) ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...client.CallOption) (*ApplyFeatureAuditResponse, error) {
 	req := c.c.NewRequest(c.name, "UserAPI.ApplyFeatureAudit", in)
 	out := new(ApplyFeatureAuditResponse)
@@ -245,10 +257,12 @@ type UserAPIHandler interface {
 	//----------------------应用-------------------------------
 	//应用申请
 	ApplyApplication(context.Context, *ApplyApplicationRequest, *ApplyApplicationResponse) error
-	//获取应用详情
+	//获取应用列表
 	GetApplicationInfo(context.Context, *GetApplicationInfoRequest, *GetApplicationInfoResponse) error
 	//重置app_secret
 	RestAppSecretById(context.Context, *RestAppSecretByIdRequest, *RestAppSecretByIdResponse) error
+	//获取单个应用详情
+	GetApplicationDetails(context.Context, *GetApplicationDetailsRequest, *GetApplicationDetailsResponse) error
 	//应用功能申请
 	ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest, *ApplyFeatureAuditResponse) error
 	//获取审核列表
@@ -273,6 +287,7 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, out *ApplyApplicationResponse) error
 		GetApplicationInfo(ctx context.Context, in *GetApplicationInfoRequest, out *GetApplicationInfoResponse) error
 		RestAppSecretById(ctx context.Context, in *RestAppSecretByIdRequest, out *RestAppSecretByIdResponse) error
+		GetApplicationDetails(ctx context.Context, in *GetApplicationDetailsRequest, out *GetApplicationDetailsResponse) error
 		ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, out *ApplyFeatureAuditResponse) error
 		GetFeatureAuditList(ctx context.Context, in *GetFeatureAuditListRequest, out *GetFeatureAuditListResponse) error
 		UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, out *UpdateFeatureAuditResponse) error
@@ -324,6 +339,10 @@ func (h *userAPIHandler) GetApplicationInfo(ctx context.Context, in *GetApplicat
 
 func (h *userAPIHandler) RestAppSecretById(ctx context.Context, in *RestAppSecretByIdRequest, out *RestAppSecretByIdResponse) error {
 	return h.UserAPIHandler.RestAppSecretById(ctx, in, out)
+}
+
+func (h *userAPIHandler) GetApplicationDetails(ctx context.Context, in *GetApplicationDetailsRequest, out *GetApplicationDetailsResponse) error {
+	return h.UserAPIHandler.GetApplicationDetails(ctx, in, out)
 }
 
 func (h *userAPIHandler) ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, out *ApplyFeatureAuditResponse) error {
