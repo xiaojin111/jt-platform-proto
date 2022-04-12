@@ -12,6 +12,8 @@ option java_package = "com.jthealth.biz.user.v1";
 option objc_class_prefix = "JBU";
 option php_namespace = "Jthealth\\Biz\\User\\V1";
 
+import "google/protobuf/timestamp.proto";
+
 // UserAPI 用户模块.
 service UserAPI {
   // SignInByPhoneCode 手机号验证码登录.
@@ -98,9 +100,10 @@ message GetUserInfosByIdResponse{
   //合同编号
   string contract_number = 19;
   //开放时间
-  string open_time = 20;
+  google.protobuf.Timestamp start_time = 20;
+  google.protobuf.Timestamp end_time = 21;
   //账号
-  string user_number = 21;
+  string user_number = 22;
 }
 //UpdateUserInfos  更改用户信息
 message UpdateUserInfosRequest{
