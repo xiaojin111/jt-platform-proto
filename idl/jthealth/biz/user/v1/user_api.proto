@@ -163,7 +163,7 @@ message ApplicationList{
 
 }
 message AppRoleMsg{
-  string name =1;
+  string name = 1;
 }
 //创建用户档案
 message CreatedUserProfileRequest{
@@ -271,7 +271,7 @@ message FeatureAuditMsg{
   string feature_type = 2;
   string status = 3;
   string created_at = 4;
-  string user_type =6;
+  string user_type = 6;
 }
 //应用功能审核
 message UpdateFeatureAuditRequest{
@@ -330,6 +330,8 @@ message UserProfile {
   string user_profile_id = 1;
   // 昵称
   string nickname = 2;
+  //昵称首字母
+  string nickname_initial = 8;
   // 生日
   int64 birthday = 3;
   // 测量手 0 无效的手 1 未设置 2 左手 3 右手
