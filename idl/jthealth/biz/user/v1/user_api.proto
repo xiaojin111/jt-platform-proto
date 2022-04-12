@@ -150,10 +150,13 @@ message ApplicationList{
   string app_logo = 2;
   string app_name = 3;
   string app_status = 4;
-  string app_role = 5;
+  repeated AppRoleMsg roles = 5;
   string app_id = 6;
   string app_secret = 7;
 
+}
+message AppRoleMsg{
+  string name =1;
 }
 //创建用户档案
 message CreatedUserProfileRequest{
@@ -261,6 +264,7 @@ message FeatureAuditMsg{
   string feature_type = 2;
   string status = 3;
   string created_at = 4;
+  string user_type =6;
 }
 //应用功能审核
 message UpdateFeatureAuditRequest{
