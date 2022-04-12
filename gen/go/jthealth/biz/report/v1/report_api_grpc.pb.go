@@ -18,6 +18,8 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ReportAPIClient interface {
+	// SubmitPulseTest 提交采样数据.
+	SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...grpc.CallOption) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(ctx context.Context, in *GetReportRequest, opts ...grpc.CallOption) (*GetReportResponse, error)
 	//创建风险推荐商品
@@ -42,6 +44,15 @@ type reportAPIClient struct {
 
 func NewReportAPIClient(cc grpc.ClientConnInterface) ReportAPIClient {
 	return &reportAPIClient{cc}
+}
+
+func (c *reportAPIClient) SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...grpc.CallOption) (*SubmitPulseTestResponse, error) {
+	out := new(SubmitPulseTestResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/SubmitPulseTest", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *reportAPIClient) GetReport(ctx context.Context, in *GetReportRequest, opts ...grpc.CallOption) (*GetReportResponse, error) {
@@ -120,6 +131,8 @@ func (c *reportAPIClient) GetReportComparedShow(ctx context.Context, in *GetRepo
 // All implementations must embed UnimplementedReportAPIServer
 // for forward compatibility
 type ReportAPIServer interface {
+	// SubmitPulseTest 提交采样数据.
+	SubmitPulseTest(context.Context, *SubmitPulseTestRequest) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(context.Context, *GetReportRequest) (*GetReportResponse, error)
 	//创建风险推荐商品
@@ -143,6 +156,9 @@ type ReportAPIServer interface {
 type UnimplementedReportAPIServer struct {
 }
 
+func (UnimplementedReportAPIServer) SubmitPulseTest(context.Context, *SubmitPulseTestRequest) (*SubmitPulseTestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitPulseTest not implemented")
+}
 func (UnimplementedReportAPIServer) GetReport(context.Context, *GetReportRequest) (*GetReportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReport not implemented")
 }
@@ -178,6 +194,24 @@ type UnsafeReportAPIServer interface {
 
 func RegisterReportAPIServer(s *grpc.Server, srv ReportAPIServer) {
 	s.RegisterService(&_ReportAPI_serviceDesc, srv)
+}
+
+func _ReportAPI_SubmitPulseTest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitPulseTestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).SubmitPulseTest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/SubmitPulseTest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).SubmitPulseTest(ctx, req.(*SubmitPulseTestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ReportAPI_GetReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -328,6 +362,10 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.report.v1.ReportAPI",
 	HandlerType: (*ReportAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SubmitPulseTest",
+			Handler:    _ReportAPI_SubmitPulseTest_Handler,
+		},
 		{
 			MethodName: "GetReport",
 			Handler:    _ReportAPI_GetReport_Handler,

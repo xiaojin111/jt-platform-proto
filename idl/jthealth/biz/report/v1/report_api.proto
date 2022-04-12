@@ -16,10 +16,13 @@ option objc_class_prefix = "JBR";
 option php_namespace = "Jthealth\\Biz\\Report\\V1";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 import "google/protobuf/empty.proto";
 
 // ReportAPI 报告API.
 service ReportAPI {
+  // SubmitPulseTest 提交采样数据.
+  rpc SubmitPulseTest(SubmitPulseTestRequest) returns(SubmitPulseTestResponse);
   // GetReport 获取阶梯报告.
   rpc GetReport(GetReportRequest) returns(GetReportResponse);
 
@@ -38,6 +41,95 @@ service ReportAPI {
   //获取报告对比显示功能
   rpc GetReportComparedShow(GetReportComparedShowRequest)returns(GetReportComparedShowResponse);
 
+}
+// 提交一般形式的采样数据的请求
+message SubmitPulseTestRequest {
+  // 用户档案ID
+  string user_profile_id = 1;
+  // 单笔信号采样数据
+  SamplePayload payload = 2;
+}
+// SamplePayload 一般形式的采样数据.
+message SamplePayload {
+  // 采样使用的手
+  Hand hand = 1;
+
+  // 位置信息（可选）
+  GeoLocation geo_location = 2;
+
+  // 采样设备
+  SampleDevice sample_device = 10;
+
+  // 采样数据
+  SampleData sample_data = 11;
+
+  // 本次采样开始时间
+  google.protobuf.Timestamp sampling_start_time = 20;
+  // 本次采样结束时间
+  google.protobuf.Timestamp sampling_stop_time = 21;
+}
+
+// 地理位置信息
+message GeoLocation {
+  // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+  // 纬度: position's latitude in decimal degrees
+  double latitude = 1;
+  // 经度: position's longitude in decimal degrees
+  double longitude = 2;
+  // 海拔: position's altitude in meters, relative to sea level
+  google.protobuf.DoubleValue altitude = 3;
+  // 经纬度的精度: accuracy of the latitude and longitude properties, expressed
+  // in meters.
+  double accuracy = 4;
+  // 海拔精度: accuracy of the altitude expressed in meters
+  google.protobuf.DoubleValue altitude_accuracy = 5;
+  // 方向:  direction in which the device is traveling
+  google.protobuf.DoubleValue heading = 6;
+  // 设备运动的速度: velocity of the device in meters per second
+  google.protobuf.DoubleValue speed = 7;
+}
+// 采样设备
+message SampleDevice {
+  // 实际采样工作时的采样频率
+  uint32 sample_rate = 1;
+
+  // 设备的型号
+  string device_model = 2;
+  // 设备的 MAC 地址
+  string device_mac = 3;
+  // 设备的 sn 号，可为空
+  string device_sn = 4;
+
+  // 设备参数 KV（可选）
+  // 可以包括 SDK返回的测量上下文信息，
+  // 例如 OS 信息、手机型号、摄像头型号、摄像头参数…等等.
+  // 不同的 DeviceType 此处内容不一样.
+  map<string, string> device_params = 5;
+}
+// 采样数据
+message SampleData {
+  // 测量采样数据点的编解码器
+  // 用户数据预处理或加解密算法识别.
+  string codec = 1;
+
+  // 测量采样数据点的编解码器的参数 KV（可选）
+  map<string, string> codec_params = 2;
+
+  // 测量采样数据点的数据，字节流形式。
+  // 需要将每个数据点转换为字节形式顺序排列。
+  bytes data = 3;
+
+  // HMAC 签名
+  string signature = 4;
+}
+
+// 提交一般形式的采样数据的响应
+message SubmitPulseTestResponse {
+  // 分析报告 ID
+  string report_id = 1;
+
+  // 是否需要回答问题
+  bool has_questions = 2;
 }
 
 // 获取阶梯报告请求
@@ -228,15 +320,22 @@ enum Hand {
 
 //创建风险推荐商品请求
 message CreateRiskCommodityRequest{
-  string application_id = 1;
-  string risk_id = 2;
-  int32 degree = 3;
-  int32 location = 4;
+  //商品id
+  string risk_commodity_id = 1;
+  //应用id
+  string application_id = 2;
+  //风险id
+  string risk_id = 3;
+  //程度 1 低 2 中 3 高
+  int32 degree = 4;
+  //商品图片
   string image = 5;
+  //商品链接
   string url = 6;
 }
 //创建风险推荐商品响应
 message CreateRiskCommodityResponse{
+  //商品id
   string risk_commodity_id = 1;
 }
 
@@ -247,13 +346,17 @@ message GetRiskListResponse{
   repeated RiskMsg list = 1;
 }
 message RiskMsg{
+  //风险id
   string risk_id = 1;
+  //风险名称
   string risk_name = 2;
 }
 
 //获取推荐商品列表请求
 message GetRiskCommodityListRequest{
+  //风险id
   string risk_id = 1;
+  //应用id
   string application_id = 2;
 }
 //获取推荐商品列表响应
@@ -261,100 +364,168 @@ message GetRiskCommodityListResponse{
   repeated RiskCommodityMsg list = 1;
 }
 message RiskCommodityMsg{
-  string risk_id = 1;
-  string risk_name = 2;
-  int32 degree = 3;
-  int32 location = 4;
+  //商品id
+  string risk_commodity_id = 1;
+  //风险id
+  string risk_id = 2;
+  //风险名称
+  string risk_name = 3;
+  //程度 1 低 2 中 3 高
+  int32 degree = 4;
+  //商品图片
   string image = 5;
+  //商品链接
   string url = 6;
 }
 
 //编辑报告显示内容请求
 message EditReportShowRequest{
+  //应用id
   string application_id = 1;
+  //身体状态 0 关闭 1 开启
   string is_body_condition = 2;
+  //心率 0 关闭 1 开启
   string is_heart_rate = 3;
+  //血氧 0 关闭 1 开启
   string is_blood_oxygen = 4;
+  //综合风险 0 关闭 1 开启
   string is_comprehensive_risk = 5;
+  //综合点评 0 关闭 1 开启
   string is_comprehensive_reviews = 6;
+  //波形图 0 关闭 1 开启
   string is_wave = 7;
+  //血压风险 0 关闭 1 开启
   string is_risk_1 = 8;
+  //血脂风险 0 关闭 1 开启
   string is_risk_2 = 9;
+  //血糖风险 0 关闭 1 开启
   string is_risk_3 = 10;
+  //心血管风险 0 关闭 1 开启
   string is_risk_4 = 11;
+  //脑血管风险 0 关闭 1 开启
   string is_risk_5 = 12;
+  //肝负担风险 0 关闭 1 开启
   string is_risk_6 = 13;
+  //肾负担风险 0 关闭 1 开启
   string is_risk_7 = 14;
+  //消化力 0 关闭 1 开启
   string is_risk_8 = 15;
+  //胃食道逆流风险 0 关闭 1 开启
   string is_risk_9 = 16;
+  //免疫力 0 关闭 1 开启
   string is_risk_10 = 17;
+  //缺钙风险 0 关闭 1 开启
   string is_risk_11 = 18;
+  //压力 0 关闭 1 开启
   string is_risk_12 = 19;
+  //疲劳 0 关闭 1 开启
   string is_risk_13 = 20;
+  //睡眠质量 0 关闭 1 开启
   string is_risk_14 = 21;
+  //内分泌风险 0 关闭 1 开启
   string is_risk_15 = 22;
+  //过敏风险 0 关闭 1 开启
   string is_risk_16 = 23;
+  //感染风险 0 关闭 1 开启
   string is_risk_17 = 24;
+  //胃酸过多风险 0 关闭 1 开启
   string is_risk_18 = 25;
+  //改善建议 0 关闭 1 开启
   string is_suggest = 26;
 }
 //编辑报告显示内容响应
 message EditReportShowResponse{
+  //应用id
   string application_id = 1;
 }
 
 //获取报告显示内容请求
 message GetReportShowRequest{
+  //应用id
   string application_id = 1;
 }
 //获取报告显示内容响应
 message GetReportShowResponse{
+  //应用id
   string application_id = 1;
+  //身体状态 0 关闭 1 开启
   string is_body_condition = 2;
+  //心率 0 关闭 1 开启
   string is_heart_rate = 3;
+  //血氧 0 关闭 1 开启
   string is_blood_oxygen = 4;
+  //综合风险 0 关闭 1 开启
   string is_comprehensive_risk = 5;
+  //综合点评 0 关闭 1 开启
   string is_comprehensive_reviews = 6;
+  //波形图 0 关闭 1 开启
   string is_wave = 7;
+  //血压风险 0 关闭 1 开启
   string is_risk_1 = 8;
+  //血脂风险 0 关闭 1 开启
   string is_risk_2 = 9;
+  //血糖风险 0 关闭 1 开启
   string is_risk_3 = 10;
+  //心血管风险 0 关闭 1 开启
   string is_risk_4 = 11;
+  //脑血管风险 0 关闭 1 开启
   string is_risk_5 = 12;
+  //肝负担风险 0 关闭 1 开启
   string is_risk_6 = 13;
+  //肾负担风险 0 关闭 1 开启
   string is_risk_7 = 14;
+  //消化力 0 关闭 1 开启
   string is_risk_8 = 15;
+  //胃食道逆流风险 0 关闭 1 开启
   string is_risk_9 = 16;
+  //免疫力 0 关闭 1 开启
   string is_risk_10 = 17;
+  //缺钙风险 0 关闭 1 开启
   string is_risk_11 = 18;
+  //压力 0 关闭 1 开启
   string is_risk_12 = 19;
+  //疲劳 0 关闭 1 开启
   string is_risk_13 = 20;
+  //睡眠质量 0 关闭 1 开启
   string is_risk_14 = 21;
+  //内分泌风险 0 关闭 1 开启
   string is_risk_15 = 22;
+  //过敏风险 0 关闭 1 开启
   string is_risk_16 = 23;
+  //感染风险 0 关闭 1 开启
   string is_risk_17 = 24;
+  //胃酸过多风险 0 关闭 1 开启
   string is_risk_18 = 25;
+  //改善建议 0 关闭 1 开启
   string is_suggest = 26;
 }
 
 //编辑报告对比显示功能请求
 message EditReportComparedShowRequest{
+  //应用id
   string application_id = 1;
+  //近两天对比 0 关闭 1 开启
   string is_recent = 2;
+  //周对比 0 关闭 1 开启
   string is_week = 3;
 }
 //编辑报告对比显示功能响应
 message EditReportComparedShowResponse{
+  //应用id
   string application_id = 1;
 }
 
 //获取报告对比显示功能请求
 message GetReportComparedShowRequest{
+  //应用id
   string application_id = 1;
 }
 //获取报告对比显示功能响应
 message GetReportComparedShowResponse{
+  //应用id
   string application_id = 1;
+  //近两天对比 0 关闭 1 开启
   string is_recent = 2;
+  //周对比 0 关闭 1 开启
   string is_week = 3;
 }

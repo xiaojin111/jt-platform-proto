@@ -27,15 +27,19 @@ service DeviceAPI {
   rpc ImportDeviceList(ImportDeviceListRequest)returns(ImportDeviceListResponse);
   //获取设备列表
   rpc GetDeviceList(GetDeviceListRequest)returns(GetDeviceListResponse);
-
+  // GetDeviceBySnOrMac 通过sn或mac获取设备.
+  rpc GetDeviceBySnOrMac(GetDeviceBySnOrMacRequest)returns(GetDeviceBySnOrMacResponse);
 }
 //创建设备组请求
 message CreateDeviceGroupRequest{
+  //批次数量
   int32 batch_num = 1;
+  //用户id
   string user_id = 2;
 }
 //创建设备组响应
 message CreateDeviceGroupResponse{
+  //设备组id
   string device_group_id = 2;
 }
 
@@ -43,6 +47,7 @@ message CreateDeviceGroupResponse{
 message GetDeviceGroupListRequest{
   int32 page_num = 1 ;
   int32 page_size = 2 ;
+  //用户id
   string user_id = 3;
 }
 //获取设备组列表响应
@@ -100,4 +105,29 @@ message GetDeviceListResponse{
 message DeviceMsg {
   string mac = 1;
   string sn = 2;
+}
+
+// 通过sn或mac获取设备请求
+message GetDeviceBySnOrMacRequest {
+  // 设备的mac地址
+  string mac = 1;
+  // 设备的sn号
+  string sn = 2;
+}
+
+// 通过sn或mac获取设备响应
+message GetDeviceBySnOrMacResponse {
+  // 设备信息
+  Device device = 1;
+}
+// Device 设备信息.
+message Device{
+  //设备id
+  string device_id = 1;
+  // 设备mac地址
+  string mac = 2;
+  // 设备sn号
+  string sn = 3;
+  //公司账号id
+  string user_id = 4;
 }

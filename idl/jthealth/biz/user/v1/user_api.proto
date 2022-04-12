@@ -46,6 +46,10 @@ service UserAPI {
   //获取消息通知
   rpc GetNotifyList(GetNotifyListRequest)returns(GetNotifyListResponse);
 
+  //----------------用户档案---------------
+  // GetUserProfile 获取用户档案.
+  rpc GetUserProfile(GetUserProfileRequest) returns(GetUserProfileResponse);
+
 }
 
 // 手机号验证码登录请求
@@ -298,4 +302,35 @@ message GetNotifyListResponse{
 message NotifyMsg{
   string content = 1;
   string denial_reason = 2;
+}
+
+
+// 获取用户档案请求
+message GetUserProfileRequest {
+  // 用户档案ID
+  string user_profile_id = 1;
+}
+
+// 获取用户档案响应.
+message GetUserProfileResponse {
+  // 用户档案信息
+  UserProfile profile = 1;
+}
+
+// UserProfile 用户档案.
+message UserProfile {
+  // 档案ID
+  string user_profile_id = 1;
+  // 昵称
+  string nickname = 2;
+  // 生日
+  int64 birthday = 3;
+  // 测量手 0 无效的手 1 未设置 2 左手 3 右手
+  int32 hand = 4;
+  // 用户性别 0 无效的性别 1 未设置 2 男 3 女
+  int32 gender = 5;
+  // 身高 cm
+  int32 height = 6;
+  // 体重 kg
+  int32 weight = 7;
 }

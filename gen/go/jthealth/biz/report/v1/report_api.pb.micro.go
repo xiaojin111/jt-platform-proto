@@ -8,6 +8,7 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
+	_ "google.golang.org/protobuf/types/known/wrapperspb"
 	math "math"
 )
 
@@ -44,6 +45,8 @@ func NewReportAPIEndpoints() []*api.Endpoint {
 // Client API for ReportAPI service
 
 type ReportAPIService interface {
+	// SubmitPulseTest 提交采样数据.
+	SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...client.CallOption) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(ctx context.Context, in *GetReportRequest, opts ...client.CallOption) (*GetReportResponse, error)
 	//创建风险推荐商品
@@ -72,6 +75,16 @@ func NewReportAPIService(name string, c client.Client) ReportAPIService {
 		c:    c,
 		name: name,
 	}
+}
+
+func (c *reportAPIService) SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...client.CallOption) (*SubmitPulseTestResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.SubmitPulseTest", in)
+	out := new(SubmitPulseTestResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *reportAPIService) GetReport(ctx context.Context, in *GetReportRequest, opts ...client.CallOption) (*GetReportResponse, error) {
@@ -157,6 +170,8 @@ func (c *reportAPIService) GetReportComparedShow(ctx context.Context, in *GetRep
 // Server API for ReportAPI service
 
 type ReportAPIHandler interface {
+	// SubmitPulseTest 提交采样数据.
+	SubmitPulseTest(context.Context, *SubmitPulseTestRequest, *SubmitPulseTestResponse) error
 	// GetReport 获取阶梯报告.
 	GetReport(context.Context, *GetReportRequest, *GetReportResponse) error
 	//创建风险推荐商品
@@ -177,6 +192,7 @@ type ReportAPIHandler interface {
 
 func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...server.HandlerOption) error {
 	type reportAPI interface {
+		SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, out *SubmitPulseTestResponse) error
 		GetReport(ctx context.Context, in *GetReportRequest, out *GetReportResponse) error
 		CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, out *CreateRiskCommodityResponse) error
 		GetRiskList(ctx context.Context, in *emptypb.Empty, out *GetRiskListResponse) error
@@ -195,6 +211,10 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 
 type reportAPIHandler struct {
 	ReportAPIHandler
+}
+
+func (h *reportAPIHandler) SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, out *SubmitPulseTestResponse) error {
+	return h.ReportAPIHandler.SubmitPulseTest(ctx, in, out)
 }
 
 func (h *reportAPIHandler) GetReport(ctx context.Context, in *GetReportRequest, out *GetReportResponse) error {

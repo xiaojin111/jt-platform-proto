@@ -51,6 +51,8 @@ type DeviceAPIService interface {
 	ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, opts ...client.CallOption) (*ImportDeviceListResponse, error)
 	//获取设备列表
 	GetDeviceList(ctx context.Context, in *GetDeviceListRequest, opts ...client.CallOption) (*GetDeviceListResponse, error)
+	// GetDeviceBySnOrMac 通过sn或mac获取设备.
+	GetDeviceBySnOrMac(ctx context.Context, in *GetDeviceBySnOrMacRequest, opts ...client.CallOption) (*GetDeviceBySnOrMacResponse, error)
 }
 
 type deviceAPIService struct {
@@ -105,6 +107,16 @@ func (c *deviceAPIService) GetDeviceList(ctx context.Context, in *GetDeviceListR
 	return out, nil
 }
 
+func (c *deviceAPIService) GetDeviceBySnOrMac(ctx context.Context, in *GetDeviceBySnOrMacRequest, opts ...client.CallOption) (*GetDeviceBySnOrMacResponse, error) {
+	req := c.c.NewRequest(c.name, "DeviceAPI.GetDeviceBySnOrMac", in)
+	out := new(GetDeviceBySnOrMacResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DeviceAPI service
 
 type DeviceAPIHandler interface {
@@ -116,6 +128,8 @@ type DeviceAPIHandler interface {
 	ImportDeviceList(context.Context, *ImportDeviceListRequest, *ImportDeviceListResponse) error
 	//获取设备列表
 	GetDeviceList(context.Context, *GetDeviceListRequest, *GetDeviceListResponse) error
+	// GetDeviceBySnOrMac 通过sn或mac获取设备.
+	GetDeviceBySnOrMac(context.Context, *GetDeviceBySnOrMacRequest, *GetDeviceBySnOrMacResponse) error
 }
 
 func RegisterDeviceAPIHandler(s server.Server, hdlr DeviceAPIHandler, opts ...server.HandlerOption) error {
@@ -124,6 +138,7 @@ func RegisterDeviceAPIHandler(s server.Server, hdlr DeviceAPIHandler, opts ...se
 		GetDeviceGroupList(ctx context.Context, in *GetDeviceGroupListRequest, out *GetDeviceGroupListResponse) error
 		ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, out *ImportDeviceListResponse) error
 		GetDeviceList(ctx context.Context, in *GetDeviceListRequest, out *GetDeviceListResponse) error
+		GetDeviceBySnOrMac(ctx context.Context, in *GetDeviceBySnOrMacRequest, out *GetDeviceBySnOrMacResponse) error
 	}
 	type DeviceAPI struct {
 		deviceAPI
@@ -150,4 +165,8 @@ func (h *deviceAPIHandler) ImportDeviceList(ctx context.Context, in *ImportDevic
 
 func (h *deviceAPIHandler) GetDeviceList(ctx context.Context, in *GetDeviceListRequest, out *GetDeviceListResponse) error {
 	return h.DeviceAPIHandler.GetDeviceList(ctx, in, out)
+}
+
+func (h *deviceAPIHandler) GetDeviceBySnOrMac(ctx context.Context, in *GetDeviceBySnOrMacRequest, out *GetDeviceBySnOrMacResponse) error {
+	return h.DeviceAPIHandler.GetDeviceBySnOrMac(ctx, in, out)
 }

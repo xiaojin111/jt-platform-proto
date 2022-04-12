@@ -25,6 +25,8 @@ type DeviceAPIClient interface {
 	ImportDeviceList(ctx context.Context, in *ImportDeviceListRequest, opts ...grpc.CallOption) (*ImportDeviceListResponse, error)
 	//获取设备列表
 	GetDeviceList(ctx context.Context, in *GetDeviceListRequest, opts ...grpc.CallOption) (*GetDeviceListResponse, error)
+	// GetDeviceBySnOrMac 通过sn或mac获取设备.
+	GetDeviceBySnOrMac(ctx context.Context, in *GetDeviceBySnOrMacRequest, opts ...grpc.CallOption) (*GetDeviceBySnOrMacResponse, error)
 }
 
 type deviceAPIClient struct {
@@ -71,6 +73,15 @@ func (c *deviceAPIClient) GetDeviceList(ctx context.Context, in *GetDeviceListRe
 	return out, nil
 }
 
+func (c *deviceAPIClient) GetDeviceBySnOrMac(ctx context.Context, in *GetDeviceBySnOrMacRequest, opts ...grpc.CallOption) (*GetDeviceBySnOrMacResponse, error) {
+	out := new(GetDeviceBySnOrMacResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.device.v1.DeviceAPI/GetDeviceBySnOrMac", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeviceAPIServer is the server API for DeviceAPI service.
 // All implementations must embed UnimplementedDeviceAPIServer
 // for forward compatibility
@@ -83,6 +94,8 @@ type DeviceAPIServer interface {
 	ImportDeviceList(context.Context, *ImportDeviceListRequest) (*ImportDeviceListResponse, error)
 	//获取设备列表
 	GetDeviceList(context.Context, *GetDeviceListRequest) (*GetDeviceListResponse, error)
+	// GetDeviceBySnOrMac 通过sn或mac获取设备.
+	GetDeviceBySnOrMac(context.Context, *GetDeviceBySnOrMacRequest) (*GetDeviceBySnOrMacResponse, error)
 	mustEmbedUnimplementedDeviceAPIServer()
 }
 
@@ -101,6 +114,9 @@ func (UnimplementedDeviceAPIServer) ImportDeviceList(context.Context, *ImportDev
 }
 func (UnimplementedDeviceAPIServer) GetDeviceList(context.Context, *GetDeviceListRequest) (*GetDeviceListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceList not implemented")
+}
+func (UnimplementedDeviceAPIServer) GetDeviceBySnOrMac(context.Context, *GetDeviceBySnOrMacRequest) (*GetDeviceBySnOrMacResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceBySnOrMac not implemented")
 }
 func (UnimplementedDeviceAPIServer) mustEmbedUnimplementedDeviceAPIServer() {}
 
@@ -187,6 +203,24 @@ func _DeviceAPI_GetDeviceList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeviceAPI_GetDeviceBySnOrMac_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeviceBySnOrMacRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceAPIServer).GetDeviceBySnOrMac(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.device.v1.DeviceAPI/GetDeviceBySnOrMac",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceAPIServer).GetDeviceBySnOrMac(ctx, req.(*GetDeviceBySnOrMacRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _DeviceAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.device.v1.DeviceAPI",
 	HandlerType: (*DeviceAPIServer)(nil),
@@ -206,6 +240,10 @@ var _DeviceAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDeviceList",
 			Handler:    _DeviceAPI_GetDeviceList_Handler,
+		},
+		{
+			MethodName: "GetDeviceBySnOrMac",
+			Handler:    _DeviceAPI_GetDeviceBySnOrMac_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
