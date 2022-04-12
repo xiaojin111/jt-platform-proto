@@ -33,10 +33,12 @@ service UserAPI {
   //----------------------应用-------------------------------
   //应用申请
   rpc ApplyApplication(ApplyApplicationRequest)returns(ApplyApplicationResponse);
-  //获取应用详情
+  //获取应用列表
   rpc GetApplicationInfo(GetApplicationInfoRequest)returns(GetApplicationInfoResponse);
   //重置app_secret
   rpc RestAppSecretById(RestAppSecretByIdRequest)returns(RestAppSecretByIdResponse);
+  //获取单个应用详情
+  rpc GetApplicationDetails(GetApplicationDetailsRequest)returns(GetApplicationDetailsResponse);
 
   //应用功能申请
   rpc ApplyFeatureAudit(ApplyFeatureAuditRequest)returns(ApplyFeatureAuditResponse);
@@ -164,6 +166,17 @@ message ApplicationList{
 }
 message AppRoleMsg{
   string name =1;
+}
+//单个应用详情
+message GetApplicationDetailsRequest{
+  string application_id = 1;
+}
+message GetApplicationDetailsResponse{
+  string app_logo = 1;
+  string app_name = 2;
+  string app_status = 3;
+  string app_id = 4;
+  string app_secret = 5;
 }
 //创建用户档案
 message CreatedUserProfileRequest{
