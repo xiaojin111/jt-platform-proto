@@ -25,6 +25,8 @@ service ReportAPI {
   rpc SubmitPulseTest(SubmitPulseTestRequest) returns(SubmitPulseTestResponse);
   // GetReport 获取阶梯报告.
   rpc GetReport(GetReportRequest) returns(GetReportResponse);
+  // GetMealSuggestion 通过体质获得膳食建议.
+  rpc GetMealSuggestion(GetMealSuggestionRequest)returns(GetMealSuggestionResponse);
 
   //创建风险推荐商品
   rpc CreateRiskCommodity(CreateRiskCommodityRequest)returns(CreateRiskCommodityResponse);
@@ -214,6 +216,8 @@ message HealthReport {
   string physique_explain = 5;
   // 心率
   int32 heart_rate = 6;
+  //血氧
+  int32 blood_oxygen = 20;
   // 18种疾病风险信息
   repeated RiskInfo risk = 7;
   // 体质类型
@@ -228,10 +232,29 @@ message HealthReport {
   int32 health_age = 12;
   // 备注
   string remark = 13;
+  //应急态说明
+  string emergency_explain = 23;
   // 波形图数据
   repeated uint32 wave_data = 14;
   // 测量用户档案快照信息
   UserProfileSnapshot user_profile = 15;
+  //辨证体质
+  repeated PhysicalDialecticsMessage physical_dialectics_list = 19;
+  //经络
+  repeated MeridianItems meridians = 22;
+  //体质所占比例
+  double physical_dialectics_proportion = 24;
+  //上传渠道 1,app 2,小程序 3,一体机
+  int32 upload_channel = 25;
+  //报告备注
+  repeated string report_remark = 26;
+  //健康年龄高于当前健康年龄的比例
+  float healthy_age_height_proportion = 27;
+}
+//经络
+message MeridianItems {
+  string name = 1;
+  int32 date = 2;
 }
 // UserProfileSnapshot 测量用户档案快照信息
 message UserProfileSnapshot {
@@ -255,6 +278,32 @@ message UserProfileSnapshot {
   string nation_code = 9;
   // 手机号
   string phone = 10;
+}
+
+// 通过体质获得膳食建议请求.
+message GetMealSuggestionRequest {
+  // 体质编号
+  string physique_key = 1;
+  // 语言
+  string language_code = 2;
+}
+// 通过体质获得膳食建议响应.
+message GetMealSuggestionResponse {
+  // 体质名称
+  string physique_name = 1;
+  // 膳食建议编号
+  string meal_suggestion_key = 2;
+  // 膳食建议名称
+  string meal_suggestion_name = 3;
+  // 膳食建议详情
+  string meal_suggestion_detail = 4;
+  // 膳食建议商品列表
+  repeated MealProduct food_suggestions = 5;
+}
+
+message PhysicalDialecticsMessage{
+  string physical_dialectics_cate_key = 19;
+  string physical_dialectics_cate_content = 21;
 }
 
 // RiskInfo 风险信息.

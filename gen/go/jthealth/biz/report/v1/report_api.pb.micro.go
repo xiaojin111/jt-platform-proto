@@ -49,6 +49,8 @@ type ReportAPIService interface {
 	SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...client.CallOption) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(ctx context.Context, in *GetReportRequest, opts ...client.CallOption) (*GetReportResponse, error)
+	// GetMealSuggestion 通过体质获得膳食建议.
+	GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, opts ...client.CallOption) (*GetMealSuggestionResponse, error)
 	//创建风险推荐商品
 	CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, opts ...client.CallOption) (*CreateRiskCommodityResponse, error)
 	//获取风险列表
@@ -90,6 +92,16 @@ func (c *reportAPIService) SubmitPulseTest(ctx context.Context, in *SubmitPulseT
 func (c *reportAPIService) GetReport(ctx context.Context, in *GetReportRequest, opts ...client.CallOption) (*GetReportResponse, error) {
 	req := c.c.NewRequest(c.name, "ReportAPI.GetReport", in)
 	out := new(GetReportResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, opts ...client.CallOption) (*GetMealSuggestionResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetMealSuggestion", in)
+	out := new(GetMealSuggestionResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -174,6 +186,8 @@ type ReportAPIHandler interface {
 	SubmitPulseTest(context.Context, *SubmitPulseTestRequest, *SubmitPulseTestResponse) error
 	// GetReport 获取阶梯报告.
 	GetReport(context.Context, *GetReportRequest, *GetReportResponse) error
+	// GetMealSuggestion 通过体质获得膳食建议.
+	GetMealSuggestion(context.Context, *GetMealSuggestionRequest, *GetMealSuggestionResponse) error
 	//创建风险推荐商品
 	CreateRiskCommodity(context.Context, *CreateRiskCommodityRequest, *CreateRiskCommodityResponse) error
 	//获取风险列表
@@ -194,6 +208,7 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 	type reportAPI interface {
 		SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, out *SubmitPulseTestResponse) error
 		GetReport(ctx context.Context, in *GetReportRequest, out *GetReportResponse) error
+		GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, out *GetMealSuggestionResponse) error
 		CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, out *CreateRiskCommodityResponse) error
 		GetRiskList(ctx context.Context, in *emptypb.Empty, out *GetRiskListResponse) error
 		GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, out *GetRiskCommodityListResponse) error
@@ -219,6 +234,10 @@ func (h *reportAPIHandler) SubmitPulseTest(ctx context.Context, in *SubmitPulseT
 
 func (h *reportAPIHandler) GetReport(ctx context.Context, in *GetReportRequest, out *GetReportResponse) error {
 	return h.ReportAPIHandler.GetReport(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, out *GetMealSuggestionResponse) error {
+	return h.ReportAPIHandler.GetMealSuggestion(ctx, in, out)
 }
 
 func (h *reportAPIHandler) CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, out *CreateRiskCommodityResponse) error {

@@ -22,6 +22,8 @@ type ReportAPIClient interface {
 	SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...grpc.CallOption) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(ctx context.Context, in *GetReportRequest, opts ...grpc.CallOption) (*GetReportResponse, error)
+	// GetMealSuggestion 通过体质获得膳食建议.
+	GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, opts ...grpc.CallOption) (*GetMealSuggestionResponse, error)
 	//创建风险推荐商品
 	CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, opts ...grpc.CallOption) (*CreateRiskCommodityResponse, error)
 	//获取风险列表
@@ -58,6 +60,15 @@ func (c *reportAPIClient) SubmitPulseTest(ctx context.Context, in *SubmitPulseTe
 func (c *reportAPIClient) GetReport(ctx context.Context, in *GetReportRequest, opts ...grpc.CallOption) (*GetReportResponse, error) {
 	out := new(GetReportResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetReport", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, opts ...grpc.CallOption) (*GetMealSuggestionResponse, error) {
+	out := new(GetMealSuggestionResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetMealSuggestion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -135,6 +146,8 @@ type ReportAPIServer interface {
 	SubmitPulseTest(context.Context, *SubmitPulseTestRequest) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(context.Context, *GetReportRequest) (*GetReportResponse, error)
+	// GetMealSuggestion 通过体质获得膳食建议.
+	GetMealSuggestion(context.Context, *GetMealSuggestionRequest) (*GetMealSuggestionResponse, error)
 	//创建风险推荐商品
 	CreateRiskCommodity(context.Context, *CreateRiskCommodityRequest) (*CreateRiskCommodityResponse, error)
 	//获取风险列表
@@ -161,6 +174,9 @@ func (UnimplementedReportAPIServer) SubmitPulseTest(context.Context, *SubmitPuls
 }
 func (UnimplementedReportAPIServer) GetReport(context.Context, *GetReportRequest) (*GetReportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReport not implemented")
+}
+func (UnimplementedReportAPIServer) GetMealSuggestion(context.Context, *GetMealSuggestionRequest) (*GetMealSuggestionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMealSuggestion not implemented")
 }
 func (UnimplementedReportAPIServer) CreateRiskCommodity(context.Context, *CreateRiskCommodityRequest) (*CreateRiskCommodityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRiskCommodity not implemented")
@@ -228,6 +244,24 @@ func _ReportAPI_GetReport_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ReportAPIServer).GetReport(ctx, req.(*GetReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetMealSuggestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMealSuggestionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetMealSuggestion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetMealSuggestion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetMealSuggestion(ctx, req.(*GetMealSuggestionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -369,6 +403,10 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetReport",
 			Handler:    _ReportAPI_GetReport_Handler,
+		},
+		{
+			MethodName: "GetMealSuggestion",
+			Handler:    _ReportAPI_GetMealSuggestion_Handler,
 		},
 		{
 			MethodName: "CreateRiskCommodity",
