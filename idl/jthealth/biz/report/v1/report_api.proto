@@ -422,7 +422,7 @@ message RiskCommodityMsg{
   //风险名称
   string risk_name = 3;
   //程度 1 低 2 中 3 高
-  int32 degree = 4;
+  string degree = 4;
   //商品图片
   string image = 5;
   //商品链接
