@@ -215,6 +215,8 @@ message CreatedUserProfileRequest{
   int64 start_time = 20;
   //结束时间
   int64 end_time = 21;
+  //是否修改
+  bool is_updated = 22;
 }
 message CreatedUserProfileResponse{
   string status = 1;
