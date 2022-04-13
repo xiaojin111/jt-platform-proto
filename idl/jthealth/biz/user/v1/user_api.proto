@@ -14,7 +14,7 @@ option php_namespace = "Jthealth\\Biz\\User\\V1";
 
 import "google/protobuf/timestamp.proto";
 
-// UserAPI 用户模块.
+// UserAPI 管理系统用户模块.
 service UserAPI {
   // SignInByPhoneCode 手机号验证码登录.
   rpc SignInByPhoneCode(SignInByPhoneCodeRequest)returns(SignInByPhoneCodeResponse);
