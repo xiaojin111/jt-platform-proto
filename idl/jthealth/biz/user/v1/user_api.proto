@@ -287,6 +287,7 @@ message FeatureAuditMsg{
   string status = 3;
   string created_at = 4;
   string user_type = 6;
+  string user_id =7;
 }
 //应用功能审核
 message UpdateFeatureAuditRequest{
