@@ -48,12 +48,14 @@ service ReportAPI {
 message SubmitPulseTestRequest {
   // 用户档案ID
   string user_profile_id = 1;
+  //用户信息
+  UserProfileSnapshot user_profile_snapshot = 2;
   // 单笔信号采样数据
-  SamplePayload payload = 2;
+  SamplePayload payload = 3;
   // 是否启用统计，启用统计会参与周报月报统计；
-  bool enable_trending_statistics = 3;
+  bool enable_trending_statistics = 4;
   //血氧
-  int32 blood_oxygen = 4;
+  int32 blood_oxygen = 5;
 }
 // SamplePayload 一般形式的采样数据.
 message SamplePayload {
