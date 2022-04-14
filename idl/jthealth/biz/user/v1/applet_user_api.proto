@@ -17,12 +17,18 @@ import "google/protobuf/timestamp.proto";
 
 // AppletUserAPI 小程序用户模块.
 service AppletUserAPI {
-  // SignInByPhoneCode 手机号验证码登录.
-  rpc SignInByPhoneCode(SignInByPhoneCodeRequest)returns(SignInByPhoneCodeResponse);
+  // AppletUserSignInByPhoneCode 手机号验证码登录.
+  rpc AppletUserSignInByPhoneCode(AppletUserSignInByPhoneCodeRequest)returns(AppletUserSignInByPhoneCodeResponse);
+  // SignInByWechat 通过微信小程序登录.
+  rpc SignInByWechatMiniProgram(SignInByWechatMiniProgramRequest)returns(SignInByWechatMiniProgramResponse);
+  // GetWechatPhone 获取微信手机号.
+  rpc GetWechatPhone(GetWechatPhoneRequest) returns(GetWechatPhoneResponse);
+  // BindWechatPhone 微信登录绑定手机号.
+  rpc BindWechatPhone(BindWechatPhoneRequest) returns(BindWechatPhoneResponse);
 }
 
 // 手机号验证码登录请求
-message SignInByPhoneCodeRequest {
+message AppletUserSignInByPhoneCodeRequest {
   // 手机号
   string phone = 1;
   // 验证码
@@ -31,7 +37,81 @@ message SignInByPhoneCodeRequest {
 }
 
 // 手机号验证码登录响应
-message SignInByPhoneCodeResponse {
+message AppletUserSignInByPhoneCodeResponse {
+  AppletUserProfileMsg date = 1;
+
+}
+message AppletUserProfileMsg{
+  // 档案ID
   string user_id = 1;
-  string role = 2;
+  // 昵称
+  string nickname = 2;
+  // 生日
+  Date birthday = 3;
+  // 测量手
+  string hand = 4;
+  // 用户性别
+  string gender = 5;
+  // 身高
+  int32 height = 6;
+  // 体重
+  int32 weight = 7;
+  // 档案是否完善
+  bool is_profile_completed = 8;
+  // 头像链接
+  string avatar_url = 9;
+  // 是否设置密码
+  bool is_set_password = 10;
+}
+message Date {
+  int32 year = 1;
+  int32 month = 2;
+  int32 day = 3;
+}
+
+// 通过微信小程序登录请求
+message SignInByWechatMiniProgramRequest {
+  // 授权临时票据
+  string code = 1;
+
+}
+message SignInByWechatMiniProgramResponse{
+  AppletUserProfileMsg date =1;
+  string union_id = 2;
+}
+
+// 获取微信手机号请求
+message GetWechatPhoneRequest {
+  // 加密数据
+  string encrypted_data = 1;
+  // 加密初始向量
+  string v1 = 2;
+  // 微信union_id
+  string union_id = 3;
+}
+
+// 获取微信手机号响应
+message GetWechatPhoneResponse {
+  // 手机区号
+  string nation_code = 1;
+  // 手机号
+  string phone = 2;
+}
+
+// 微信登录绑定手机号请求
+message BindWechatPhoneRequest {
+  // 手机区号
+  string nation_code = 1;
+  // 手机号
+  string phone = 2;
+  // 微信union_id
+  string union_id = 3;
+
+}
+// 微信登录绑定手机号响应
+message BindWechatPhoneResponse {
+  // 登录信息
+  AppletUserProfileMsg date = 1;
+  // 该手机号是否绑定微信
+  bool has_bind_wechat = 2;
 }
