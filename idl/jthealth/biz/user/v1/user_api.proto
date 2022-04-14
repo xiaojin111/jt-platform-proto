@@ -69,6 +69,7 @@ message SignInByPhoneCodeRequest {
 message SignInByPhoneCodeResponse {
   string user_id = 1;
   string role = 2;
+  string is_completed = 3;
 }
 //获取用户信息
 message GetUserInfosByIdRequest{
