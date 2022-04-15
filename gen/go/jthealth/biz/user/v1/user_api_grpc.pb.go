@@ -29,6 +29,8 @@ type UserAPIClient interface {
 	CreatedUserProfile(ctx context.Context, in *CreatedUserProfileRequest, opts ...grpc.CallOption) (*CreatedUserProfileResponse, error)
 	//GetUserInfosList 获取用户信息列表
 	GetUserInfosList(ctx context.Context, in *GetUserInfosListRequest, opts ...grpc.CallOption) (*GetUserInfosListResponse, error)
+	//获取用户信息通过appKey
+	GetUserInfosByAppKey(ctx context.Context, in *GetUserInfosByAppKeyRequest, opts ...grpc.CallOption) (*GetUserInfosByAppKeyResponse, error)
 	//----------------------应用-------------------------------
 	//应用申请
 	ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error)
@@ -38,6 +40,8 @@ type UserAPIClient interface {
 	RestAppSecretById(ctx context.Context, in *RestAppSecretByIdRequest, opts ...grpc.CallOption) (*RestAppSecretByIdResponse, error)
 	//获取单个应用详情
 	GetApplicationDetails(ctx context.Context, in *GetApplicationDetailsRequest, opts ...grpc.CallOption) (*GetApplicationDetailsResponse, error)
+	//获取应用通过appid
+	GetApplicationByAppId(ctx context.Context, in *GetApplicationByAppIdRequest, opts ...grpc.CallOption) (*GetApplicationByAppIdResponse, error)
 	//应用功能申请
 	ApplyFeatureAudit(ctx context.Context, in *ApplyFeatureAuditRequest, opts ...grpc.CallOption) (*ApplyFeatureAuditResponse, error)
 	//获取审核列表
@@ -115,6 +119,15 @@ func (c *userAPIClient) GetUserInfosList(ctx context.Context, in *GetUserInfosLi
 	return out, nil
 }
 
+func (c *userAPIClient) GetUserInfosByAppKey(ctx context.Context, in *GetUserInfosByAppKeyRequest, opts ...grpc.CallOption) (*GetUserInfosByAppKeyResponse, error) {
+	out := new(GetUserInfosByAppKeyResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetUserInfosByAppKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAPIClient) ApplyApplication(ctx context.Context, in *ApplyApplicationRequest, opts ...grpc.CallOption) (*ApplyApplicationResponse, error) {
 	out := new(ApplyApplicationResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/ApplyApplication", in, out, opts...)
@@ -145,6 +158,15 @@ func (c *userAPIClient) RestAppSecretById(ctx context.Context, in *RestAppSecret
 func (c *userAPIClient) GetApplicationDetails(ctx context.Context, in *GetApplicationDetailsRequest, opts ...grpc.CallOption) (*GetApplicationDetailsResponse, error) {
 	out := new(GetApplicationDetailsResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetApplicationDetails", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIClient) GetApplicationByAppId(ctx context.Context, in *GetApplicationByAppIdRequest, opts ...grpc.CallOption) (*GetApplicationByAppIdResponse, error) {
+	out := new(GetApplicationByAppIdResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetApplicationByAppId", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -221,6 +243,8 @@ type UserAPIServer interface {
 	CreatedUserProfile(context.Context, *CreatedUserProfileRequest) (*CreatedUserProfileResponse, error)
 	//GetUserInfosList 获取用户信息列表
 	GetUserInfosList(context.Context, *GetUserInfosListRequest) (*GetUserInfosListResponse, error)
+	//获取用户信息通过appKey
+	GetUserInfosByAppKey(context.Context, *GetUserInfosByAppKeyRequest) (*GetUserInfosByAppKeyResponse, error)
 	//----------------------应用-------------------------------
 	//应用申请
 	ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error)
@@ -230,6 +254,8 @@ type UserAPIServer interface {
 	RestAppSecretById(context.Context, *RestAppSecretByIdRequest) (*RestAppSecretByIdResponse, error)
 	//获取单个应用详情
 	GetApplicationDetails(context.Context, *GetApplicationDetailsRequest) (*GetApplicationDetailsResponse, error)
+	//获取应用通过appid
+	GetApplicationByAppId(context.Context, *GetApplicationByAppIdRequest) (*GetApplicationByAppIdResponse, error)
 	//应用功能申请
 	ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest) (*ApplyFeatureAuditResponse, error)
 	//获取审核列表
@@ -268,6 +294,9 @@ func (UnimplementedUserAPIServer) CreatedUserProfile(context.Context, *CreatedUs
 func (UnimplementedUserAPIServer) GetUserInfosList(context.Context, *GetUserInfosListRequest) (*GetUserInfosListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfosList not implemented")
 }
+func (UnimplementedUserAPIServer) GetUserInfosByAppKey(context.Context, *GetUserInfosByAppKeyRequest) (*GetUserInfosByAppKeyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfosByAppKey not implemented")
+}
 func (UnimplementedUserAPIServer) ApplyApplication(context.Context, *ApplyApplicationRequest) (*ApplyApplicationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyApplication not implemented")
 }
@@ -279,6 +308,9 @@ func (UnimplementedUserAPIServer) RestAppSecretById(context.Context, *RestAppSec
 }
 func (UnimplementedUserAPIServer) GetApplicationDetails(context.Context, *GetApplicationDetailsRequest) (*GetApplicationDetailsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApplicationDetails not implemented")
+}
+func (UnimplementedUserAPIServer) GetApplicationByAppId(context.Context, *GetApplicationByAppIdRequest) (*GetApplicationByAppIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApplicationByAppId not implemented")
 }
 func (UnimplementedUserAPIServer) ApplyFeatureAudit(context.Context, *ApplyFeatureAuditRequest) (*ApplyFeatureAuditResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyFeatureAudit not implemented")
@@ -419,6 +451,24 @@ func _UserAPI_GetUserInfosList_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_GetUserInfosByAppKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInfosByAppKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).GetUserInfosByAppKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/GetUserInfosByAppKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).GetUserInfosByAppKey(ctx, req.(*GetUserInfosByAppKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserAPI_ApplyApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ApplyApplicationRequest)
 	if err := dec(in); err != nil {
@@ -487,6 +537,24 @@ func _UserAPI_GetApplicationDetails_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserAPIServer).GetApplicationDetails(ctx, req.(*GetApplicationDetailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAPI_GetApplicationByAppId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetApplicationByAppIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).GetApplicationByAppId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/GetApplicationByAppId",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).GetApplicationByAppId(ctx, req.(*GetApplicationByAppIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -628,6 +696,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 			Handler:    _UserAPI_GetUserInfosList_Handler,
 		},
 		{
+			MethodName: "GetUserInfosByAppKey",
+			Handler:    _UserAPI_GetUserInfosByAppKey_Handler,
+		},
+		{
 			MethodName: "ApplyApplication",
 			Handler:    _UserAPI_ApplyApplication_Handler,
 		},
@@ -642,6 +714,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetApplicationDetails",
 			Handler:    _UserAPI_GetApplicationDetails_Handler,
+		},
+		{
+			MethodName: "GetApplicationByAppId",
+			Handler:    _UserAPI_GetApplicationByAppId_Handler,
 		},
 		{
 			MethodName: "ApplyFeatureAudit",

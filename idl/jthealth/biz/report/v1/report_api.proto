@@ -60,7 +60,7 @@ message SubmitPulseTestRequest {
 // SamplePayload 一般形式的采样数据.
 message SamplePayload {
   // 采样使用的手
-  Hand hand = 1;
+  int32 hand = 1;
 
   // 位置信息（可选）
   GeoLocation geo_location = 2;

@@ -28,6 +28,8 @@ service UserAPI {
   rpc CreatedUserProfile(CreatedUserProfileRequest)returns(CreatedUserProfileResponse);
   //GetUserInfosList 获取用户信息列表
   rpc GetUserInfosList(GetUserInfosListRequest)returns(GetUserInfosListResponse);
+  //获取用户信息通过appKey
+  rpc GetUserInfosByAppKey(GetUserInfosByAppKeyRequest)returns(GetUserInfosByAppKeyResponse);
 
 
   //----------------------应用-------------------------------
@@ -39,7 +41,8 @@ service UserAPI {
   rpc RestAppSecretById(RestAppSecretByIdRequest)returns(RestAppSecretByIdResponse);
   //获取单个应用详情
   rpc GetApplicationDetails(GetApplicationDetailsRequest)returns(GetApplicationDetailsResponse);
-
+  //获取应用通过appid
+  rpc GetApplicationByAppId(GetApplicationByAppIdRequest)returns(GetApplicationByAppIdResponse);
   //应用功能申请
   rpc ApplyFeatureAudit(ApplyFeatureAuditRequest)returns(ApplyFeatureAuditResponse);
   //获取审核列表
@@ -183,6 +186,18 @@ message GetApplicationDetailsResponse{
   string app_id = 4;
   string app_secret = 5;
 }
+//获取应用通过appid
+message GetApplicationByAppIdRequest{
+  string app_id = 4;
+}
+message GetApplicationByAppIdResponse{
+  string app_logo = 1;
+  string app_name = 2;
+  string app_status = 3;
+  string app_id = 4;
+  string app_secret = 5;
+}
+
 //创建用户档案
 message CreatedUserProfileRequest{
   string user_id = 1;
@@ -269,6 +284,15 @@ message UserMsg {
   int32 device_num = 8;
   string app_key = 9;
 
+}
+
+//获取用户信息通过appKey
+message GetUserInfosByAppKeyRequest{
+  string app_key = 1;
+}
+message GetUserInfosByAppKeyResponse{
+  //用户信息
+  UserMsg user_msg = 4;
 }
 
 //获取审核列表
