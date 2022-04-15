@@ -111,6 +111,8 @@ message GetUserInfosByIdResponse{
   google.protobuf.Timestamp end_time = 21;
   //账号
   string user_number = 22;
+  //用户类型
+  string user_type = 23;
 }
 //UpdateUserInfos  更改用户信息
 message UpdateUserInfosRequest{
