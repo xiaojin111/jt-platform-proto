@@ -53,6 +53,8 @@ service UserAPI {
   //----------------用户档案---------------
   // GetUserProfile 获取用户档案.
   rpc GetUserProfile(GetUserProfileRequest) returns(GetUserProfileResponse);
+  // 提交用户档案
+  rpc SubmitUserProfile(SubmitUserProfileRequest)returns(SubmitUserProfileResponse);
 
 }
 
@@ -288,7 +290,7 @@ message FeatureAuditMsg{
   string status = 3;
   string created_at = 4;
   string user_type = 6;
-  string user_id =7;
+  string user_id = 7;
 }
 //应用功能审核
 message UpdateFeatureAuditRequest{
@@ -341,6 +343,17 @@ message GetUserProfileResponse {
   UserProfile profile = 1;
 }
 
+// 提交用户档案请求
+message SubmitUserProfileRequest{
+  // 用户档案信息
+  UserProfile profile = 1;
+}
+// 提交用户档案响应
+message SubmitUserProfileResponse{
+  // 档案ID
+  string user_profile_id = 1;
+}
+
 // UserProfile 用户档案.
 message UserProfile {
   // 档案ID
@@ -359,4 +372,6 @@ message UserProfile {
   int32 height = 6;
   // 体重 kg
   int32 weight = 7;
+  //客户id
+  string client_id = 9;
 }

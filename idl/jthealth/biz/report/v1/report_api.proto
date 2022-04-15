@@ -267,9 +267,9 @@ message UserProfileSnapshot {
   // 年龄
   int32 age = 3;
   // 测量手
-  Hand hand = 4;
+  int32 hand = 4;
   // 用户性别
-  Gender gender = 5;
+  int32 gender = 5;
   // 身高
   int32 height = 6;
   // 体重
@@ -280,6 +280,8 @@ message UserProfileSnapshot {
   string nation_code = 9;
   // 手机号
   string phone = 10;
+  //客户id
+  string client_id = 11;
 }
 
 // 通过体质获得膳食建议请求.

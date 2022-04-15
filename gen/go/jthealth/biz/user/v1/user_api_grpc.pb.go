@@ -49,6 +49,8 @@ type UserAPIClient interface {
 	//----------------用户档案---------------
 	// GetUserProfile 获取用户档案.
 	GetUserProfile(ctx context.Context, in *GetUserProfileRequest, opts ...grpc.CallOption) (*GetUserProfileResponse, error)
+	// 提交用户档案
+	SubmitUserProfile(ctx context.Context, in *SubmitUserProfileRequest, opts ...grpc.CallOption) (*SubmitUserProfileResponse, error)
 }
 
 type userAPIClient struct {
@@ -194,6 +196,15 @@ func (c *userAPIClient) GetUserProfile(ctx context.Context, in *GetUserProfileRe
 	return out, nil
 }
 
+func (c *userAPIClient) SubmitUserProfile(ctx context.Context, in *SubmitUserProfileRequest, opts ...grpc.CallOption) (*SubmitUserProfileResponse, error) {
+	out := new(SubmitUserProfileResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/SubmitUserProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserAPIServer is the server API for UserAPI service.
 // All implementations must embed UnimplementedUserAPIServer
 // for forward compatibility
@@ -230,6 +241,8 @@ type UserAPIServer interface {
 	//----------------用户档案---------------
 	// GetUserProfile 获取用户档案.
 	GetUserProfile(context.Context, *GetUserProfileRequest) (*GetUserProfileResponse, error)
+	// 提交用户档案
+	SubmitUserProfile(context.Context, *SubmitUserProfileRequest) (*SubmitUserProfileResponse, error)
 	mustEmbedUnimplementedUserAPIServer()
 }
 
@@ -281,6 +294,9 @@ func (UnimplementedUserAPIServer) GetNotifyList(context.Context, *GetNotifyListR
 }
 func (UnimplementedUserAPIServer) GetUserProfile(context.Context, *GetUserProfileRequest) (*GetUserProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserProfile not implemented")
+}
+func (UnimplementedUserAPIServer) SubmitUserProfile(context.Context, *SubmitUserProfileRequest) (*SubmitUserProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitUserProfile not implemented")
 }
 func (UnimplementedUserAPIServer) mustEmbedUnimplementedUserAPIServer() {}
 
@@ -565,6 +581,24 @@ func _UserAPI_GetUserProfile_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_SubmitUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitUserProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).SubmitUserProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/SubmitUserProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).SubmitUserProfile(ctx, req.(*SubmitUserProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.UserAPI",
 	HandlerType: (*UserAPIServer)(nil),
@@ -628,6 +662,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserProfile",
 			Handler:    _UserAPI_GetUserProfile_Handler,
+		},
+		{
+			MethodName: "SubmitUserProfile",
+			Handler:    _UserAPI_SubmitUserProfile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

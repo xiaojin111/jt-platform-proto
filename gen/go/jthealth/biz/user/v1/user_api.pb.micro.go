@@ -75,6 +75,8 @@ type UserAPIService interface {
 	//----------------用户档案---------------
 	// GetUserProfile 获取用户档案.
 	GetUserProfile(ctx context.Context, in *GetUserProfileRequest, opts ...client.CallOption) (*GetUserProfileResponse, error)
+	// 提交用户档案
+	SubmitUserProfile(ctx context.Context, in *SubmitUserProfileRequest, opts ...client.CallOption) (*SubmitUserProfileResponse, error)
 }
 
 type userAPIService struct {
@@ -239,6 +241,16 @@ func (c *userAPIService) GetUserProfile(ctx context.Context, in *GetUserProfileR
 	return out, nil
 }
 
+func (c *userAPIService) SubmitUserProfile(ctx context.Context, in *SubmitUserProfileRequest, opts ...client.CallOption) (*SubmitUserProfileResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.SubmitUserProfile", in)
+	out := new(SubmitUserProfileResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
@@ -274,6 +286,8 @@ type UserAPIHandler interface {
 	//----------------用户档案---------------
 	// GetUserProfile 获取用户档案.
 	GetUserProfile(context.Context, *GetUserProfileRequest, *GetUserProfileResponse) error
+	// 提交用户档案
+	SubmitUserProfile(context.Context, *SubmitUserProfileRequest, *SubmitUserProfileResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
@@ -293,6 +307,7 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, out *UpdateFeatureAuditResponse) error
 		GetNotifyList(ctx context.Context, in *GetNotifyListRequest, out *GetNotifyListResponse) error
 		GetUserProfile(ctx context.Context, in *GetUserProfileRequest, out *GetUserProfileResponse) error
+		SubmitUserProfile(ctx context.Context, in *SubmitUserProfileRequest, out *SubmitUserProfileResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -363,4 +378,8 @@ func (h *userAPIHandler) GetNotifyList(ctx context.Context, in *GetNotifyListReq
 
 func (h *userAPIHandler) GetUserProfile(ctx context.Context, in *GetUserProfileRequest, out *GetUserProfileResponse) error {
 	return h.UserAPIHandler.GetUserProfile(ctx, in, out)
+}
+
+func (h *userAPIHandler) SubmitUserProfile(ctx context.Context, in *SubmitUserProfileRequest, out *SubmitUserProfileResponse) error {
+	return h.UserAPIHandler.SubmitUserProfile(ctx, in, out)
 }
