@@ -196,6 +196,7 @@ message GetApplicationByAppIdResponse{
   string app_status = 3;
   string app_id = 4;
   string app_secret = 5;
+  string application_id = 6;
 }
 
 //创建用户档案
