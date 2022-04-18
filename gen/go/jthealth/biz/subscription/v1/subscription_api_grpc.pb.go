@@ -25,6 +25,8 @@ type SubscriptionAPIClient interface {
 	GetPhysiqueCardList(ctx context.Context, in *GetPhysiqueCardListRequest, opts ...grpc.CallOption) (*GetPhysiqueCardListResponse, error)
 	// 获取用户增值服务信息
 	GetUserVasInfo(ctx context.Context, in *GetUserVasInfoRequest, opts ...grpc.CallOption) (*GetUserVasInfoResponse, error)
+	// 兑换体质卡
+	ExchangePhysiqueCard(ctx context.Context, in *ExchangePhysiqueCardRequest, opts ...grpc.CallOption) (*ExchangePhysiqueCardResponse, error)
 }
 
 type subscriptionAPIClient struct {
@@ -71,6 +73,15 @@ func (c *subscriptionAPIClient) GetUserVasInfo(ctx context.Context, in *GetUserV
 	return out, nil
 }
 
+func (c *subscriptionAPIClient) ExchangePhysiqueCard(ctx context.Context, in *ExchangePhysiqueCardRequest, opts ...grpc.CallOption) (*ExchangePhysiqueCardResponse, error) {
+	out := new(ExchangePhysiqueCardResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.subscription.v1.SubscriptionAPI/ExchangePhysiqueCard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SubscriptionAPIServer is the server API for SubscriptionAPI service.
 // All implementations must embed UnimplementedSubscriptionAPIServer
 // for forward compatibility
@@ -83,6 +94,8 @@ type SubscriptionAPIServer interface {
 	GetPhysiqueCardList(context.Context, *GetPhysiqueCardListRequest) (*GetPhysiqueCardListResponse, error)
 	// 获取用户增值服务信息
 	GetUserVasInfo(context.Context, *GetUserVasInfoRequest) (*GetUserVasInfoResponse, error)
+	// 兑换体质卡
+	ExchangePhysiqueCard(context.Context, *ExchangePhysiqueCardRequest) (*ExchangePhysiqueCardResponse, error)
 	mustEmbedUnimplementedSubscriptionAPIServer()
 }
 
@@ -101,6 +114,9 @@ func (UnimplementedSubscriptionAPIServer) GetPhysiqueCardList(context.Context, *
 }
 func (UnimplementedSubscriptionAPIServer) GetUserVasInfo(context.Context, *GetUserVasInfoRequest) (*GetUserVasInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserVasInfo not implemented")
+}
+func (UnimplementedSubscriptionAPIServer) ExchangePhysiqueCard(context.Context, *ExchangePhysiqueCardRequest) (*ExchangePhysiqueCardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExchangePhysiqueCard not implemented")
 }
 func (UnimplementedSubscriptionAPIServer) mustEmbedUnimplementedSubscriptionAPIServer() {}
 
@@ -187,6 +203,24 @@ func _SubscriptionAPI_GetUserVasInfo_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SubscriptionAPI_ExchangePhysiqueCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExchangePhysiqueCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionAPIServer).ExchangePhysiqueCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.subscription.v1.SubscriptionAPI/ExchangePhysiqueCard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionAPIServer).ExchangePhysiqueCard(ctx, req.(*ExchangePhysiqueCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _SubscriptionAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.subscription.v1.SubscriptionAPI",
 	HandlerType: (*SubscriptionAPIServer)(nil),
@@ -206,6 +240,10 @@ var _SubscriptionAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserVasInfo",
 			Handler:    _SubscriptionAPI_GetUserVasInfo_Handler,
+		},
+		{
+			MethodName: "ExchangePhysiqueCard",
+			Handler:    _SubscriptionAPI_ExchangePhysiqueCard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

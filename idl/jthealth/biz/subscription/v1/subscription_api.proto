@@ -27,6 +27,8 @@ service SubscriptionAPI {
   rpc GetPhysiqueCardList(GetPhysiqueCardListRequest)returns(GetPhysiqueCardListResponse);
   // 获取用户增值服务信息
   rpc GetUserVasInfo(GetUserVasInfoRequest) returns(GetUserVasInfoResponse);
+  // 兑换体质卡
+  rpc ExchangePhysiqueCard(ExchangePhysiqueCardRequest)returns(ExchangePhysiqueCardResponse);
 }
 
 //创建体质卡组请求
@@ -93,7 +95,7 @@ message PhysiqueCardMsg{
 
 message GetUserVasInfoRequest {
   // 用户ID
-  string user_id = 1;
+  string client_id = 1;
 }
 
 message GetUserVasInfoResponse {
@@ -101,4 +103,15 @@ message GetUserVasInfoResponse {
   int32 type = 1;
   // 天数
   int32 day_num = 2;
+}
+
+//兑换体质卡请求
+message ExchangePhysiqueCardRequest{
+  string card_number = 1;
+  string card_password = 2;
+  string client_id = 3;
+}
+//兑换体质卡响应
+message ExchangePhysiqueCardResponse{
+  string physique_card_id = 1;
 }

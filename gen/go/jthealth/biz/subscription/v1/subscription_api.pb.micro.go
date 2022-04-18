@@ -51,6 +51,8 @@ type SubscriptionAPIService interface {
 	GetPhysiqueCardList(ctx context.Context, in *GetPhysiqueCardListRequest, opts ...client.CallOption) (*GetPhysiqueCardListResponse, error)
 	// 获取用户增值服务信息
 	GetUserVasInfo(ctx context.Context, in *GetUserVasInfoRequest, opts ...client.CallOption) (*GetUserVasInfoResponse, error)
+	// 兑换体质卡
+	ExchangePhysiqueCard(ctx context.Context, in *ExchangePhysiqueCardRequest, opts ...client.CallOption) (*ExchangePhysiqueCardResponse, error)
 }
 
 type subscriptionAPIService struct {
@@ -105,6 +107,16 @@ func (c *subscriptionAPIService) GetUserVasInfo(ctx context.Context, in *GetUser
 	return out, nil
 }
 
+func (c *subscriptionAPIService) ExchangePhysiqueCard(ctx context.Context, in *ExchangePhysiqueCardRequest, opts ...client.CallOption) (*ExchangePhysiqueCardResponse, error) {
+	req := c.c.NewRequest(c.name, "SubscriptionAPI.ExchangePhysiqueCard", in)
+	out := new(ExchangePhysiqueCardResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for SubscriptionAPI service
 
 type SubscriptionAPIHandler interface {
@@ -116,6 +128,8 @@ type SubscriptionAPIHandler interface {
 	GetPhysiqueCardList(context.Context, *GetPhysiqueCardListRequest, *GetPhysiqueCardListResponse) error
 	// 获取用户增值服务信息
 	GetUserVasInfo(context.Context, *GetUserVasInfoRequest, *GetUserVasInfoResponse) error
+	// 兑换体质卡
+	ExchangePhysiqueCard(context.Context, *ExchangePhysiqueCardRequest, *ExchangePhysiqueCardResponse) error
 }
 
 func RegisterSubscriptionAPIHandler(s server.Server, hdlr SubscriptionAPIHandler, opts ...server.HandlerOption) error {
@@ -124,6 +138,7 @@ func RegisterSubscriptionAPIHandler(s server.Server, hdlr SubscriptionAPIHandler
 		GetPhysiqueCardGroupList(ctx context.Context, in *GetPhysiqueCardGroupListRequest, out *GetPhysiqueCardGroupListResponse) error
 		GetPhysiqueCardList(ctx context.Context, in *GetPhysiqueCardListRequest, out *GetPhysiqueCardListResponse) error
 		GetUserVasInfo(ctx context.Context, in *GetUserVasInfoRequest, out *GetUserVasInfoResponse) error
+		ExchangePhysiqueCard(ctx context.Context, in *ExchangePhysiqueCardRequest, out *ExchangePhysiqueCardResponse) error
 	}
 	type SubscriptionAPI struct {
 		subscriptionAPI
@@ -150,4 +165,8 @@ func (h *subscriptionAPIHandler) GetPhysiqueCardList(ctx context.Context, in *Ge
 
 func (h *subscriptionAPIHandler) GetUserVasInfo(ctx context.Context, in *GetUserVasInfoRequest, out *GetUserVasInfoResponse) error {
 	return h.SubscriptionAPIHandler.GetUserVasInfo(ctx, in, out)
+}
+
+func (h *subscriptionAPIHandler) ExchangePhysiqueCard(ctx context.Context, in *ExchangePhysiqueCardRequest, out *ExchangePhysiqueCardResponse) error {
+	return h.SubscriptionAPIHandler.ExchangePhysiqueCard(ctx, in, out)
 }
