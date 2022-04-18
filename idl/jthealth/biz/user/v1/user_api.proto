@@ -185,6 +185,11 @@ message GetApplicationDetailsResponse{
   string app_status = 3;
   string app_id = 4;
   string app_secret = 5;
+  string is_product = 6;
+  string is_physical = 7;
+  string is_compared = 8;
+  string is_recent = 9;
+  string is_week = 10;
 }
 //获取应用通过appid
 message GetApplicationByAppIdRequest{
