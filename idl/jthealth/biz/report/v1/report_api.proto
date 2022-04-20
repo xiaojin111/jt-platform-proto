@@ -312,10 +312,14 @@ message PhysicalDialecticsMessage{
 
 // RiskInfo 风险信息.
 message RiskInfo {
+  //风险编号
+  string risk_id = 1;
   // 风险名称
-  string risk_name = 1;
+  string risk_name = 2;
   // 风险指数
-  int32 index_value = 2;
+  int32 index_value = 3;
+  //程度
+  string degree = 4;
 }
 
 // MealProduct 膳食商品.
