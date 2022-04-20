@@ -368,6 +368,7 @@ message NotifyMsg{
 message SendNotifyRequest{
   string user_id = 1;
   string content = 2;
+  string detail = 3;
 }
 //发送通知响应
 message SendNotifyResponse{
