@@ -349,6 +349,7 @@ message GetNotifyListRequest{
   int32 page_num = 1 ;
   int32 page_size = 2 ;
   string user_id = 3;
+  string notify_id = 4;
 }
 //获取消息通知响应
 message GetNotifyListResponse{
@@ -359,9 +360,10 @@ message GetNotifyListResponse{
   repeated NotifyMsg list = 4;
 }
 message NotifyMsg{
-  string content = 1;
-  string denial_reason = 2;
-  string created_at = 3;
+  string notify_id = 1;
+  string content = 2;
+  string denial_reason = 3;
+  string created_at = 4;
 }
 
 //发送通知请求
