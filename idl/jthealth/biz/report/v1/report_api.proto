@@ -411,6 +411,10 @@ message GetRiskCommodityListRequest{
   string risk_id = 1;
   //应用id
   string application_id = 2;
+  //风险名称
+  string risk_name = 3;
+  //风险程度
+  int32 degree = 4;
 }
 //获取推荐商品列表响应
 message GetRiskCommodityListResponse{
