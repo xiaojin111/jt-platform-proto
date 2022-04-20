@@ -52,6 +52,8 @@ service UserAPI {
 
   //获取消息通知
   rpc GetNotifyList(GetNotifyListRequest)returns(GetNotifyListResponse);
+  //发送通知
+  rpc SendNotify(SendNotifyRequest)returns(SendNotifyResponse);
 
   //----------------用户档案---------------
   // GetUserProfile 获取用户档案.
@@ -178,7 +180,7 @@ message AppRoleMsg{
 //单个应用详情
 message GetApplicationDetailsRequest{
   string application_id = 1;
-  string feature_type =2;
+  string feature_type = 2;
 }
 message GetApplicationDetailsResponse{
   string app_logo = 1;
@@ -362,6 +364,15 @@ message NotifyMsg{
   string created_at = 3;
 }
 
+//发送通知请求
+message SendNotifyRequest{
+  string user_id = 1;
+  string content = 2;
+}
+//发送通知响应
+message SendNotifyResponse{
+  string content = 1;
+}
 
 // 获取用户档案请求
 message GetUserProfileRequest {

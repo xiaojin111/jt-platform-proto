@@ -50,6 +50,8 @@ type UserAPIClient interface {
 	UpdateFeatureAudit(ctx context.Context, in *UpdateFeatureAuditRequest, opts ...grpc.CallOption) (*UpdateFeatureAuditResponse, error)
 	//获取消息通知
 	GetNotifyList(ctx context.Context, in *GetNotifyListRequest, opts ...grpc.CallOption) (*GetNotifyListResponse, error)
+	//发送通知
+	SendNotify(ctx context.Context, in *SendNotifyRequest, opts ...grpc.CallOption) (*SendNotifyResponse, error)
 	//----------------用户档案---------------
 	// GetUserProfile 获取用户档案.
 	GetUserProfile(ctx context.Context, in *GetUserProfileRequest, opts ...grpc.CallOption) (*GetUserProfileResponse, error)
@@ -209,6 +211,15 @@ func (c *userAPIClient) GetNotifyList(ctx context.Context, in *GetNotifyListRequ
 	return out, nil
 }
 
+func (c *userAPIClient) SendNotify(ctx context.Context, in *SendNotifyRequest, opts ...grpc.CallOption) (*SendNotifyResponse, error) {
+	out := new(SendNotifyResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/SendNotify", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAPIClient) GetUserProfile(ctx context.Context, in *GetUserProfileRequest, opts ...grpc.CallOption) (*GetUserProfileResponse, error) {
 	out := new(GetUserProfileResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/GetUserProfile", in, out, opts...)
@@ -264,6 +275,8 @@ type UserAPIServer interface {
 	UpdateFeatureAudit(context.Context, *UpdateFeatureAuditRequest) (*UpdateFeatureAuditResponse, error)
 	//获取消息通知
 	GetNotifyList(context.Context, *GetNotifyListRequest) (*GetNotifyListResponse, error)
+	//发送通知
+	SendNotify(context.Context, *SendNotifyRequest) (*SendNotifyResponse, error)
 	//----------------用户档案---------------
 	// GetUserProfile 获取用户档案.
 	GetUserProfile(context.Context, *GetUserProfileRequest) (*GetUserProfileResponse, error)
@@ -323,6 +336,9 @@ func (UnimplementedUserAPIServer) UpdateFeatureAudit(context.Context, *UpdateFea
 }
 func (UnimplementedUserAPIServer) GetNotifyList(context.Context, *GetNotifyListRequest) (*GetNotifyListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNotifyList not implemented")
+}
+func (UnimplementedUserAPIServer) SendNotify(context.Context, *SendNotifyRequest) (*SendNotifyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendNotify not implemented")
 }
 func (UnimplementedUserAPIServer) GetUserProfile(context.Context, *GetUserProfileRequest) (*GetUserProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserProfile not implemented")
@@ -631,6 +647,24 @@ func _UserAPI_GetNotifyList_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_SendNotify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendNotifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).SendNotify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/SendNotify",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).SendNotify(ctx, req.(*SendNotifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserAPI_GetUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserProfileRequest)
 	if err := dec(in); err != nil {
@@ -734,6 +768,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetNotifyList",
 			Handler:    _UserAPI_GetNotifyList_Handler,
+		},
+		{
+			MethodName: "SendNotify",
+			Handler:    _UserAPI_SendNotify_Handler,
 		},
 		{
 			MethodName: "GetUserProfile",
