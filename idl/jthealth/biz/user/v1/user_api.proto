@@ -420,4 +420,6 @@ message UserProfile {
   int32 weight = 7;
   //客户id
   string client_id = 9;
+  //应用id
+  string application_id = 12;
 }

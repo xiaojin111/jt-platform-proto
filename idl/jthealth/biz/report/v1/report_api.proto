@@ -284,6 +284,8 @@ message UserProfileSnapshot {
   string phone = 10;
   //客户id
   string client_id = 11;
+  //应用id
+  string application_id = 12;
 }
 
 // 通过体质获得膳食建议请求.
