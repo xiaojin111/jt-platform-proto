@@ -38,6 +38,8 @@ type ReportAPIClient interface {
 	EditReportComparedShow(ctx context.Context, in *EditReportComparedShowRequest, opts ...grpc.CallOption) (*EditReportComparedShowResponse, error)
 	//获取报告对比显示功能
 	GetReportComparedShow(ctx context.Context, in *GetReportComparedShowRequest, opts ...grpc.CallOption) (*GetReportComparedShowResponse, error)
+	// 报告对比接口
+	GetComparisonReportNew(ctx context.Context, in *GetComparisonReportNewRequest, opts ...grpc.CallOption) (*GetComparisonReportNewResponse, error)
 }
 
 type reportAPIClient struct {
@@ -138,6 +140,15 @@ func (c *reportAPIClient) GetReportComparedShow(ctx context.Context, in *GetRepo
 	return out, nil
 }
 
+func (c *reportAPIClient) GetComparisonReportNew(ctx context.Context, in *GetComparisonReportNewRequest, opts ...grpc.CallOption) (*GetComparisonReportNewResponse, error) {
+	out := new(GetComparisonReportNewResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetComparisonReportNew", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReportAPIServer is the server API for ReportAPI service.
 // All implementations must embed UnimplementedReportAPIServer
 // for forward compatibility
@@ -162,6 +173,8 @@ type ReportAPIServer interface {
 	EditReportComparedShow(context.Context, *EditReportComparedShowRequest) (*EditReportComparedShowResponse, error)
 	//获取报告对比显示功能
 	GetReportComparedShow(context.Context, *GetReportComparedShowRequest) (*GetReportComparedShowResponse, error)
+	// 报告对比接口
+	GetComparisonReportNew(context.Context, *GetComparisonReportNewRequest) (*GetComparisonReportNewResponse, error)
 	mustEmbedUnimplementedReportAPIServer()
 }
 
@@ -198,6 +211,9 @@ func (UnimplementedReportAPIServer) EditReportComparedShow(context.Context, *Edi
 }
 func (UnimplementedReportAPIServer) GetReportComparedShow(context.Context, *GetReportComparedShowRequest) (*GetReportComparedShowResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReportComparedShow not implemented")
+}
+func (UnimplementedReportAPIServer) GetComparisonReportNew(context.Context, *GetComparisonReportNewRequest) (*GetComparisonReportNewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetComparisonReportNew not implemented")
 }
 func (UnimplementedReportAPIServer) mustEmbedUnimplementedReportAPIServer() {}
 
@@ -392,6 +408,24 @@ func _ReportAPI_GetReportComparedShow_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportAPI_GetComparisonReportNew_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetComparisonReportNewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetComparisonReportNew(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetComparisonReportNew",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetComparisonReportNew(ctx, req.(*GetComparisonReportNewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.report.v1.ReportAPI",
 	HandlerType: (*ReportAPIServer)(nil),
@@ -435,6 +469,10 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetReportComparedShow",
 			Handler:    _ReportAPI_GetReportComparedShow_Handler,
+		},
+		{
+			MethodName: "GetComparisonReportNew",
+			Handler:    _ReportAPI_GetComparisonReportNew_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

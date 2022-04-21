@@ -42,6 +42,8 @@ service ReportAPI {
   rpc EditReportComparedShow(EditReportComparedShowRequest)returns(EditReportComparedShowResponse);
   //获取报告对比显示功能
   rpc GetReportComparedShow(GetReportComparedShowRequest)returns(GetReportComparedShowResponse);
+  // 报告对比接口
+  rpc GetComparisonReportNew(GetComparisonReportNewRequest) returns (GetComparisonReportNewResponse);
 
 }
 // 提交一般形式的采样数据的请求
@@ -589,4 +591,115 @@ message GetReportComparedShowResponse{
   string is_recent = 2;
   //周对比 0 关闭 1 开启
   string is_week = 3;
+}
+
+// 报告对比接口请求
+message GetComparisonReportNewRequest {
+  // 对比的第一个报告ID
+  string first_report_id = 2;
+  // 对比的第二个报告ID
+  string second_report_id = 3;
+  // 全报告-1	 综合风险指数与健康年龄-2	 经络分析-3	18项风险评估-4
+  int32 type = 6;
+  // keys 按小项组合
+  //【神经系统】压力-12 疲劳-13 睡眠质量-14
+  //【心血管系统】血压风险-1 血脂风险-2 心血管风险-4 脑血管风险-5
+  //【功能系统】肝负担风险-6 肾负担风险-7 内分泌风险-15 缺钙风险-11
+  //【代谢系统】血糖风险-3 免疫力-10 过敏风险-16 感染风险-17
+  //【消化系统】消化力-8 胃食道逆流风险-9 胃酸过多风险-18
+  //【经络分析】心包经-1 肝经-2 肾经-3 脾经-4 肺经-5 胃经-6 胆经-7 膀胱经-8
+  string keys = 7;
+}
+
+// 报告对比接口响应
+message GetComparisonReportNewResponse {
+  // c端对比报告
+  ComparisonReportNew comparison_report = 1;
+  string is_member = 2;
+}
+message ComparisonReportNew {
+  // 健康改善状况
+  int32 improvement_status = 1;
+  // 改善指数
+  int32 improvement_index = 2;
+  // 改善概述
+  string improvement_summary = 3;
+  // 升高的风险指数个数
+  int32 increased_risks_count = 4;
+  // 没有改变风险指数个数
+  int32 same_risks_count = 5;
+  // 降低的风险指数个数
+  int32 decreased_risks_count = 6;
+  // 改善(降低)最多的风险内容
+  repeated RiskComparison reducing_risks = 7;
+
+  // 18种系统风险对比
+  repeated SystemRiskComparison risk = 8;
+
+  //经络对比
+  repeated Comparison meridians = 11;
+
+  // 报告时间(日期早)
+  google.protobuf.Timestamp former_report = 9;
+  // 报告时间(日期晚)
+  google.protobuf.Timestamp later_report = 10;
+
+  // 综合风险
+  HealthComparison health = 12;
+  // 健康年龄
+  HealthAgeComparison health_age = 13;
+}
+// RiskComparison 对比信息.
+message RiskComparison {
+  // 风险名称
+  string risk_name = 1;
+  // 风险指数(日期早)
+  int32 former_index_value = 2;
+  // 风险指数(日期晚)
+  int32 later_index_value = 3;
+  // 变化趋势
+  string trend = 4;
+}
+// SystemRiskComparison 对比信息.
+message SystemRiskComparison {
+  string system = 1;
+  repeated RiskComparison list = 2;
+}
+
+message MeridianComparison {
+  string meridian_name = 1;
+  int32 first = 2;
+  int32 second = 3;
+  // 变化趋势
+  string trend = 4;
+}
+// HealthComparison 对比信息.
+message HealthComparison {
+  // 风险指数(日期早)
+  int32 former_index_value = 1;
+  // 风险指数(日期晚)
+  int32 later_index_value = 2;
+  // 变化趋势
+  string trend = 3;
+  // 名称
+  string name = 4;
+}
+
+// HealthAgeComparison 对比信息.
+message HealthAgeComparison {
+  // 风险指数(日期早)
+  int32 former_index_value = 1;
+  // 风险指数(日期晚)
+  int32 later_index_value = 2;
+  // 变化趋势
+  string trend = 3;
+  // 名称
+  string name = 4;
+}
+message Comparison {
+  string meridian_name = 1;
+  int32 first = 2;
+  int32 second = 3;
+  // 变化趋势
+  string trend = 4;
 }
