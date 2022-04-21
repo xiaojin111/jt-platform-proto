@@ -267,7 +267,7 @@ message UserProfileSnapshot {
   // 昵称
   string nickname = 2;
   // 年龄
-  int32 age = 3;
+  int64 age = 3;
   // 测量手
   int32 hand = 4;
   // 用户性别
