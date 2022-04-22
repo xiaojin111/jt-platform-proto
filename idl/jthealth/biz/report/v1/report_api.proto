@@ -45,6 +45,11 @@ service ReportAPI {
   // 报告对比接口
   rpc GetComparisonReportNew(GetComparisonReportNewRequest) returns (GetComparisonReportNewResponse);
 
+  //近两天报告
+  rpc ListDaysReports(ListDaysReportsRequest) returns (ListDaysReportsResponse);
+  //近一周报告
+  rpc ListWeekDaysReports(ListWeekDaysReportsRequest) returns (ListWeekDaysReportsResponse);
+
 }
 // 提交一般形式的采样数据的请求
 message SubmitPulseTestRequest {
@@ -704,4 +709,31 @@ message Comparison {
   int32 second = 3;
   // 变化趋势
   string trend = 4;
+}
+
+//列举近两天报告请求
+message ListDaysReportsRequest {
+  string user_profile_id = 1;
+}
+
+//列举近两天报告响应
+message ListDaysReportsResponse {
+  repeated DaysReport days_report = 1;
+}
+//一天的报告列表
+message DaysReport {
+  //日期
+  google.protobuf.Timestamp date = 1;
+  //
+  repeated HealthReport health_reports = 2;
+}
+
+//列举近一周报告请求
+message ListWeekDaysReportsRequest {
+  string user_profile_id = 1;
+}
+
+//列举近一周报告响应
+message ListWeekDaysReportsResponse {
+  repeated DaysReport days_report = 1;
 }
