@@ -1344,8 +1344,9 @@ type MeridianItems struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Date int32  `protobuf:"varint,2,opt,name=date,proto3" json:"date,omitempty"`
+	Name     string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Date     int32             `protobuf:"varint,2,opt,name=date,proto3" json:"date,omitempty"`
+	Describe *MeridianDescribe `protobuf:"bytes,3,opt,name=describe,proto3" json:"describe,omitempty"`
 }
 
 func (x *MeridianItems) Reset() {
@@ -1394,6 +1395,92 @@ func (x *MeridianItems) GetDate() int32 {
 	return 0
 }
 
+func (x *MeridianItems) GetDescribe() *MeridianDescribe {
+	if x != nil {
+		return x.Describe
+	}
+	return nil
+}
+
+type MeridianDescribe struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Describe    string `protobuf:"bytes,2,opt,name=describe,proto3" json:"describe,omitempty"`
+	Walk        string `protobuf:"bytes,3,opt,name=walk,proto3" json:"walk,omitempty"`
+	Summary     string `protobuf:"bytes,4,opt,name=summary,proto3" json:"summary,omitempty"`
+	Reason      string `protobuf:"bytes,5,opt,name=reason,proto3" json:"reason,omitempty"`
+	Performance string `protobuf:"bytes,6,opt,name=performance,proto3" json:"performance,omitempty"`
+}
+
+func (x *MeridianDescribe) Reset() {
+	*x = MeridianDescribe{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MeridianDescribe) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MeridianDescribe) ProtoMessage() {}
+
+func (x *MeridianDescribe) ProtoReflect() protoreflect.Message {
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MeridianDescribe.ProtoReflect.Descriptor instead.
+func (*MeridianDescribe) Descriptor() ([]byte, []int) {
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *MeridianDescribe) GetDescribe() string {
+	if x != nil {
+		return x.Describe
+	}
+	return ""
+}
+
+func (x *MeridianDescribe) GetWalk() string {
+	if x != nil {
+		return x.Walk
+	}
+	return ""
+}
+
+func (x *MeridianDescribe) GetSummary() string {
+	if x != nil {
+		return x.Summary
+	}
+	return ""
+}
+
+func (x *MeridianDescribe) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *MeridianDescribe) GetPerformance() string {
+	if x != nil {
+		return x.Performance
+	}
+	return ""
+}
+
 // UserProfileSnapshot 测量用户档案快照信息
 type UserProfileSnapshot struct {
 	state         protoimpl.MessageState
@@ -1429,7 +1516,7 @@ type UserProfileSnapshot struct {
 func (x *UserProfileSnapshot) Reset() {
 	*x = UserProfileSnapshot{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[15]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1442,7 +1529,7 @@ func (x *UserProfileSnapshot) String() string {
 func (*UserProfileSnapshot) ProtoMessage() {}
 
 func (x *UserProfileSnapshot) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[15]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1455,7 +1542,7 @@ func (x *UserProfileSnapshot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserProfileSnapshot.ProtoReflect.Descriptor instead.
 func (*UserProfileSnapshot) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{15}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *UserProfileSnapshot) GetUserProfileId() string {
@@ -1557,7 +1644,7 @@ type GetMealSuggestionRequest struct {
 func (x *GetMealSuggestionRequest) Reset() {
 	*x = GetMealSuggestionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[16]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1570,7 +1657,7 @@ func (x *GetMealSuggestionRequest) String() string {
 func (*GetMealSuggestionRequest) ProtoMessage() {}
 
 func (x *GetMealSuggestionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[16]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1583,7 +1670,7 @@ func (x *GetMealSuggestionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMealSuggestionRequest.ProtoReflect.Descriptor instead.
 func (*GetMealSuggestionRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{16}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetMealSuggestionRequest) GetPhysiqueKey() string {
@@ -1621,7 +1708,7 @@ type GetMealSuggestionResponse struct {
 func (x *GetMealSuggestionResponse) Reset() {
 	*x = GetMealSuggestionResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[17]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1634,7 +1721,7 @@ func (x *GetMealSuggestionResponse) String() string {
 func (*GetMealSuggestionResponse) ProtoMessage() {}
 
 func (x *GetMealSuggestionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[17]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1647,7 +1734,7 @@ func (x *GetMealSuggestionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMealSuggestionResponse.ProtoReflect.Descriptor instead.
 func (*GetMealSuggestionResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{17}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GetMealSuggestionResponse) GetPhysiqueName() string {
@@ -1690,14 +1777,15 @@ type PhysicalDialecticsMessage struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PhysicalDialecticsCateKey     string `protobuf:"bytes,19,opt,name=physical_dialectics_cate_key,json=physicalDialecticsCateKey,proto3" json:"physical_dialectics_cate_key,omitempty"`
-	PhysicalDialecticsCateContent string `protobuf:"bytes,21,opt,name=physical_dialectics_cate_content,json=physicalDialecticsCateContent,proto3" json:"physical_dialectics_cate_content,omitempty"`
+	PhysicalDialecticsCateKey     string            `protobuf:"bytes,19,opt,name=physical_dialectics_cate_key,json=physicalDialecticsCateKey,proto3" json:"physical_dialectics_cate_key,omitempty"`
+	PhysicalDialecticsCateContent string            `protobuf:"bytes,21,opt,name=physical_dialectics_cate_content,json=physicalDialecticsCateContent,proto3" json:"physical_dialectics_cate_content,omitempty"`
+	Describe                      *PhysicalDescribe `protobuf:"bytes,3,opt,name=describe,proto3" json:"describe,omitempty"`
 }
 
 func (x *PhysicalDialecticsMessage) Reset() {
 	*x = PhysicalDialecticsMessage{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[18]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1710,7 +1798,7 @@ func (x *PhysicalDialecticsMessage) String() string {
 func (*PhysicalDialecticsMessage) ProtoMessage() {}
 
 func (x *PhysicalDialecticsMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[18]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1723,7 +1811,7 @@ func (x *PhysicalDialecticsMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PhysicalDialecticsMessage.ProtoReflect.Descriptor instead.
 func (*PhysicalDialecticsMessage) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{18}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *PhysicalDialecticsMessage) GetPhysicalDialecticsCateKey() string {
@@ -1736,6 +1824,68 @@ func (x *PhysicalDialecticsMessage) GetPhysicalDialecticsCateKey() string {
 func (x *PhysicalDialecticsMessage) GetPhysicalDialecticsCateContent() string {
 	if x != nil {
 		return x.PhysicalDialecticsCateContent
+	}
+	return ""
+}
+
+func (x *PhysicalDialecticsMessage) GetDescribe() *PhysicalDescribe {
+	if x != nil {
+		return x.Describe
+	}
+	return nil
+}
+
+type PhysicalDescribe struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Signs        string `protobuf:"bytes,1,opt,name=signs,proto3" json:"signs,omitempty"`
+	Conditioning string `protobuf:"bytes,2,opt,name=conditioning,proto3" json:"conditioning,omitempty"`
+}
+
+func (x *PhysicalDescribe) Reset() {
+	*x = PhysicalDescribe{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PhysicalDescribe) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PhysicalDescribe) ProtoMessage() {}
+
+func (x *PhysicalDescribe) ProtoReflect() protoreflect.Message {
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PhysicalDescribe.ProtoReflect.Descriptor instead.
+func (*PhysicalDescribe) Descriptor() ([]byte, []int) {
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *PhysicalDescribe) GetSigns() string {
+	if x != nil {
+		return x.Signs
+	}
+	return ""
+}
+
+func (x *PhysicalDescribe) GetConditioning() string {
+	if x != nil {
+		return x.Conditioning
 	}
 	return ""
 }
@@ -1754,12 +1904,14 @@ type RiskInfo struct {
 	IndexValue int32 `protobuf:"varint,3,opt,name=index_value,json=indexValue,proto3" json:"index_value,omitempty"`
 	//程度
 	Degree string `protobuf:"bytes,4,opt,name=degree,proto3" json:"degree,omitempty"`
+	//描述
+	Describe *RiskDescribe `protobuf:"bytes,5,opt,name=describe,proto3" json:"describe,omitempty"`
 }
 
 func (x *RiskInfo) Reset() {
 	*x = RiskInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[19]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1772,7 +1924,7 @@ func (x *RiskInfo) String() string {
 func (*RiskInfo) ProtoMessage() {}
 
 func (x *RiskInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[19]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1785,7 +1937,7 @@ func (x *RiskInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RiskInfo.ProtoReflect.Descriptor instead.
 func (*RiskInfo) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{19}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *RiskInfo) GetRiskId() string {
@@ -1816,6 +1968,76 @@ func (x *RiskInfo) GetDegree() string {
 	return ""
 }
 
+func (x *RiskInfo) GetDescribe() *RiskDescribe {
+	if x != nil {
+		return x.Describe
+	}
+	return nil
+}
+
+type RiskDescribe struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Describe string `protobuf:"bytes,1,opt,name=describe,proto3" json:"describe,omitempty"`
+	Refer    string `protobuf:"bytes,2,opt,name=refer,proto3" json:"refer,omitempty"`
+	Reason   string `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
+}
+
+func (x *RiskDescribe) Reset() {
+	*x = RiskDescribe{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RiskDescribe) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RiskDescribe) ProtoMessage() {}
+
+func (x *RiskDescribe) ProtoReflect() protoreflect.Message {
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RiskDescribe.ProtoReflect.Descriptor instead.
+func (*RiskDescribe) Descriptor() ([]byte, []int) {
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *RiskDescribe) GetDescribe() string {
+	if x != nil {
+		return x.Describe
+	}
+	return ""
+}
+
+func (x *RiskDescribe) GetRefer() string {
+	if x != nil {
+		return x.Refer
+	}
+	return ""
+}
+
+func (x *RiskDescribe) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
 // MealProduct 膳食商品.
 type MealProduct struct {
 	state         protoimpl.MessageState
@@ -1833,7 +2055,7 @@ type MealProduct struct {
 func (x *MealProduct) Reset() {
 	*x = MealProduct{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[20]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1846,7 +2068,7 @@ func (x *MealProduct) String() string {
 func (*MealProduct) ProtoMessage() {}
 
 func (x *MealProduct) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[20]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1859,7 +2081,7 @@ func (x *MealProduct) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MealProduct.ProtoReflect.Descriptor instead.
 func (*MealProduct) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{20}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *MealProduct) GetProductLink() string {
@@ -1910,7 +2132,7 @@ type ImageResource struct {
 func (x *ImageResource) Reset() {
 	*x = ImageResource{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[21]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1923,7 +2145,7 @@ func (x *ImageResource) String() string {
 func (*ImageResource) ProtoMessage() {}
 
 func (x *ImageResource) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[21]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1936,7 +2158,7 @@ func (x *ImageResource) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImageResource.ProtoReflect.Descriptor instead.
 func (*ImageResource) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{21}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ImageResource) GetImageId() string {
@@ -2018,7 +2240,7 @@ type CreateRiskCommodityRequest struct {
 func (x *CreateRiskCommodityRequest) Reset() {
 	*x = CreateRiskCommodityRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[22]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2031,7 +2253,7 @@ func (x *CreateRiskCommodityRequest) String() string {
 func (*CreateRiskCommodityRequest) ProtoMessage() {}
 
 func (x *CreateRiskCommodityRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[22]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2044,7 +2266,7 @@ func (x *CreateRiskCommodityRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRiskCommodityRequest.ProtoReflect.Descriptor instead.
 func (*CreateRiskCommodityRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{22}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *CreateRiskCommodityRequest) GetRiskCommodityId() string {
@@ -2102,7 +2324,7 @@ type CreateRiskCommodityResponse struct {
 func (x *CreateRiskCommodityResponse) Reset() {
 	*x = CreateRiskCommodityResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[23]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2115,7 +2337,7 @@ func (x *CreateRiskCommodityResponse) String() string {
 func (*CreateRiskCommodityResponse) ProtoMessage() {}
 
 func (x *CreateRiskCommodityResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[23]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2128,7 +2350,7 @@ func (x *CreateRiskCommodityResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRiskCommodityResponse.ProtoReflect.Descriptor instead.
 func (*CreateRiskCommodityResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{23}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *CreateRiskCommodityResponse) GetRiskCommodityId() string {
@@ -2148,7 +2370,7 @@ type GetRiskListRequest struct {
 func (x *GetRiskListRequest) Reset() {
 	*x = GetRiskListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[24]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2161,7 +2383,7 @@ func (x *GetRiskListRequest) String() string {
 func (*GetRiskListRequest) ProtoMessage() {}
 
 func (x *GetRiskListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[24]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2174,7 +2396,7 @@ func (x *GetRiskListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRiskListRequest.ProtoReflect.Descriptor instead.
 func (*GetRiskListRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{24}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{27}
 }
 
 //获取风险列表响应
@@ -2189,7 +2411,7 @@ type GetRiskListResponse struct {
 func (x *GetRiskListResponse) Reset() {
 	*x = GetRiskListResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[25]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2202,7 +2424,7 @@ func (x *GetRiskListResponse) String() string {
 func (*GetRiskListResponse) ProtoMessage() {}
 
 func (x *GetRiskListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[25]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2215,7 +2437,7 @@ func (x *GetRiskListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRiskListResponse.ProtoReflect.Descriptor instead.
 func (*GetRiskListResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{25}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *GetRiskListResponse) GetList() []*RiskMsg {
@@ -2239,7 +2461,7 @@ type RiskMsg struct {
 func (x *RiskMsg) Reset() {
 	*x = RiskMsg{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[26]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2252,7 +2474,7 @@ func (x *RiskMsg) String() string {
 func (*RiskMsg) ProtoMessage() {}
 
 func (x *RiskMsg) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[26]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2265,7 +2487,7 @@ func (x *RiskMsg) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RiskMsg.ProtoReflect.Descriptor instead.
 func (*RiskMsg) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{26}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *RiskMsg) GetRiskId() string {
@@ -2301,7 +2523,7 @@ type GetRiskCommodityListRequest struct {
 func (x *GetRiskCommodityListRequest) Reset() {
 	*x = GetRiskCommodityListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[27]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2314,7 +2536,7 @@ func (x *GetRiskCommodityListRequest) String() string {
 func (*GetRiskCommodityListRequest) ProtoMessage() {}
 
 func (x *GetRiskCommodityListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[27]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2327,7 +2549,7 @@ func (x *GetRiskCommodityListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRiskCommodityListRequest.ProtoReflect.Descriptor instead.
 func (*GetRiskCommodityListRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{27}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *GetRiskCommodityListRequest) GetRiskId() string {
@@ -2370,7 +2592,7 @@ type GetRiskCommodityListResponse struct {
 func (x *GetRiskCommodityListResponse) Reset() {
 	*x = GetRiskCommodityListResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[28]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2383,7 +2605,7 @@ func (x *GetRiskCommodityListResponse) String() string {
 func (*GetRiskCommodityListResponse) ProtoMessage() {}
 
 func (x *GetRiskCommodityListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[28]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2396,7 +2618,7 @@ func (x *GetRiskCommodityListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRiskCommodityListResponse.ProtoReflect.Descriptor instead.
 func (*GetRiskCommodityListResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{28}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *GetRiskCommodityListResponse) GetList() []*RiskCommodityMsg {
@@ -2428,7 +2650,7 @@ type RiskCommodityMsg struct {
 func (x *RiskCommodityMsg) Reset() {
 	*x = RiskCommodityMsg{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[29]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2441,7 +2663,7 @@ func (x *RiskCommodityMsg) String() string {
 func (*RiskCommodityMsg) ProtoMessage() {}
 
 func (x *RiskCommodityMsg) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[29]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2454,7 +2676,7 @@ func (x *RiskCommodityMsg) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RiskCommodityMsg.ProtoReflect.Descriptor instead.
 func (*RiskCommodityMsg) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{29}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *RiskCommodityMsg) GetRiskCommodityId() string {
@@ -2562,7 +2784,7 @@ type EditReportShowRequest struct {
 func (x *EditReportShowRequest) Reset() {
 	*x = EditReportShowRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[30]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2575,7 +2797,7 @@ func (x *EditReportShowRequest) String() string {
 func (*EditReportShowRequest) ProtoMessage() {}
 
 func (x *EditReportShowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[30]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2588,7 +2810,7 @@ func (x *EditReportShowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EditReportShowRequest.ProtoReflect.Descriptor instead.
 func (*EditReportShowRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{30}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *EditReportShowRequest) GetApplicationId() string {
@@ -2786,7 +3008,7 @@ type EditReportShowResponse struct {
 func (x *EditReportShowResponse) Reset() {
 	*x = EditReportShowResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[31]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2799,7 +3021,7 @@ func (x *EditReportShowResponse) String() string {
 func (*EditReportShowResponse) ProtoMessage() {}
 
 func (x *EditReportShowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[31]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2812,7 +3034,7 @@ func (x *EditReportShowResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EditReportShowResponse.ProtoReflect.Descriptor instead.
 func (*EditReportShowResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{31}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *EditReportShowResponse) GetApplicationId() string {
@@ -2835,7 +3057,7 @@ type GetReportShowRequest struct {
 func (x *GetReportShowRequest) Reset() {
 	*x = GetReportShowRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[32]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2848,7 +3070,7 @@ func (x *GetReportShowRequest) String() string {
 func (*GetReportShowRequest) ProtoMessage() {}
 
 func (x *GetReportShowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[32]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2861,7 +3083,7 @@ func (x *GetReportShowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetReportShowRequest.ProtoReflect.Descriptor instead.
 func (*GetReportShowRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{32}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *GetReportShowRequest) GetApplicationId() string {
@@ -2934,7 +3156,7 @@ type GetReportShowResponse struct {
 func (x *GetReportShowResponse) Reset() {
 	*x = GetReportShowResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[33]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2947,7 +3169,7 @@ func (x *GetReportShowResponse) String() string {
 func (*GetReportShowResponse) ProtoMessage() {}
 
 func (x *GetReportShowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[33]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2960,7 +3182,7 @@ func (x *GetReportShowResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetReportShowResponse.ProtoReflect.Descriptor instead.
 func (*GetReportShowResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{33}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *GetReportShowResponse) GetApplicationId() string {
@@ -3162,7 +3384,7 @@ type EditReportComparedShowRequest struct {
 func (x *EditReportComparedShowRequest) Reset() {
 	*x = EditReportComparedShowRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[34]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3175,7 +3397,7 @@ func (x *EditReportComparedShowRequest) String() string {
 func (*EditReportComparedShowRequest) ProtoMessage() {}
 
 func (x *EditReportComparedShowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[34]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3188,7 +3410,7 @@ func (x *EditReportComparedShowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EditReportComparedShowRequest.ProtoReflect.Descriptor instead.
 func (*EditReportComparedShowRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{34}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *EditReportComparedShowRequest) GetApplicationId() string {
@@ -3225,7 +3447,7 @@ type EditReportComparedShowResponse struct {
 func (x *EditReportComparedShowResponse) Reset() {
 	*x = EditReportComparedShowResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[35]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3238,7 +3460,7 @@ func (x *EditReportComparedShowResponse) String() string {
 func (*EditReportComparedShowResponse) ProtoMessage() {}
 
 func (x *EditReportComparedShowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[35]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3251,7 +3473,7 @@ func (x *EditReportComparedShowResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EditReportComparedShowResponse.ProtoReflect.Descriptor instead.
 func (*EditReportComparedShowResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{35}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *EditReportComparedShowResponse) GetApplicationId() string {
@@ -3274,7 +3496,7 @@ type GetReportComparedShowRequest struct {
 func (x *GetReportComparedShowRequest) Reset() {
 	*x = GetReportComparedShowRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[36]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3287,7 +3509,7 @@ func (x *GetReportComparedShowRequest) String() string {
 func (*GetReportComparedShowRequest) ProtoMessage() {}
 
 func (x *GetReportComparedShowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[36]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3300,7 +3522,7 @@ func (x *GetReportComparedShowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetReportComparedShowRequest.ProtoReflect.Descriptor instead.
 func (*GetReportComparedShowRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{36}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *GetReportComparedShowRequest) GetApplicationId() string {
@@ -3327,7 +3549,7 @@ type GetReportComparedShowResponse struct {
 func (x *GetReportComparedShowResponse) Reset() {
 	*x = GetReportComparedShowResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[37]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3340,7 +3562,7 @@ func (x *GetReportComparedShowResponse) String() string {
 func (*GetReportComparedShowResponse) ProtoMessage() {}
 
 func (x *GetReportComparedShowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[37]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3353,7 +3575,7 @@ func (x *GetReportComparedShowResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetReportComparedShowResponse.ProtoReflect.Descriptor instead.
 func (*GetReportComparedShowResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{37}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *GetReportComparedShowResponse) GetApplicationId() string {
@@ -3402,7 +3624,7 @@ type GetComparisonReportNewRequest struct {
 func (x *GetComparisonReportNewRequest) Reset() {
 	*x = GetComparisonReportNewRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[38]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3415,7 +3637,7 @@ func (x *GetComparisonReportNewRequest) String() string {
 func (*GetComparisonReportNewRequest) ProtoMessage() {}
 
 func (x *GetComparisonReportNewRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[38]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3428,7 +3650,7 @@ func (x *GetComparisonReportNewRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetComparisonReportNewRequest.ProtoReflect.Descriptor instead.
 func (*GetComparisonReportNewRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{38}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *GetComparisonReportNewRequest) GetFirstReportId() string {
@@ -3473,7 +3695,7 @@ type GetComparisonReportNewResponse struct {
 func (x *GetComparisonReportNewResponse) Reset() {
 	*x = GetComparisonReportNewResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[39]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3486,7 +3708,7 @@ func (x *GetComparisonReportNewResponse) String() string {
 func (*GetComparisonReportNewResponse) ProtoMessage() {}
 
 func (x *GetComparisonReportNewResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[39]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3499,7 +3721,7 @@ func (x *GetComparisonReportNewResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetComparisonReportNewResponse.ProtoReflect.Descriptor instead.
 func (*GetComparisonReportNewResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{39}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *GetComparisonReportNewResponse) GetComparisonReport() *ComparisonReportNew {
@@ -3552,7 +3774,7 @@ type ComparisonReportNew struct {
 func (x *ComparisonReportNew) Reset() {
 	*x = ComparisonReportNew{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[40]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[43]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3565,7 +3787,7 @@ func (x *ComparisonReportNew) String() string {
 func (*ComparisonReportNew) ProtoMessage() {}
 
 func (x *ComparisonReportNew) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[40]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[43]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3578,7 +3800,7 @@ func (x *ComparisonReportNew) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ComparisonReportNew.ProtoReflect.Descriptor instead.
 func (*ComparisonReportNew) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{40}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *ComparisonReportNew) GetImprovementStatus() int32 {
@@ -3691,7 +3913,7 @@ type RiskComparison struct {
 func (x *RiskComparison) Reset() {
 	*x = RiskComparison{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[41]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[44]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3704,7 +3926,7 @@ func (x *RiskComparison) String() string {
 func (*RiskComparison) ProtoMessage() {}
 
 func (x *RiskComparison) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[41]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[44]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3717,7 +3939,7 @@ func (x *RiskComparison) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RiskComparison.ProtoReflect.Descriptor instead.
 func (*RiskComparison) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{41}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *RiskComparison) GetRiskName() string {
@@ -3761,7 +3983,7 @@ type SystemRiskComparison struct {
 func (x *SystemRiskComparison) Reset() {
 	*x = SystemRiskComparison{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[42]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[45]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3774,7 +3996,7 @@ func (x *SystemRiskComparison) String() string {
 func (*SystemRiskComparison) ProtoMessage() {}
 
 func (x *SystemRiskComparison) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[42]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[45]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3787,7 +4009,7 @@ func (x *SystemRiskComparison) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemRiskComparison.ProtoReflect.Descriptor instead.
 func (*SystemRiskComparison) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{42}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *SystemRiskComparison) GetSystem() string {
@@ -3819,7 +4041,7 @@ type MeridianComparison struct {
 func (x *MeridianComparison) Reset() {
 	*x = MeridianComparison{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[43]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3832,7 +4054,7 @@ func (x *MeridianComparison) String() string {
 func (*MeridianComparison) ProtoMessage() {}
 
 func (x *MeridianComparison) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[43]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3845,7 +4067,7 @@ func (x *MeridianComparison) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MeridianComparison.ProtoReflect.Descriptor instead.
 func (*MeridianComparison) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{43}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *MeridianComparison) GetMeridianName() string {
@@ -3895,7 +4117,7 @@ type HealthComparison struct {
 func (x *HealthComparison) Reset() {
 	*x = HealthComparison{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[44]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[47]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3908,7 +4130,7 @@ func (x *HealthComparison) String() string {
 func (*HealthComparison) ProtoMessage() {}
 
 func (x *HealthComparison) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[44]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[47]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3921,7 +4143,7 @@ func (x *HealthComparison) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthComparison.ProtoReflect.Descriptor instead.
 func (*HealthComparison) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{44}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *HealthComparison) GetFormerIndexValue() int32 {
@@ -3971,7 +4193,7 @@ type HealthAgeComparison struct {
 func (x *HealthAgeComparison) Reset() {
 	*x = HealthAgeComparison{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[45]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[48]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3984,7 +4206,7 @@ func (x *HealthAgeComparison) String() string {
 func (*HealthAgeComparison) ProtoMessage() {}
 
 func (x *HealthAgeComparison) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[45]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[48]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3997,7 +4219,7 @@ func (x *HealthAgeComparison) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthAgeComparison.ProtoReflect.Descriptor instead.
 func (*HealthAgeComparison) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{45}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *HealthAgeComparison) GetFormerIndexValue() int32 {
@@ -4043,7 +4265,7 @@ type Comparison struct {
 func (x *Comparison) Reset() {
 	*x = Comparison{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[46]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4056,7 +4278,7 @@ func (x *Comparison) String() string {
 func (*Comparison) ProtoMessage() {}
 
 func (x *Comparison) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[46]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4069,7 +4291,7 @@ func (x *Comparison) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Comparison.ProtoReflect.Descriptor instead.
 func (*Comparison) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{46}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *Comparison) GetMeridianName() string {
@@ -4112,7 +4334,7 @@ type ListDaysReportsRequest struct {
 func (x *ListDaysReportsRequest) Reset() {
 	*x = ListDaysReportsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[47]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[50]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4125,7 +4347,7 @@ func (x *ListDaysReportsRequest) String() string {
 func (*ListDaysReportsRequest) ProtoMessage() {}
 
 func (x *ListDaysReportsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[47]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[50]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4138,7 +4360,7 @@ func (x *ListDaysReportsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDaysReportsRequest.ProtoReflect.Descriptor instead.
 func (*ListDaysReportsRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{47}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *ListDaysReportsRequest) GetUserProfileId() string {
@@ -4160,7 +4382,7 @@ type ListDaysReportsResponse struct {
 func (x *ListDaysReportsResponse) Reset() {
 	*x = ListDaysReportsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[48]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4173,7 +4395,7 @@ func (x *ListDaysReportsResponse) String() string {
 func (*ListDaysReportsResponse) ProtoMessage() {}
 
 func (x *ListDaysReportsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[48]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4186,7 +4408,7 @@ func (x *ListDaysReportsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDaysReportsResponse.ProtoReflect.Descriptor instead.
 func (*ListDaysReportsResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{48}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *ListDaysReportsResponse) GetDaysReport() []*DaysReport {
@@ -4211,7 +4433,7 @@ type DaysReport struct {
 func (x *DaysReport) Reset() {
 	*x = DaysReport{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[49]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4224,7 +4446,7 @@ func (x *DaysReport) String() string {
 func (*DaysReport) ProtoMessage() {}
 
 func (x *DaysReport) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[49]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4237,7 +4459,7 @@ func (x *DaysReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DaysReport.ProtoReflect.Descriptor instead.
 func (*DaysReport) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{49}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *DaysReport) GetDate() *timestamppb.Timestamp {
@@ -4266,7 +4488,7 @@ type ListWeekDaysReportsRequest struct {
 func (x *ListWeekDaysReportsRequest) Reset() {
 	*x = ListWeekDaysReportsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[50]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4279,7 +4501,7 @@ func (x *ListWeekDaysReportsRequest) String() string {
 func (*ListWeekDaysReportsRequest) ProtoMessage() {}
 
 func (x *ListWeekDaysReportsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[50]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4292,7 +4514,7 @@ func (x *ListWeekDaysReportsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListWeekDaysReportsRequest.ProtoReflect.Descriptor instead.
 func (*ListWeekDaysReportsRequest) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{50}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *ListWeekDaysReportsRequest) GetUserProfileId() string {
@@ -4314,7 +4536,7 @@ type ListWeekDaysReportsResponse struct {
 func (x *ListWeekDaysReportsResponse) Reset() {
 	*x = ListWeekDaysReportsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[51]
+		mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[54]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4327,7 +4549,7 @@ func (x *ListWeekDaysReportsResponse) String() string {
 func (*ListWeekDaysReportsResponse) ProtoMessage() {}
 
 func (x *ListWeekDaysReportsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[51]
+	mi := &file_jthealth_biz_report_v1_report_api_proto_msgTypes[54]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4340,7 +4562,7 @@ func (x *ListWeekDaysReportsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListWeekDaysReportsResponse.ProtoReflect.Descriptor instead.
 func (*ListWeekDaysReportsResponse) Descriptor() ([]byte, []int) {
-	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{51}
+	return file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *ListWeekDaysReportsResponse) GetDaysReport() []*DaysReport {
@@ -4614,77 +4836,110 @@ var file_jthealth_biz_report_v1_report_api_proto_rawDesc = []byte{
 	0x65, 0x61, 0x6c, 0x74, 0x68, 0x79, 0x5f, 0x61, 0x67, 0x65, 0x5f, 0x68, 0x65, 0x69, 0x67, 0x68,
 	0x74, 0x5f, 0x70, 0x72, 0x6f, 0x70, 0x6f, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x1b, 0x20, 0x01,
 	0x28, 0x02, 0x52, 0x1a, 0x68, 0x65, 0x61, 0x6c, 0x74, 0x68, 0x79, 0x41, 0x67, 0x65, 0x48, 0x65,
-	0x69, 0x67, 0x68, 0x74, 0x50, 0x72, 0x6f, 0x70, 0x6f, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x37,
+	0x69, 0x67, 0x68, 0x74, 0x50, 0x72, 0x6f, 0x70, 0x6f, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x7d,
 	0x0a, 0x0d, 0x4d, 0x65, 0x72, 0x69, 0x64, 0x69, 0x61, 0x6e, 0x49, 0x74, 0x65, 0x6d, 0x73, 0x12,
 	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
 	0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x22, 0xed, 0x02, 0x0a, 0x13, 0x55, 0x73, 0x65, 0x72,
-	0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x12,
-	0x26, 0x0a, 0x0f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x5f,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x75, 0x73, 0x65, 0x72, 0x50, 0x72,
-	0x6f, 0x66, 0x69, 0x6c, 0x65, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x6e, 0x69, 0x63, 0x6b, 0x6e,
-	0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6e, 0x69, 0x63, 0x6b, 0x6e,
-	0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x61, 0x67, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03,
-	0x52, 0x03, 0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x68, 0x61, 0x6e, 0x64, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x05, 0x52, 0x04, 0x68, 0x61, 0x6e, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x67, 0x65, 0x6e,
-	0x64, 0x65, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x67, 0x65, 0x6e, 0x64, 0x65,
-	0x72, 0x12, 0x16, 0x0a, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x77, 0x65, 0x69,
-	0x67, 0x68, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x77, 0x65, 0x69, 0x67, 0x68,
-	0x74, 0x12, 0x29, 0x0a, 0x10, 0x6e, 0x69, 0x63, 0x6b, 0x6e, 0x61, 0x6d, 0x65, 0x5f, 0x69, 0x6e,
-	0x69, 0x74, 0x69, 0x61, 0x6c, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x6e, 0x69, 0x63,
-	0x6b, 0x6e, 0x61, 0x6d, 0x65, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x12, 0x1f, 0x0a, 0x0b,
-	0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x0a, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x14, 0x0a,
-	0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x68,
-	0x6f, 0x6e, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64,
-	0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64,
-	0x12, 0x25, 0x0a, 0x0e, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
-	0x69, 0x64, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x22, 0x62, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x4d, 0x65,
-	0x61, 0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x68, 0x79, 0x73, 0x69, 0x71, 0x75, 0x65, 0x5f,
-	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x68, 0x79, 0x73, 0x69,
-	0x71, 0x75, 0x65, 0x4b, 0x65, 0x79, 0x12, 0x23, 0x0a, 0x0d, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61,
-	0x67, 0x65, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6c,
-	0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x43, 0x6f, 0x64, 0x65, 0x22, 0xa8, 0x02, 0x0a, 0x19,
-	0x47, 0x65, 0x74, 0x4d, 0x65, 0x61, 0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f,
-	0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x70, 0x68, 0x79,
-	0x73, 0x69, 0x71, 0x75, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0c, 0x70, 0x68, 0x79, 0x73, 0x69, 0x71, 0x75, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x2e,
-	0x0a, 0x13, 0x6d, 0x65, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f,
-	0x6e, 0x5f, 0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x6d, 0x65, 0x61,
-	0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x4b, 0x65, 0x79, 0x12, 0x30,
-	0x0a, 0x14, 0x6d, 0x65, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f,
-	0x6e, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x12, 0x6d, 0x65,
-	0x61, 0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x61, 0x6d, 0x65,
-	0x12, 0x34, 0x0a, 0x16, 0x6d, 0x65, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74,
-	0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x14, 0x6d, 0x65, 0x61, 0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e,
-	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x4e, 0x0a, 0x10, 0x66, 0x6f, 0x6f, 0x64, 0x5f, 0x73,
-	0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b,
-	0x32, 0x23, 0x2e, 0x6a, 0x74, 0x68, 0x65, 0x61, 0x6c, 0x74, 0x68, 0x2e, 0x62, 0x69, 0x7a, 0x2e,
-	0x72, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x61, 0x6c, 0x50, 0x72,
-	0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x0f, 0x66, 0x6f, 0x6f, 0x64, 0x53, 0x75, 0x67, 0x67, 0x65,
-	0x73, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0xa5, 0x01, 0x0a, 0x19, 0x50, 0x68, 0x79, 0x73, 0x69,
-	0x63, 0x61, 0x6c, 0x44, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x63, 0x73, 0x4d, 0x65, 0x73,
-	0x73, 0x61, 0x67, 0x65, 0x12, 0x3f, 0x0a, 0x1c, 0x70, 0x68, 0x79, 0x73, 0x69, 0x63, 0x61, 0x6c,
+	0x05, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x44, 0x0a, 0x08, 0x64, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x62, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x6a, 0x74, 0x68, 0x65,
+	0x61, 0x6c, 0x74, 0x68, 0x2e, 0x62, 0x69, 0x7a, 0x2e, 0x72, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x2e,
+	0x76, 0x31, 0x2e, 0x4d, 0x65, 0x72, 0x69, 0x64, 0x69, 0x61, 0x6e, 0x44, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x62, 0x65, 0x52, 0x08, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x22, 0x96, 0x01,
+	0x0a, 0x10, 0x4d, 0x65, 0x72, 0x69, 0x64, 0x69, 0x61, 0x6e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x12, 0x12,
+	0x0a, 0x04, 0x77, 0x61, 0x6c, 0x6b, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x77, 0x61,
+	0x6c, 0x6b, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x12, 0x16, 0x0a, 0x06,
+	0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65,
+	0x61, 0x73, 0x6f, 0x6e, 0x12, 0x20, 0x0a, 0x0b, 0x70, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d, 0x61,
+	0x6e, 0x63, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x65, 0x72, 0x66, 0x6f,
+	0x72, 0x6d, 0x61, 0x6e, 0x63, 0x65, 0x22, 0xed, 0x02, 0x0a, 0x13, 0x55, 0x73, 0x65, 0x72, 0x50,
+	0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x12, 0x26,
+	0x0a, 0x0f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x75, 0x73, 0x65, 0x72, 0x50, 0x72, 0x6f,
+	0x66, 0x69, 0x6c, 0x65, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x6e, 0x69, 0x63, 0x6b, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6e, 0x69, 0x63, 0x6b, 0x6e, 0x61,
+	0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x61, 0x67, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x03, 0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x68, 0x61, 0x6e, 0x64, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x68, 0x61, 0x6e, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x67, 0x65, 0x6e, 0x64,
+	0x65, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x67, 0x65, 0x6e, 0x64, 0x65, 0x72,
+	0x12, 0x16, 0x0a, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x06, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x77, 0x65, 0x69, 0x67,
+	0x68, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74,
+	0x12, 0x29, 0x0a, 0x10, 0x6e, 0x69, 0x63, 0x6b, 0x6e, 0x61, 0x6d, 0x65, 0x5f, 0x69, 0x6e, 0x69,
+	0x74, 0x69, 0x61, 0x6c, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x6e, 0x69, 0x63, 0x6b,
+	0x6e, 0x61, 0x6d, 0x65, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x12, 0x1f, 0x0a, 0x0b, 0x6e,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x14, 0x0a, 0x05,
+	0x70, 0x68, 0x6f, 0x6e, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x68, 0x6f,
+	0x6e, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18,
+	0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x12,
+	0x25, 0x0a, 0x0e, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69,
+	0x64, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x22, 0x62, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x61,
+	0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x68, 0x79, 0x73, 0x69, 0x71, 0x75, 0x65, 0x5f, 0x6b,
+	0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x68, 0x79, 0x73, 0x69, 0x71,
+	0x75, 0x65, 0x4b, 0x65, 0x79, 0x12, 0x23, 0x0a, 0x0d, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67,
+	0x65, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6c, 0x61,
+	0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x43, 0x6f, 0x64, 0x65, 0x22, 0xa8, 0x02, 0x0a, 0x19, 0x47,
+	0x65, 0x74, 0x4d, 0x65, 0x61, 0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x70, 0x68, 0x79, 0x73,
+	0x69, 0x71, 0x75, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0c, 0x70, 0x68, 0x79, 0x73, 0x69, 0x71, 0x75, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x2e, 0x0a,
+	0x13, 0x6d, 0x65, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e,
+	0x5f, 0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x6d, 0x65, 0x61, 0x6c,
+	0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x4b, 0x65, 0x79, 0x12, 0x30, 0x0a,
+	0x14, 0x6d, 0x65, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e,
+	0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x12, 0x6d, 0x65, 0x61,
+	0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x34, 0x0a, 0x16, 0x6d, 0x65, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69,
+	0x6f, 0x6e, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x14, 0x6d, 0x65, 0x61, 0x6c, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x44,
+	0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x4e, 0x0a, 0x10, 0x66, 0x6f, 0x6f, 0x64, 0x5f, 0x73, 0x75,
+	0x67, 0x67, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x23, 0x2e, 0x6a, 0x74, 0x68, 0x65, 0x61, 0x6c, 0x74, 0x68, 0x2e, 0x62, 0x69, 0x7a, 0x2e, 0x72,
+	0x65, 0x70, 0x6f, 0x72, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x61, 0x6c, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x52, 0x0f, 0x66, 0x6f, 0x6f, 0x64, 0x53, 0x75, 0x67, 0x67, 0x65, 0x73,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0xeb, 0x01, 0x0a, 0x19, 0x50, 0x68, 0x79, 0x73, 0x69, 0x63,
+	0x61, 0x6c, 0x44, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x63, 0x73, 0x4d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x12, 0x3f, 0x0a, 0x1c, 0x70, 0x68, 0x79, 0x73, 0x69, 0x63, 0x61, 0x6c, 0x5f,
+	0x64, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x63, 0x73, 0x5f, 0x63, 0x61, 0x74, 0x65, 0x5f,
+	0x6b, 0x65, 0x79, 0x18, 0x13, 0x20, 0x01, 0x28, 0x09, 0x52, 0x19, 0x70, 0x68, 0x79, 0x73, 0x69,
+	0x63, 0x61, 0x6c, 0x44, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x63, 0x73, 0x43, 0x61, 0x74,
+	0x65, 0x4b, 0x65, 0x79, 0x12, 0x47, 0x0a, 0x20, 0x70, 0x68, 0x79, 0x73, 0x69, 0x63, 0x61, 0x6c,
 	0x5f, 0x64, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x63, 0x73, 0x5f, 0x63, 0x61, 0x74, 0x65,
-	0x5f, 0x6b, 0x65, 0x79, 0x18, 0x13, 0x20, 0x01, 0x28, 0x09, 0x52, 0x19, 0x70, 0x68, 0x79, 0x73,
-	0x69, 0x63, 0x61, 0x6c, 0x44, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x63, 0x73, 0x43, 0x61,
-	0x74, 0x65, 0x4b, 0x65, 0x79, 0x12, 0x47, 0x0a, 0x20, 0x70, 0x68, 0x79, 0x73, 0x69, 0x63, 0x61,
-	0x6c, 0x5f, 0x64, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x63, 0x73, 0x5f, 0x63, 0x61, 0x74,
-	0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x15, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x1d, 0x70, 0x68, 0x79, 0x73, 0x69, 0x63, 0x61, 0x6c, 0x44, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74,
-	0x69, 0x63, 0x73, 0x43, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x22, 0x79,
-	0x0a, 0x08, 0x52, 0x69, 0x73, 0x6b, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x17, 0x0a, 0x07, 0x72, 0x69,
-	0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x69, 0x73,
-	0x6b, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x72, 0x69, 0x73, 0x6b, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72, 0x69, 0x73, 0x6b, 0x4e, 0x61, 0x6d, 0x65,
-	0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x56, 0x61, 0x6c, 0x75,
-	0x65, 0x12, 0x16, 0x0a, 0x06, 0x64, 0x65, 0x67, 0x72, 0x65, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x06, 0x64, 0x65, 0x67, 0x72, 0x65, 0x65, 0x22, 0x92, 0x01, 0x0a, 0x0b, 0x4d, 0x65,
+	0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x15, 0x20, 0x01, 0x28, 0x09, 0x52, 0x1d,
+	0x70, 0x68, 0x79, 0x73, 0x69, 0x63, 0x61, 0x6c, 0x44, 0x69, 0x61, 0x6c, 0x65, 0x63, 0x74, 0x69,
+	0x63, 0x73, 0x43, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x12, 0x44, 0x0a,
+	0x08, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x28, 0x2e, 0x6a, 0x74, 0x68, 0x65, 0x61, 0x6c, 0x74, 0x68, 0x2e, 0x62, 0x69, 0x7a, 0x2e, 0x72,
+	0x65, 0x70, 0x6f, 0x72, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x68, 0x79, 0x73, 0x69, 0x63, 0x61,
+	0x6c, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x52, 0x08, 0x64, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x62, 0x65, 0x22, 0x4c, 0x0a, 0x10, 0x50, 0x68, 0x79, 0x73, 0x69, 0x63, 0x61, 0x6c, 0x44,
+	0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x69, 0x67, 0x6e, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x69, 0x67, 0x6e, 0x73, 0x12, 0x22, 0x0a,
+	0x0c, 0x63, 0x6f, 0x6e, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0c, 0x63, 0x6f, 0x6e, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x69, 0x6e,
+	0x67, 0x22, 0xbb, 0x01, 0x0a, 0x08, 0x52, 0x69, 0x73, 0x6b, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x17,
+	0x0a, 0x07, 0x72, 0x69, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x72, 0x69, 0x73, 0x6b, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x72, 0x69, 0x73, 0x6b, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72, 0x69, 0x73, 0x6b,
+	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x5f, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x69, 0x6e, 0x64, 0x65, 0x78,
+	0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x64, 0x65, 0x67, 0x72, 0x65, 0x65, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x64, 0x65, 0x67, 0x72, 0x65, 0x65, 0x12, 0x40, 0x0a,
+	0x08, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x24, 0x2e, 0x6a, 0x74, 0x68, 0x65, 0x61, 0x6c, 0x74, 0x68, 0x2e, 0x62, 0x69, 0x7a, 0x2e, 0x72,
+	0x65, 0x70, 0x6f, 0x72, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x69, 0x73, 0x6b, 0x44, 0x65, 0x73,
+	0x63, 0x72, 0x69, 0x62, 0x65, 0x52, 0x08, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x22,
+	0x58, 0x0a, 0x0c, 0x52, 0x69, 0x73, 0x6b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x12,
+	0x1a, 0x0a, 0x08, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x72,
+	0x65, 0x66, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x72, 0x65, 0x66, 0x65,
+	0x72, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x22, 0x92, 0x01, 0x0a, 0x0b, 0x4d, 0x65,
 	0x61, 0x6c, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72, 0x6f,
 	0x64, 0x75, 0x63, 0x74, 0x5f, 0x6c, 0x69, 0x6e, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x0b, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4c, 0x69, 0x6e, 0x6b, 0x12, 0x23, 0x0a, 0x0d,
@@ -5190,7 +5445,7 @@ func file_jthealth_biz_report_v1_report_api_proto_rawDescGZIP() []byte {
 }
 
 var file_jthealth_biz_report_v1_report_api_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_jthealth_biz_report_v1_report_api_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
+var file_jthealth_biz_report_v1_report_api_proto_msgTypes = make([]protoimpl.MessageInfo, 59)
 var file_jthealth_biz_report_v1_report_api_proto_goTypes = []interface{}{
 	(Gender)(0),                            // 0: jthealth.biz.report.v1.Gender
 	(Hand)(0),                              // 1: jthealth.biz.report.v1.Hand
@@ -5209,127 +5464,133 @@ var file_jthealth_biz_report_v1_report_api_proto_goTypes = []interface{}{
 	(*QuestionChoice)(nil),                 // 14: jthealth.biz.report.v1.QuestionChoice
 	(*HealthReport)(nil),                   // 15: jthealth.biz.report.v1.HealthReport
 	(*MeridianItems)(nil),                  // 16: jthealth.biz.report.v1.MeridianItems
-	(*UserProfileSnapshot)(nil),            // 17: jthealth.biz.report.v1.UserProfileSnapshot
-	(*GetMealSuggestionRequest)(nil),       // 18: jthealth.biz.report.v1.GetMealSuggestionRequest
-	(*GetMealSuggestionResponse)(nil),      // 19: jthealth.biz.report.v1.GetMealSuggestionResponse
-	(*PhysicalDialecticsMessage)(nil),      // 20: jthealth.biz.report.v1.PhysicalDialecticsMessage
-	(*RiskInfo)(nil),                       // 21: jthealth.biz.report.v1.RiskInfo
-	(*MealProduct)(nil),                    // 22: jthealth.biz.report.v1.MealProduct
-	(*ImageResource)(nil),                  // 23: jthealth.biz.report.v1.ImageResource
-	(*CreateRiskCommodityRequest)(nil),     // 24: jthealth.biz.report.v1.CreateRiskCommodityRequest
-	(*CreateRiskCommodityResponse)(nil),    // 25: jthealth.biz.report.v1.CreateRiskCommodityResponse
-	(*GetRiskListRequest)(nil),             // 26: jthealth.biz.report.v1.GetRiskListRequest
-	(*GetRiskListResponse)(nil),            // 27: jthealth.biz.report.v1.GetRiskListResponse
-	(*RiskMsg)(nil),                        // 28: jthealth.biz.report.v1.RiskMsg
-	(*GetRiskCommodityListRequest)(nil),    // 29: jthealth.biz.report.v1.GetRiskCommodityListRequest
-	(*GetRiskCommodityListResponse)(nil),   // 30: jthealth.biz.report.v1.GetRiskCommodityListResponse
-	(*RiskCommodityMsg)(nil),               // 31: jthealth.biz.report.v1.RiskCommodityMsg
-	(*EditReportShowRequest)(nil),          // 32: jthealth.biz.report.v1.EditReportShowRequest
-	(*EditReportShowResponse)(nil),         // 33: jthealth.biz.report.v1.EditReportShowResponse
-	(*GetReportShowRequest)(nil),           // 34: jthealth.biz.report.v1.GetReportShowRequest
-	(*GetReportShowResponse)(nil),          // 35: jthealth.biz.report.v1.GetReportShowResponse
-	(*EditReportComparedShowRequest)(nil),  // 36: jthealth.biz.report.v1.EditReportComparedShowRequest
-	(*EditReportComparedShowResponse)(nil), // 37: jthealth.biz.report.v1.EditReportComparedShowResponse
-	(*GetReportComparedShowRequest)(nil),   // 38: jthealth.biz.report.v1.GetReportComparedShowRequest
-	(*GetReportComparedShowResponse)(nil),  // 39: jthealth.biz.report.v1.GetReportComparedShowResponse
-	(*GetComparisonReportNewRequest)(nil),  // 40: jthealth.biz.report.v1.GetComparisonReportNewRequest
-	(*GetComparisonReportNewResponse)(nil), // 41: jthealth.biz.report.v1.GetComparisonReportNewResponse
-	(*ComparisonReportNew)(nil),            // 42: jthealth.biz.report.v1.ComparisonReportNew
-	(*RiskComparison)(nil),                 // 43: jthealth.biz.report.v1.RiskComparison
-	(*SystemRiskComparison)(nil),           // 44: jthealth.biz.report.v1.SystemRiskComparison
-	(*MeridianComparison)(nil),             // 45: jthealth.biz.report.v1.MeridianComparison
-	(*HealthComparison)(nil),               // 46: jthealth.biz.report.v1.HealthComparison
-	(*HealthAgeComparison)(nil),            // 47: jthealth.biz.report.v1.HealthAgeComparison
-	(*Comparison)(nil),                     // 48: jthealth.biz.report.v1.Comparison
-	(*ListDaysReportsRequest)(nil),         // 49: jthealth.biz.report.v1.ListDaysReportsRequest
-	(*ListDaysReportsResponse)(nil),        // 50: jthealth.biz.report.v1.ListDaysReportsResponse
-	(*DaysReport)(nil),                     // 51: jthealth.biz.report.v1.DaysReport
-	(*ListWeekDaysReportsRequest)(nil),     // 52: jthealth.biz.report.v1.ListWeekDaysReportsRequest
-	(*ListWeekDaysReportsResponse)(nil),    // 53: jthealth.biz.report.v1.ListWeekDaysReportsResponse
-	nil,                                    // 54: jthealth.biz.report.v1.SampleDevice.DeviceParamsEntry
-	nil,                                    // 55: jthealth.biz.report.v1.SampleData.CodecParamsEntry
-	nil,                                    // 56: jthealth.biz.report.v1.GetReportRequest.ModuleAnswersEntry
-	nil,                                    // 57: jthealth.biz.report.v1.GetReportResponse.ModuleQuestionsEntry
-	(*timestamppb.Timestamp)(nil),          // 58: google.protobuf.Timestamp
-	(*wrapperspb.DoubleValue)(nil),         // 59: google.protobuf.DoubleValue
-	(*emptypb.Empty)(nil),                  // 60: google.protobuf.Empty
+	(*MeridianDescribe)(nil),               // 17: jthealth.biz.report.v1.MeridianDescribe
+	(*UserProfileSnapshot)(nil),            // 18: jthealth.biz.report.v1.UserProfileSnapshot
+	(*GetMealSuggestionRequest)(nil),       // 19: jthealth.biz.report.v1.GetMealSuggestionRequest
+	(*GetMealSuggestionResponse)(nil),      // 20: jthealth.biz.report.v1.GetMealSuggestionResponse
+	(*PhysicalDialecticsMessage)(nil),      // 21: jthealth.biz.report.v1.PhysicalDialecticsMessage
+	(*PhysicalDescribe)(nil),               // 22: jthealth.biz.report.v1.PhysicalDescribe
+	(*RiskInfo)(nil),                       // 23: jthealth.biz.report.v1.RiskInfo
+	(*RiskDescribe)(nil),                   // 24: jthealth.biz.report.v1.RiskDescribe
+	(*MealProduct)(nil),                    // 25: jthealth.biz.report.v1.MealProduct
+	(*ImageResource)(nil),                  // 26: jthealth.biz.report.v1.ImageResource
+	(*CreateRiskCommodityRequest)(nil),     // 27: jthealth.biz.report.v1.CreateRiskCommodityRequest
+	(*CreateRiskCommodityResponse)(nil),    // 28: jthealth.biz.report.v1.CreateRiskCommodityResponse
+	(*GetRiskListRequest)(nil),             // 29: jthealth.biz.report.v1.GetRiskListRequest
+	(*GetRiskListResponse)(nil),            // 30: jthealth.biz.report.v1.GetRiskListResponse
+	(*RiskMsg)(nil),                        // 31: jthealth.biz.report.v1.RiskMsg
+	(*GetRiskCommodityListRequest)(nil),    // 32: jthealth.biz.report.v1.GetRiskCommodityListRequest
+	(*GetRiskCommodityListResponse)(nil),   // 33: jthealth.biz.report.v1.GetRiskCommodityListResponse
+	(*RiskCommodityMsg)(nil),               // 34: jthealth.biz.report.v1.RiskCommodityMsg
+	(*EditReportShowRequest)(nil),          // 35: jthealth.biz.report.v1.EditReportShowRequest
+	(*EditReportShowResponse)(nil),         // 36: jthealth.biz.report.v1.EditReportShowResponse
+	(*GetReportShowRequest)(nil),           // 37: jthealth.biz.report.v1.GetReportShowRequest
+	(*GetReportShowResponse)(nil),          // 38: jthealth.biz.report.v1.GetReportShowResponse
+	(*EditReportComparedShowRequest)(nil),  // 39: jthealth.biz.report.v1.EditReportComparedShowRequest
+	(*EditReportComparedShowResponse)(nil), // 40: jthealth.biz.report.v1.EditReportComparedShowResponse
+	(*GetReportComparedShowRequest)(nil),   // 41: jthealth.biz.report.v1.GetReportComparedShowRequest
+	(*GetReportComparedShowResponse)(nil),  // 42: jthealth.biz.report.v1.GetReportComparedShowResponse
+	(*GetComparisonReportNewRequest)(nil),  // 43: jthealth.biz.report.v1.GetComparisonReportNewRequest
+	(*GetComparisonReportNewResponse)(nil), // 44: jthealth.biz.report.v1.GetComparisonReportNewResponse
+	(*ComparisonReportNew)(nil),            // 45: jthealth.biz.report.v1.ComparisonReportNew
+	(*RiskComparison)(nil),                 // 46: jthealth.biz.report.v1.RiskComparison
+	(*SystemRiskComparison)(nil),           // 47: jthealth.biz.report.v1.SystemRiskComparison
+	(*MeridianComparison)(nil),             // 48: jthealth.biz.report.v1.MeridianComparison
+	(*HealthComparison)(nil),               // 49: jthealth.biz.report.v1.HealthComparison
+	(*HealthAgeComparison)(nil),            // 50: jthealth.biz.report.v1.HealthAgeComparison
+	(*Comparison)(nil),                     // 51: jthealth.biz.report.v1.Comparison
+	(*ListDaysReportsRequest)(nil),         // 52: jthealth.biz.report.v1.ListDaysReportsRequest
+	(*ListDaysReportsResponse)(nil),        // 53: jthealth.biz.report.v1.ListDaysReportsResponse
+	(*DaysReport)(nil),                     // 54: jthealth.biz.report.v1.DaysReport
+	(*ListWeekDaysReportsRequest)(nil),     // 55: jthealth.biz.report.v1.ListWeekDaysReportsRequest
+	(*ListWeekDaysReportsResponse)(nil),    // 56: jthealth.biz.report.v1.ListWeekDaysReportsResponse
+	nil,                                    // 57: jthealth.biz.report.v1.SampleDevice.DeviceParamsEntry
+	nil,                                    // 58: jthealth.biz.report.v1.SampleData.CodecParamsEntry
+	nil,                                    // 59: jthealth.biz.report.v1.GetReportRequest.ModuleAnswersEntry
+	nil,                                    // 60: jthealth.biz.report.v1.GetReportResponse.ModuleQuestionsEntry
+	(*timestamppb.Timestamp)(nil),          // 61: google.protobuf.Timestamp
+	(*wrapperspb.DoubleValue)(nil),         // 62: google.protobuf.DoubleValue
+	(*emptypb.Empty)(nil),                  // 63: google.protobuf.Empty
 }
 var file_jthealth_biz_report_v1_report_api_proto_depIdxs = []int32{
-	17, // 0: jthealth.biz.report.v1.SubmitPulseTestRequest.user_profile_snapshot:type_name -> jthealth.biz.report.v1.UserProfileSnapshot
+	18, // 0: jthealth.biz.report.v1.SubmitPulseTestRequest.user_profile_snapshot:type_name -> jthealth.biz.report.v1.UserProfileSnapshot
 	3,  // 1: jthealth.biz.report.v1.SubmitPulseTestRequest.payload:type_name -> jthealth.biz.report.v1.SamplePayload
 	4,  // 2: jthealth.biz.report.v1.SamplePayload.geo_location:type_name -> jthealth.biz.report.v1.GeoLocation
 	5,  // 3: jthealth.biz.report.v1.SamplePayload.sample_device:type_name -> jthealth.biz.report.v1.SampleDevice
 	6,  // 4: jthealth.biz.report.v1.SamplePayload.sample_data:type_name -> jthealth.biz.report.v1.SampleData
-	58, // 5: jthealth.biz.report.v1.SamplePayload.sampling_start_time:type_name -> google.protobuf.Timestamp
-	58, // 6: jthealth.biz.report.v1.SamplePayload.sampling_stop_time:type_name -> google.protobuf.Timestamp
-	59, // 7: jthealth.biz.report.v1.GeoLocation.altitude:type_name -> google.protobuf.DoubleValue
-	59, // 8: jthealth.biz.report.v1.GeoLocation.altitude_accuracy:type_name -> google.protobuf.DoubleValue
-	59, // 9: jthealth.biz.report.v1.GeoLocation.heading:type_name -> google.protobuf.DoubleValue
-	59, // 10: jthealth.biz.report.v1.GeoLocation.speed:type_name -> google.protobuf.DoubleValue
-	54, // 11: jthealth.biz.report.v1.SampleDevice.device_params:type_name -> jthealth.biz.report.v1.SampleDevice.DeviceParamsEntry
-	55, // 12: jthealth.biz.report.v1.SampleData.codec_params:type_name -> jthealth.biz.report.v1.SampleData.CodecParamsEntry
-	56, // 13: jthealth.biz.report.v1.GetReportRequest.module_answers:type_name -> jthealth.biz.report.v1.GetReportRequest.ModuleAnswersEntry
+	61, // 5: jthealth.biz.report.v1.SamplePayload.sampling_start_time:type_name -> google.protobuf.Timestamp
+	61, // 6: jthealth.biz.report.v1.SamplePayload.sampling_stop_time:type_name -> google.protobuf.Timestamp
+	62, // 7: jthealth.biz.report.v1.GeoLocation.altitude:type_name -> google.protobuf.DoubleValue
+	62, // 8: jthealth.biz.report.v1.GeoLocation.altitude_accuracy:type_name -> google.protobuf.DoubleValue
+	62, // 9: jthealth.biz.report.v1.GeoLocation.heading:type_name -> google.protobuf.DoubleValue
+	62, // 10: jthealth.biz.report.v1.GeoLocation.speed:type_name -> google.protobuf.DoubleValue
+	57, // 11: jthealth.biz.report.v1.SampleDevice.device_params:type_name -> jthealth.biz.report.v1.SampleDevice.DeviceParamsEntry
+	58, // 12: jthealth.biz.report.v1.SampleData.codec_params:type_name -> jthealth.biz.report.v1.SampleData.CodecParamsEntry
+	59, // 13: jthealth.biz.report.v1.GetReportRequest.module_answers:type_name -> jthealth.biz.report.v1.GetReportRequest.ModuleAnswersEntry
 	10, // 14: jthealth.biz.report.v1.AnswerList.answers:type_name -> jthealth.biz.report.v1.Answer
-	57, // 15: jthealth.biz.report.v1.GetReportResponse.module_questions:type_name -> jthealth.biz.report.v1.GetReportResponse.ModuleQuestionsEntry
+	60, // 15: jthealth.biz.report.v1.GetReportResponse.module_questions:type_name -> jthealth.biz.report.v1.GetReportResponse.ModuleQuestionsEntry
 	15, // 16: jthealth.biz.report.v1.GetReportResponse.report:type_name -> jthealth.biz.report.v1.HealthReport
 	13, // 17: jthealth.biz.report.v1.QuestionList.questions:type_name -> jthealth.biz.report.v1.Question
 	14, // 18: jthealth.biz.report.v1.Question.choices:type_name -> jthealth.biz.report.v1.QuestionChoice
-	21, // 19: jthealth.biz.report.v1.HealthReport.health_risk_index:type_name -> jthealth.biz.report.v1.RiskInfo
-	21, // 20: jthealth.biz.report.v1.HealthReport.risk:type_name -> jthealth.biz.report.v1.RiskInfo
-	22, // 21: jthealth.biz.report.v1.HealthReport.meal_products:type_name -> jthealth.biz.report.v1.MealProduct
-	17, // 22: jthealth.biz.report.v1.HealthReport.user_profile:type_name -> jthealth.biz.report.v1.UserProfileSnapshot
-	20, // 23: jthealth.biz.report.v1.HealthReport.physical_dialectics_list:type_name -> jthealth.biz.report.v1.PhysicalDialecticsMessage
+	23, // 19: jthealth.biz.report.v1.HealthReport.health_risk_index:type_name -> jthealth.biz.report.v1.RiskInfo
+	23, // 20: jthealth.biz.report.v1.HealthReport.risk:type_name -> jthealth.biz.report.v1.RiskInfo
+	25, // 21: jthealth.biz.report.v1.HealthReport.meal_products:type_name -> jthealth.biz.report.v1.MealProduct
+	18, // 22: jthealth.biz.report.v1.HealthReport.user_profile:type_name -> jthealth.biz.report.v1.UserProfileSnapshot
+	21, // 23: jthealth.biz.report.v1.HealthReport.physical_dialectics_list:type_name -> jthealth.biz.report.v1.PhysicalDialecticsMessage
 	16, // 24: jthealth.biz.report.v1.HealthReport.meridians:type_name -> jthealth.biz.report.v1.MeridianItems
-	22, // 25: jthealth.biz.report.v1.GetMealSuggestionResponse.food_suggestions:type_name -> jthealth.biz.report.v1.MealProduct
-	23, // 26: jthealth.biz.report.v1.MealProduct.image:type_name -> jthealth.biz.report.v1.ImageResource
-	28, // 27: jthealth.biz.report.v1.GetRiskListResponse.list:type_name -> jthealth.biz.report.v1.RiskMsg
-	31, // 28: jthealth.biz.report.v1.GetRiskCommodityListResponse.list:type_name -> jthealth.biz.report.v1.RiskCommodityMsg
-	42, // 29: jthealth.biz.report.v1.GetComparisonReportNewResponse.comparison_report:type_name -> jthealth.biz.report.v1.ComparisonReportNew
-	43, // 30: jthealth.biz.report.v1.ComparisonReportNew.reducing_risks:type_name -> jthealth.biz.report.v1.RiskComparison
-	44, // 31: jthealth.biz.report.v1.ComparisonReportNew.risk:type_name -> jthealth.biz.report.v1.SystemRiskComparison
-	48, // 32: jthealth.biz.report.v1.ComparisonReportNew.meridians:type_name -> jthealth.biz.report.v1.Comparison
-	58, // 33: jthealth.biz.report.v1.ComparisonReportNew.former_report:type_name -> google.protobuf.Timestamp
-	58, // 34: jthealth.biz.report.v1.ComparisonReportNew.later_report:type_name -> google.protobuf.Timestamp
-	46, // 35: jthealth.biz.report.v1.ComparisonReportNew.health:type_name -> jthealth.biz.report.v1.HealthComparison
-	47, // 36: jthealth.biz.report.v1.ComparisonReportNew.health_age:type_name -> jthealth.biz.report.v1.HealthAgeComparison
-	43, // 37: jthealth.biz.report.v1.SystemRiskComparison.list:type_name -> jthealth.biz.report.v1.RiskComparison
-	51, // 38: jthealth.biz.report.v1.ListDaysReportsResponse.days_report:type_name -> jthealth.biz.report.v1.DaysReport
-	58, // 39: jthealth.biz.report.v1.DaysReport.date:type_name -> google.protobuf.Timestamp
-	15, // 40: jthealth.biz.report.v1.DaysReport.health_reports:type_name -> jthealth.biz.report.v1.HealthReport
-	51, // 41: jthealth.biz.report.v1.ListWeekDaysReportsResponse.days_report:type_name -> jthealth.biz.report.v1.DaysReport
-	9,  // 42: jthealth.biz.report.v1.GetReportRequest.ModuleAnswersEntry.value:type_name -> jthealth.biz.report.v1.AnswerList
-	12, // 43: jthealth.biz.report.v1.GetReportResponse.ModuleQuestionsEntry.value:type_name -> jthealth.biz.report.v1.QuestionList
-	2,  // 44: jthealth.biz.report.v1.ReportAPI.SubmitPulseTest:input_type -> jthealth.biz.report.v1.SubmitPulseTestRequest
-	8,  // 45: jthealth.biz.report.v1.ReportAPI.GetReport:input_type -> jthealth.biz.report.v1.GetReportRequest
-	18, // 46: jthealth.biz.report.v1.ReportAPI.GetMealSuggestion:input_type -> jthealth.biz.report.v1.GetMealSuggestionRequest
-	24, // 47: jthealth.biz.report.v1.ReportAPI.CreateRiskCommodity:input_type -> jthealth.biz.report.v1.CreateRiskCommodityRequest
-	60, // 48: jthealth.biz.report.v1.ReportAPI.GetRiskList:input_type -> google.protobuf.Empty
-	29, // 49: jthealth.biz.report.v1.ReportAPI.GetRiskCommodityList:input_type -> jthealth.biz.report.v1.GetRiskCommodityListRequest
-	32, // 50: jthealth.biz.report.v1.ReportAPI.EditReportShow:input_type -> jthealth.biz.report.v1.EditReportShowRequest
-	34, // 51: jthealth.biz.report.v1.ReportAPI.GetReportShow:input_type -> jthealth.biz.report.v1.GetReportShowRequest
-	36, // 52: jthealth.biz.report.v1.ReportAPI.EditReportComparedShow:input_type -> jthealth.biz.report.v1.EditReportComparedShowRequest
-	38, // 53: jthealth.biz.report.v1.ReportAPI.GetReportComparedShow:input_type -> jthealth.biz.report.v1.GetReportComparedShowRequest
-	40, // 54: jthealth.biz.report.v1.ReportAPI.GetComparisonReportNew:input_type -> jthealth.biz.report.v1.GetComparisonReportNewRequest
-	49, // 55: jthealth.biz.report.v1.ReportAPI.ListDaysReports:input_type -> jthealth.biz.report.v1.ListDaysReportsRequest
-	52, // 56: jthealth.biz.report.v1.ReportAPI.ListWeekDaysReports:input_type -> jthealth.biz.report.v1.ListWeekDaysReportsRequest
-	7,  // 57: jthealth.biz.report.v1.ReportAPI.SubmitPulseTest:output_type -> jthealth.biz.report.v1.SubmitPulseTestResponse
-	11, // 58: jthealth.biz.report.v1.ReportAPI.GetReport:output_type -> jthealth.biz.report.v1.GetReportResponse
-	19, // 59: jthealth.biz.report.v1.ReportAPI.GetMealSuggestion:output_type -> jthealth.biz.report.v1.GetMealSuggestionResponse
-	25, // 60: jthealth.biz.report.v1.ReportAPI.CreateRiskCommodity:output_type -> jthealth.biz.report.v1.CreateRiskCommodityResponse
-	27, // 61: jthealth.biz.report.v1.ReportAPI.GetRiskList:output_type -> jthealth.biz.report.v1.GetRiskListResponse
-	30, // 62: jthealth.biz.report.v1.ReportAPI.GetRiskCommodityList:output_type -> jthealth.biz.report.v1.GetRiskCommodityListResponse
-	33, // 63: jthealth.biz.report.v1.ReportAPI.EditReportShow:output_type -> jthealth.biz.report.v1.EditReportShowResponse
-	35, // 64: jthealth.biz.report.v1.ReportAPI.GetReportShow:output_type -> jthealth.biz.report.v1.GetReportShowResponse
-	37, // 65: jthealth.biz.report.v1.ReportAPI.EditReportComparedShow:output_type -> jthealth.biz.report.v1.EditReportComparedShowResponse
-	39, // 66: jthealth.biz.report.v1.ReportAPI.GetReportComparedShow:output_type -> jthealth.biz.report.v1.GetReportComparedShowResponse
-	41, // 67: jthealth.biz.report.v1.ReportAPI.GetComparisonReportNew:output_type -> jthealth.biz.report.v1.GetComparisonReportNewResponse
-	50, // 68: jthealth.biz.report.v1.ReportAPI.ListDaysReports:output_type -> jthealth.biz.report.v1.ListDaysReportsResponse
-	53, // 69: jthealth.biz.report.v1.ReportAPI.ListWeekDaysReports:output_type -> jthealth.biz.report.v1.ListWeekDaysReportsResponse
-	57, // [57:70] is the sub-list for method output_type
-	44, // [44:57] is the sub-list for method input_type
-	44, // [44:44] is the sub-list for extension type_name
-	44, // [44:44] is the sub-list for extension extendee
-	0,  // [0:44] is the sub-list for field type_name
+	17, // 25: jthealth.biz.report.v1.MeridianItems.describe:type_name -> jthealth.biz.report.v1.MeridianDescribe
+	25, // 26: jthealth.biz.report.v1.GetMealSuggestionResponse.food_suggestions:type_name -> jthealth.biz.report.v1.MealProduct
+	22, // 27: jthealth.biz.report.v1.PhysicalDialecticsMessage.describe:type_name -> jthealth.biz.report.v1.PhysicalDescribe
+	24, // 28: jthealth.biz.report.v1.RiskInfo.describe:type_name -> jthealth.biz.report.v1.RiskDescribe
+	26, // 29: jthealth.biz.report.v1.MealProduct.image:type_name -> jthealth.biz.report.v1.ImageResource
+	31, // 30: jthealth.biz.report.v1.GetRiskListResponse.list:type_name -> jthealth.biz.report.v1.RiskMsg
+	34, // 31: jthealth.biz.report.v1.GetRiskCommodityListResponse.list:type_name -> jthealth.biz.report.v1.RiskCommodityMsg
+	45, // 32: jthealth.biz.report.v1.GetComparisonReportNewResponse.comparison_report:type_name -> jthealth.biz.report.v1.ComparisonReportNew
+	46, // 33: jthealth.biz.report.v1.ComparisonReportNew.reducing_risks:type_name -> jthealth.biz.report.v1.RiskComparison
+	47, // 34: jthealth.biz.report.v1.ComparisonReportNew.risk:type_name -> jthealth.biz.report.v1.SystemRiskComparison
+	51, // 35: jthealth.biz.report.v1.ComparisonReportNew.meridians:type_name -> jthealth.biz.report.v1.Comparison
+	61, // 36: jthealth.biz.report.v1.ComparisonReportNew.former_report:type_name -> google.protobuf.Timestamp
+	61, // 37: jthealth.biz.report.v1.ComparisonReportNew.later_report:type_name -> google.protobuf.Timestamp
+	49, // 38: jthealth.biz.report.v1.ComparisonReportNew.health:type_name -> jthealth.biz.report.v1.HealthComparison
+	50, // 39: jthealth.biz.report.v1.ComparisonReportNew.health_age:type_name -> jthealth.biz.report.v1.HealthAgeComparison
+	46, // 40: jthealth.biz.report.v1.SystemRiskComparison.list:type_name -> jthealth.biz.report.v1.RiskComparison
+	54, // 41: jthealth.biz.report.v1.ListDaysReportsResponse.days_report:type_name -> jthealth.biz.report.v1.DaysReport
+	61, // 42: jthealth.biz.report.v1.DaysReport.date:type_name -> google.protobuf.Timestamp
+	15, // 43: jthealth.biz.report.v1.DaysReport.health_reports:type_name -> jthealth.biz.report.v1.HealthReport
+	54, // 44: jthealth.biz.report.v1.ListWeekDaysReportsResponse.days_report:type_name -> jthealth.biz.report.v1.DaysReport
+	9,  // 45: jthealth.biz.report.v1.GetReportRequest.ModuleAnswersEntry.value:type_name -> jthealth.biz.report.v1.AnswerList
+	12, // 46: jthealth.biz.report.v1.GetReportResponse.ModuleQuestionsEntry.value:type_name -> jthealth.biz.report.v1.QuestionList
+	2,  // 47: jthealth.biz.report.v1.ReportAPI.SubmitPulseTest:input_type -> jthealth.biz.report.v1.SubmitPulseTestRequest
+	8,  // 48: jthealth.biz.report.v1.ReportAPI.GetReport:input_type -> jthealth.biz.report.v1.GetReportRequest
+	19, // 49: jthealth.biz.report.v1.ReportAPI.GetMealSuggestion:input_type -> jthealth.biz.report.v1.GetMealSuggestionRequest
+	27, // 50: jthealth.biz.report.v1.ReportAPI.CreateRiskCommodity:input_type -> jthealth.biz.report.v1.CreateRiskCommodityRequest
+	63, // 51: jthealth.biz.report.v1.ReportAPI.GetRiskList:input_type -> google.protobuf.Empty
+	32, // 52: jthealth.biz.report.v1.ReportAPI.GetRiskCommodityList:input_type -> jthealth.biz.report.v1.GetRiskCommodityListRequest
+	35, // 53: jthealth.biz.report.v1.ReportAPI.EditReportShow:input_type -> jthealth.biz.report.v1.EditReportShowRequest
+	37, // 54: jthealth.biz.report.v1.ReportAPI.GetReportShow:input_type -> jthealth.biz.report.v1.GetReportShowRequest
+	39, // 55: jthealth.biz.report.v1.ReportAPI.EditReportComparedShow:input_type -> jthealth.biz.report.v1.EditReportComparedShowRequest
+	41, // 56: jthealth.biz.report.v1.ReportAPI.GetReportComparedShow:input_type -> jthealth.biz.report.v1.GetReportComparedShowRequest
+	43, // 57: jthealth.biz.report.v1.ReportAPI.GetComparisonReportNew:input_type -> jthealth.biz.report.v1.GetComparisonReportNewRequest
+	52, // 58: jthealth.biz.report.v1.ReportAPI.ListDaysReports:input_type -> jthealth.biz.report.v1.ListDaysReportsRequest
+	55, // 59: jthealth.biz.report.v1.ReportAPI.ListWeekDaysReports:input_type -> jthealth.biz.report.v1.ListWeekDaysReportsRequest
+	7,  // 60: jthealth.biz.report.v1.ReportAPI.SubmitPulseTest:output_type -> jthealth.biz.report.v1.SubmitPulseTestResponse
+	11, // 61: jthealth.biz.report.v1.ReportAPI.GetReport:output_type -> jthealth.biz.report.v1.GetReportResponse
+	20, // 62: jthealth.biz.report.v1.ReportAPI.GetMealSuggestion:output_type -> jthealth.biz.report.v1.GetMealSuggestionResponse
+	28, // 63: jthealth.biz.report.v1.ReportAPI.CreateRiskCommodity:output_type -> jthealth.biz.report.v1.CreateRiskCommodityResponse
+	30, // 64: jthealth.biz.report.v1.ReportAPI.GetRiskList:output_type -> jthealth.biz.report.v1.GetRiskListResponse
+	33, // 65: jthealth.biz.report.v1.ReportAPI.GetRiskCommodityList:output_type -> jthealth.biz.report.v1.GetRiskCommodityListResponse
+	36, // 66: jthealth.biz.report.v1.ReportAPI.EditReportShow:output_type -> jthealth.biz.report.v1.EditReportShowResponse
+	38, // 67: jthealth.biz.report.v1.ReportAPI.GetReportShow:output_type -> jthealth.biz.report.v1.GetReportShowResponse
+	40, // 68: jthealth.biz.report.v1.ReportAPI.EditReportComparedShow:output_type -> jthealth.biz.report.v1.EditReportComparedShowResponse
+	42, // 69: jthealth.biz.report.v1.ReportAPI.GetReportComparedShow:output_type -> jthealth.biz.report.v1.GetReportComparedShowResponse
+	44, // 70: jthealth.biz.report.v1.ReportAPI.GetComparisonReportNew:output_type -> jthealth.biz.report.v1.GetComparisonReportNewResponse
+	53, // 71: jthealth.biz.report.v1.ReportAPI.ListDaysReports:output_type -> jthealth.biz.report.v1.ListDaysReportsResponse
+	56, // 72: jthealth.biz.report.v1.ReportAPI.ListWeekDaysReports:output_type -> jthealth.biz.report.v1.ListWeekDaysReportsResponse
+	60, // [60:73] is the sub-list for method output_type
+	47, // [47:60] is the sub-list for method input_type
+	47, // [47:47] is the sub-list for extension type_name
+	47, // [47:47] is the sub-list for extension extendee
+	0,  // [0:47] is the sub-list for field type_name
 }
 
 func init() { file_jthealth_biz_report_v1_report_api_proto_init() }
@@ -5519,7 +5780,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserProfileSnapshot); i {
+			switch v := v.(*MeridianDescribe); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5531,7 +5792,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMealSuggestionRequest); i {
+			switch v := v.(*UserProfileSnapshot); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5543,7 +5804,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMealSuggestionResponse); i {
+			switch v := v.(*GetMealSuggestionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5555,7 +5816,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PhysicalDialecticsMessage); i {
+			switch v := v.(*GetMealSuggestionResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5567,7 +5828,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RiskInfo); i {
+			switch v := v.(*PhysicalDialecticsMessage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5579,7 +5840,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MealProduct); i {
+			switch v := v.(*PhysicalDescribe); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5591,7 +5852,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImageResource); i {
+			switch v := v.(*RiskInfo); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5603,7 +5864,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateRiskCommodityRequest); i {
+			switch v := v.(*RiskDescribe); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5615,7 +5876,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateRiskCommodityResponse); i {
+			switch v := v.(*MealProduct); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5627,7 +5888,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRiskListRequest); i {
+			switch v := v.(*ImageResource); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5639,7 +5900,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRiskListResponse); i {
+			switch v := v.(*CreateRiskCommodityRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5651,7 +5912,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RiskMsg); i {
+			switch v := v.(*CreateRiskCommodityResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5663,7 +5924,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRiskCommodityListRequest); i {
+			switch v := v.(*GetRiskListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5675,7 +5936,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRiskCommodityListResponse); i {
+			switch v := v.(*GetRiskListResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5687,7 +5948,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RiskCommodityMsg); i {
+			switch v := v.(*RiskMsg); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5699,7 +5960,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EditReportShowRequest); i {
+			switch v := v.(*GetRiskCommodityListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5711,7 +5972,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EditReportShowResponse); i {
+			switch v := v.(*GetRiskCommodityListResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5723,7 +5984,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetReportShowRequest); i {
+			switch v := v.(*RiskCommodityMsg); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5735,7 +5996,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetReportShowResponse); i {
+			switch v := v.(*EditReportShowRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5747,7 +6008,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EditReportComparedShowRequest); i {
+			switch v := v.(*EditReportShowResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5759,7 +6020,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EditReportComparedShowResponse); i {
+			switch v := v.(*GetReportShowRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5771,7 +6032,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetReportComparedShowRequest); i {
+			switch v := v.(*GetReportShowResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5783,7 +6044,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetReportComparedShowResponse); i {
+			switch v := v.(*EditReportComparedShowRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5795,7 +6056,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetComparisonReportNewRequest); i {
+			switch v := v.(*EditReportComparedShowResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5807,7 +6068,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetComparisonReportNewResponse); i {
+			switch v := v.(*GetReportComparedShowRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5819,7 +6080,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ComparisonReportNew); i {
+			switch v := v.(*GetReportComparedShowResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5831,7 +6092,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RiskComparison); i {
+			switch v := v.(*GetComparisonReportNewRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5843,7 +6104,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SystemRiskComparison); i {
+			switch v := v.(*GetComparisonReportNewResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5855,7 +6116,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MeridianComparison); i {
+			switch v := v.(*ComparisonReportNew); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5867,7 +6128,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*HealthComparison); i {
+			switch v := v.(*RiskComparison); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5879,7 +6140,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*HealthAgeComparison); i {
+			switch v := v.(*SystemRiskComparison); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5891,7 +6152,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Comparison); i {
+			switch v := v.(*MeridianComparison); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5903,7 +6164,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListDaysReportsRequest); i {
+			switch v := v.(*HealthComparison); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5915,7 +6176,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListDaysReportsResponse); i {
+			switch v := v.(*HealthAgeComparison); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5927,7 +6188,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DaysReport); i {
+			switch v := v.(*Comparison); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5939,7 +6200,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListWeekDaysReportsRequest); i {
+			switch v := v.(*ListDaysReportsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5951,6 +6212,42 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			}
 		}
 		file_jthealth_biz_report_v1_report_api_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListDaysReportsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_jthealth_biz_report_v1_report_api_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DaysReport); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_jthealth_biz_report_v1_report_api_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListWeekDaysReportsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_jthealth_biz_report_v1_report_api_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListWeekDaysReportsResponse); i {
 			case 0:
 				return &v.state
@@ -5969,7 +6266,7 @@ func file_jthealth_biz_report_v1_report_api_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_jthealth_biz_report_v1_report_api_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   56,
+			NumMessages:   59,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

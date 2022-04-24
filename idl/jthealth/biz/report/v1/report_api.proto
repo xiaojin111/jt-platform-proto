@@ -264,7 +264,16 @@ message HealthReport {
 message MeridianItems {
   string name = 1;
   int32 date = 2;
+  MeridianDescribe describe = 3;
 }
+message MeridianDescribe{
+  string describe = 2;
+  string walk = 3;
+  string summary = 4;
+  string reason = 5;
+  string performance = 6;
+}
+
 // UserProfileSnapshot 测量用户档案快照信息
 message UserProfileSnapshot {
   // 档案ID
@@ -317,6 +326,12 @@ message GetMealSuggestionResponse {
 message PhysicalDialecticsMessage{
   string physical_dialectics_cate_key = 19;
   string physical_dialectics_cate_content = 21;
+  PhysicalDescribe describe = 3;
+}
+
+message PhysicalDescribe{
+  string signs = 1;
+  string conditioning = 2;
 }
 
 // RiskInfo 风险信息.
@@ -329,6 +344,14 @@ message RiskInfo {
   int32 index_value = 3;
   //程度
   string degree = 4;
+  //描述
+  RiskDescribe describe = 5;
+}
+
+message RiskDescribe{
+  string describe = 1;
+  string refer = 2;
+  string reason = 3;
 }
 
 // MealProduct 膳食商品.
