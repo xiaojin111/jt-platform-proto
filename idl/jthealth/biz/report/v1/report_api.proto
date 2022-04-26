@@ -32,6 +32,14 @@ service ReportAPI {
   rpc CreateRiskCommodity(CreateRiskCommodityRequest)returns(CreateRiskCommodityResponse);
   //获取风险列表
   rpc GetRiskList(google.protobuf.Empty)returns(GetRiskListResponse);
+  //获取风险描述
+  rpc GetRiskDescribe(GetRiskDescribeRequest)returns(GetRiskDescribeResponse);
+  //更新风险描述
+  rpc UpdateRiskDescribe(UpdateRiskDescribeRequest)returns(UpdateRiskDescribeResponse);
+  //获取经络列表
+  rpc GetMeridianList(google.protobuf.Empty)returns(GetMeridianListResponse);
+  //获取体质列表
+  rpc GetPhysicalList(google.protobuf.Empty)returns(GetPhysicalListResponse);
   //获取推荐商品列表
   rpc GetRiskCommodityList(GetRiskCommodityListRequest)returns(GetRiskCommodityListResponse);
   //编辑报告显示内容
@@ -428,8 +436,6 @@ message CreateRiskCommodityResponse{
   string risk_commodity_id = 1;
 }
 
-//获取风险列表请求
-message GetRiskListRequest{}
 //获取风险列表响应
 message GetRiskListResponse{
   repeated RiskMsg list = 1;
@@ -439,6 +445,67 @@ message RiskMsg{
   string risk_id = 1;
   //风险名称
   string risk_name = 2;
+}
+
+//获取风险描述请求
+message GetRiskDescribeRequest{
+  //风险id
+  string risk_id = 1;
+  //应用id
+  string application_id = 2;
+
+}
+//获取风险描述响应
+message GetRiskDescribeResponse{
+  //风险id
+  string risk_id = 1;
+  //应用id
+  string application_id = 2;
+  //风险描述
+  string describe = 3;
+  //评估参考
+  string refer = 4;
+  //可能原因
+  string reason = 5;
+}
+
+//更新风险描述请求
+message UpdateRiskDescribeRequest{
+  //风险id
+  string risk_id = 1;
+  //应用id
+  string application_id = 2;
+  //风险描述
+  string describe = 3;
+  //评估参考
+  string refer = 4;
+  //可能原因
+  string reason = 5;
+}
+//更新风险描述响应
+message UpdateRiskDescribeResponse{
+  //风险id
+  string risk_id = 1;
+}
+
+//获取经络列表响应
+message GetMeridianListResponse{
+  repeated MeridianMsg list = 1;
+}
+message MeridianMsg{
+  //经络id
+  string meridian_id = 1;
+  //经络名称
+  string meridian_name = 2;
+}
+
+//获取体质列表
+message GetPhysicalListResponse{
+  repeated PhysicalMsg list = 1;
+}
+message PhysicalMsg{
+  string physical_dialectics_cate_key = 1;
+  string physical_dialectics_cate_name = 2;
 }
 
 //获取推荐商品列表请求

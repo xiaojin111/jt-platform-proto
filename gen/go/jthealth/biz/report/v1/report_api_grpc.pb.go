@@ -28,6 +28,14 @@ type ReportAPIClient interface {
 	CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, opts ...grpc.CallOption) (*CreateRiskCommodityResponse, error)
 	//获取风险列表
 	GetRiskList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetRiskListResponse, error)
+	//获取风险描述
+	GetRiskDescribe(ctx context.Context, in *GetRiskDescribeRequest, opts ...grpc.CallOption) (*GetRiskDescribeResponse, error)
+	//更新风险描述
+	UpdateRiskDescribe(ctx context.Context, in *UpdateRiskDescribeRequest, opts ...grpc.CallOption) (*UpdateRiskDescribeResponse, error)
+	//获取经络列表
+	GetMeridianList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetMeridianListResponse, error)
+	//获取体质列表
+	GetPhysicalList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetPhysicalListResponse, error)
 	//获取推荐商品列表
 	GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...grpc.CallOption) (*GetRiskCommodityListResponse, error)
 	//编辑报告显示内容
@@ -93,6 +101,42 @@ func (c *reportAPIClient) CreateRiskCommodity(ctx context.Context, in *CreateRis
 func (c *reportAPIClient) GetRiskList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetRiskListResponse, error) {
 	out := new(GetRiskListResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetRiskList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetRiskDescribe(ctx context.Context, in *GetRiskDescribeRequest, opts ...grpc.CallOption) (*GetRiskDescribeResponse, error) {
+	out := new(GetRiskDescribeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetRiskDescribe", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) UpdateRiskDescribe(ctx context.Context, in *UpdateRiskDescribeRequest, opts ...grpc.CallOption) (*UpdateRiskDescribeResponse, error) {
+	out := new(UpdateRiskDescribeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/UpdateRiskDescribe", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetMeridianList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetMeridianListResponse, error) {
+	out := new(GetMeridianListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetMeridianList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetPhysicalList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetPhysicalListResponse, error) {
+	out := new(GetPhysicalListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetPhysicalList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -185,6 +229,14 @@ type ReportAPIServer interface {
 	CreateRiskCommodity(context.Context, *CreateRiskCommodityRequest) (*CreateRiskCommodityResponse, error)
 	//获取风险列表
 	GetRiskList(context.Context, *emptypb.Empty) (*GetRiskListResponse, error)
+	//获取风险描述
+	GetRiskDescribe(context.Context, *GetRiskDescribeRequest) (*GetRiskDescribeResponse, error)
+	//更新风险描述
+	UpdateRiskDescribe(context.Context, *UpdateRiskDescribeRequest) (*UpdateRiskDescribeResponse, error)
+	//获取经络列表
+	GetMeridianList(context.Context, *emptypb.Empty) (*GetMeridianListResponse, error)
+	//获取体质列表
+	GetPhysicalList(context.Context, *emptypb.Empty) (*GetPhysicalListResponse, error)
 	//获取推荐商品列表
 	GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest) (*GetRiskCommodityListResponse, error)
 	//编辑报告显示内容
@@ -222,6 +274,18 @@ func (UnimplementedReportAPIServer) CreateRiskCommodity(context.Context, *Create
 }
 func (UnimplementedReportAPIServer) GetRiskList(context.Context, *emptypb.Empty) (*GetRiskListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRiskList not implemented")
+}
+func (UnimplementedReportAPIServer) GetRiskDescribe(context.Context, *GetRiskDescribeRequest) (*GetRiskDescribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRiskDescribe not implemented")
+}
+func (UnimplementedReportAPIServer) UpdateRiskDescribe(context.Context, *UpdateRiskDescribeRequest) (*UpdateRiskDescribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRiskDescribe not implemented")
+}
+func (UnimplementedReportAPIServer) GetMeridianList(context.Context, *emptypb.Empty) (*GetMeridianListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMeridianList not implemented")
+}
+func (UnimplementedReportAPIServer) GetPhysicalList(context.Context, *emptypb.Empty) (*GetPhysicalListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPhysicalList not implemented")
 }
 func (UnimplementedReportAPIServer) GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest) (*GetRiskCommodityListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRiskCommodityList not implemented")
@@ -346,6 +410,78 @@ func _ReportAPI_GetRiskList_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ReportAPIServer).GetRiskList(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetRiskDescribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRiskDescribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetRiskDescribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetRiskDescribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetRiskDescribe(ctx, req.(*GetRiskDescribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_UpdateRiskDescribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRiskDescribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).UpdateRiskDescribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/UpdateRiskDescribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).UpdateRiskDescribe(ctx, req.(*UpdateRiskDescribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetMeridianList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetMeridianList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetMeridianList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetMeridianList(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetPhysicalList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetPhysicalList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetPhysicalList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetPhysicalList(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -517,6 +653,22 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRiskList",
 			Handler:    _ReportAPI_GetRiskList_Handler,
+		},
+		{
+			MethodName: "GetRiskDescribe",
+			Handler:    _ReportAPI_GetRiskDescribe_Handler,
+		},
+		{
+			MethodName: "UpdateRiskDescribe",
+			Handler:    _ReportAPI_UpdateRiskDescribe_Handler,
+		},
+		{
+			MethodName: "GetMeridianList",
+			Handler:    _ReportAPI_GetMeridianList_Handler,
+		},
+		{
+			MethodName: "GetPhysicalList",
+			Handler:    _ReportAPI_GetPhysicalList_Handler,
 		},
 		{
 			MethodName: "GetRiskCommodityList",
