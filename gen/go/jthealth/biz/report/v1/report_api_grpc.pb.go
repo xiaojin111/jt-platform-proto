@@ -34,8 +34,16 @@ type ReportAPIClient interface {
 	UpdateRiskDescribe(ctx context.Context, in *UpdateRiskDescribeRequest, opts ...grpc.CallOption) (*UpdateRiskDescribeResponse, error)
 	//获取经络列表
 	GetMeridianList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetMeridianListResponse, error)
+	//获取经络描述
+	GetMeridianDescribe(ctx context.Context, in *GetMeridianDescribeRequest, opts ...grpc.CallOption) (*GetMeridianDescribeResponse, error)
+	//更新经络描述
+	UpdateMeridianDescribe(ctx context.Context, in *UpdateMeridianDescribeRequest, opts ...grpc.CallOption) (*UpdateMeridianDescribeResponse, error)
 	//获取体质列表
 	GetPhysicalList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetPhysicalListResponse, error)
+	//获取体质描述
+	GetPhysicalDescribe(ctx context.Context, in *GetPhysicalDescribeRequest, opts ...grpc.CallOption) (*GetPhysicalDescribeResponse, error)
+	//更新体质描述
+	UpdatePhysicalDescribe(ctx context.Context, in *UpdatePhysicalDescribeRequest, opts ...grpc.CallOption) (*UpdatePhysicalDescribeResponse, error)
 	//获取推荐商品列表
 	GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...grpc.CallOption) (*GetRiskCommodityListResponse, error)
 	//编辑报告显示内容
@@ -134,9 +142,45 @@ func (c *reportAPIClient) GetMeridianList(ctx context.Context, in *emptypb.Empty
 	return out, nil
 }
 
+func (c *reportAPIClient) GetMeridianDescribe(ctx context.Context, in *GetMeridianDescribeRequest, opts ...grpc.CallOption) (*GetMeridianDescribeResponse, error) {
+	out := new(GetMeridianDescribeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetMeridianDescribe", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) UpdateMeridianDescribe(ctx context.Context, in *UpdateMeridianDescribeRequest, opts ...grpc.CallOption) (*UpdateMeridianDescribeResponse, error) {
+	out := new(UpdateMeridianDescribeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/UpdateMeridianDescribe", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *reportAPIClient) GetPhysicalList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetPhysicalListResponse, error) {
 	out := new(GetPhysicalListResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetPhysicalList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetPhysicalDescribe(ctx context.Context, in *GetPhysicalDescribeRequest, opts ...grpc.CallOption) (*GetPhysicalDescribeResponse, error) {
+	out := new(GetPhysicalDescribeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetPhysicalDescribe", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) UpdatePhysicalDescribe(ctx context.Context, in *UpdatePhysicalDescribeRequest, opts ...grpc.CallOption) (*UpdatePhysicalDescribeResponse, error) {
+	out := new(UpdatePhysicalDescribeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/UpdatePhysicalDescribe", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -235,8 +279,16 @@ type ReportAPIServer interface {
 	UpdateRiskDescribe(context.Context, *UpdateRiskDescribeRequest) (*UpdateRiskDescribeResponse, error)
 	//获取经络列表
 	GetMeridianList(context.Context, *emptypb.Empty) (*GetMeridianListResponse, error)
+	//获取经络描述
+	GetMeridianDescribe(context.Context, *GetMeridianDescribeRequest) (*GetMeridianDescribeResponse, error)
+	//更新经络描述
+	UpdateMeridianDescribe(context.Context, *UpdateMeridianDescribeRequest) (*UpdateMeridianDescribeResponse, error)
 	//获取体质列表
 	GetPhysicalList(context.Context, *emptypb.Empty) (*GetPhysicalListResponse, error)
+	//获取体质描述
+	GetPhysicalDescribe(context.Context, *GetPhysicalDescribeRequest) (*GetPhysicalDescribeResponse, error)
+	//更新体质描述
+	UpdatePhysicalDescribe(context.Context, *UpdatePhysicalDescribeRequest) (*UpdatePhysicalDescribeResponse, error)
 	//获取推荐商品列表
 	GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest) (*GetRiskCommodityListResponse, error)
 	//编辑报告显示内容
@@ -284,8 +336,20 @@ func (UnimplementedReportAPIServer) UpdateRiskDescribe(context.Context, *UpdateR
 func (UnimplementedReportAPIServer) GetMeridianList(context.Context, *emptypb.Empty) (*GetMeridianListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMeridianList not implemented")
 }
+func (UnimplementedReportAPIServer) GetMeridianDescribe(context.Context, *GetMeridianDescribeRequest) (*GetMeridianDescribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMeridianDescribe not implemented")
+}
+func (UnimplementedReportAPIServer) UpdateMeridianDescribe(context.Context, *UpdateMeridianDescribeRequest) (*UpdateMeridianDescribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMeridianDescribe not implemented")
+}
 func (UnimplementedReportAPIServer) GetPhysicalList(context.Context, *emptypb.Empty) (*GetPhysicalListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPhysicalList not implemented")
+}
+func (UnimplementedReportAPIServer) GetPhysicalDescribe(context.Context, *GetPhysicalDescribeRequest) (*GetPhysicalDescribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPhysicalDescribe not implemented")
+}
+func (UnimplementedReportAPIServer) UpdatePhysicalDescribe(context.Context, *UpdatePhysicalDescribeRequest) (*UpdatePhysicalDescribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePhysicalDescribe not implemented")
 }
 func (UnimplementedReportAPIServer) GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest) (*GetRiskCommodityListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRiskCommodityList not implemented")
@@ -468,6 +532,42 @@ func _ReportAPI_GetMeridianList_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportAPI_GetMeridianDescribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMeridianDescribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetMeridianDescribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetMeridianDescribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetMeridianDescribe(ctx, req.(*GetMeridianDescribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_UpdateMeridianDescribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMeridianDescribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).UpdateMeridianDescribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/UpdateMeridianDescribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).UpdateMeridianDescribe(ctx, req.(*UpdateMeridianDescribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ReportAPI_GetPhysicalList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
@@ -482,6 +582,42 @@ func _ReportAPI_GetPhysicalList_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ReportAPIServer).GetPhysicalList(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetPhysicalDescribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPhysicalDescribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetPhysicalDescribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetPhysicalDescribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetPhysicalDescribe(ctx, req.(*GetPhysicalDescribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_UpdatePhysicalDescribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePhysicalDescribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).UpdatePhysicalDescribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/UpdatePhysicalDescribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).UpdatePhysicalDescribe(ctx, req.(*UpdatePhysicalDescribeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -667,8 +803,24 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 			Handler:    _ReportAPI_GetMeridianList_Handler,
 		},
 		{
+			MethodName: "GetMeridianDescribe",
+			Handler:    _ReportAPI_GetMeridianDescribe_Handler,
+		},
+		{
+			MethodName: "UpdateMeridianDescribe",
+			Handler:    _ReportAPI_UpdateMeridianDescribe_Handler,
+		},
+		{
 			MethodName: "GetPhysicalList",
 			Handler:    _ReportAPI_GetPhysicalList_Handler,
+		},
+		{
+			MethodName: "GetPhysicalDescribe",
+			Handler:    _ReportAPI_GetPhysicalDescribe_Handler,
+		},
+		{
+			MethodName: "UpdatePhysicalDescribe",
+			Handler:    _ReportAPI_UpdatePhysicalDescribe_Handler,
 		},
 		{
 			MethodName: "GetRiskCommodityList",

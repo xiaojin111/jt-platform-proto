@@ -61,8 +61,16 @@ type ReportAPIService interface {
 	UpdateRiskDescribe(ctx context.Context, in *UpdateRiskDescribeRequest, opts ...client.CallOption) (*UpdateRiskDescribeResponse, error)
 	//获取经络列表
 	GetMeridianList(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*GetMeridianListResponse, error)
+	//获取经络描述
+	GetMeridianDescribe(ctx context.Context, in *GetMeridianDescribeRequest, opts ...client.CallOption) (*GetMeridianDescribeResponse, error)
+	//更新经络描述
+	UpdateMeridianDescribe(ctx context.Context, in *UpdateMeridianDescribeRequest, opts ...client.CallOption) (*UpdateMeridianDescribeResponse, error)
 	//获取体质列表
 	GetPhysicalList(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*GetPhysicalListResponse, error)
+	//获取体质描述
+	GetPhysicalDescribe(ctx context.Context, in *GetPhysicalDescribeRequest, opts ...client.CallOption) (*GetPhysicalDescribeResponse, error)
+	//更新体质描述
+	UpdatePhysicalDescribe(ctx context.Context, in *UpdatePhysicalDescribeRequest, opts ...client.CallOption) (*UpdatePhysicalDescribeResponse, error)
 	//获取推荐商品列表
 	GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, opts ...client.CallOption) (*GetRiskCommodityListResponse, error)
 	//编辑报告显示内容
@@ -173,9 +181,49 @@ func (c *reportAPIService) GetMeridianList(ctx context.Context, in *emptypb.Empt
 	return out, nil
 }
 
+func (c *reportAPIService) GetMeridianDescribe(ctx context.Context, in *GetMeridianDescribeRequest, opts ...client.CallOption) (*GetMeridianDescribeResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetMeridianDescribe", in)
+	out := new(GetMeridianDescribeResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) UpdateMeridianDescribe(ctx context.Context, in *UpdateMeridianDescribeRequest, opts ...client.CallOption) (*UpdateMeridianDescribeResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.UpdateMeridianDescribe", in)
+	out := new(UpdateMeridianDescribeResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *reportAPIService) GetPhysicalList(ctx context.Context, in *emptypb.Empty, opts ...client.CallOption) (*GetPhysicalListResponse, error) {
 	req := c.c.NewRequest(c.name, "ReportAPI.GetPhysicalList", in)
 	out := new(GetPhysicalListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetPhysicalDescribe(ctx context.Context, in *GetPhysicalDescribeRequest, opts ...client.CallOption) (*GetPhysicalDescribeResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetPhysicalDescribe", in)
+	out := new(GetPhysicalDescribeResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) UpdatePhysicalDescribe(ctx context.Context, in *UpdatePhysicalDescribeRequest, opts ...client.CallOption) (*UpdatePhysicalDescribeResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.UpdatePhysicalDescribe", in)
+	out := new(UpdatePhysicalDescribeResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -282,8 +330,16 @@ type ReportAPIHandler interface {
 	UpdateRiskDescribe(context.Context, *UpdateRiskDescribeRequest, *UpdateRiskDescribeResponse) error
 	//获取经络列表
 	GetMeridianList(context.Context, *emptypb.Empty, *GetMeridianListResponse) error
+	//获取经络描述
+	GetMeridianDescribe(context.Context, *GetMeridianDescribeRequest, *GetMeridianDescribeResponse) error
+	//更新经络描述
+	UpdateMeridianDescribe(context.Context, *UpdateMeridianDescribeRequest, *UpdateMeridianDescribeResponse) error
 	//获取体质列表
 	GetPhysicalList(context.Context, *emptypb.Empty, *GetPhysicalListResponse) error
+	//获取体质描述
+	GetPhysicalDescribe(context.Context, *GetPhysicalDescribeRequest, *GetPhysicalDescribeResponse) error
+	//更新体质描述
+	UpdatePhysicalDescribe(context.Context, *UpdatePhysicalDescribeRequest, *UpdatePhysicalDescribeResponse) error
 	//获取推荐商品列表
 	GetRiskCommodityList(context.Context, *GetRiskCommodityListRequest, *GetRiskCommodityListResponse) error
 	//编辑报告显示内容
@@ -312,7 +368,11 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 		GetRiskDescribe(ctx context.Context, in *GetRiskDescribeRequest, out *GetRiskDescribeResponse) error
 		UpdateRiskDescribe(ctx context.Context, in *UpdateRiskDescribeRequest, out *UpdateRiskDescribeResponse) error
 		GetMeridianList(ctx context.Context, in *emptypb.Empty, out *GetMeridianListResponse) error
+		GetMeridianDescribe(ctx context.Context, in *GetMeridianDescribeRequest, out *GetMeridianDescribeResponse) error
+		UpdateMeridianDescribe(ctx context.Context, in *UpdateMeridianDescribeRequest, out *UpdateMeridianDescribeResponse) error
 		GetPhysicalList(ctx context.Context, in *emptypb.Empty, out *GetPhysicalListResponse) error
+		GetPhysicalDescribe(ctx context.Context, in *GetPhysicalDescribeRequest, out *GetPhysicalDescribeResponse) error
+		UpdatePhysicalDescribe(ctx context.Context, in *UpdatePhysicalDescribeRequest, out *UpdatePhysicalDescribeResponse) error
 		GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, out *GetRiskCommodityListResponse) error
 		EditReportShow(ctx context.Context, in *EditReportShowRequest, out *EditReportShowResponse) error
 		GetReportShow(ctx context.Context, in *GetReportShowRequest, out *GetReportShowResponse) error
@@ -365,8 +425,24 @@ func (h *reportAPIHandler) GetMeridianList(ctx context.Context, in *emptypb.Empt
 	return h.ReportAPIHandler.GetMeridianList(ctx, in, out)
 }
 
+func (h *reportAPIHandler) GetMeridianDescribe(ctx context.Context, in *GetMeridianDescribeRequest, out *GetMeridianDescribeResponse) error {
+	return h.ReportAPIHandler.GetMeridianDescribe(ctx, in, out)
+}
+
+func (h *reportAPIHandler) UpdateMeridianDescribe(ctx context.Context, in *UpdateMeridianDescribeRequest, out *UpdateMeridianDescribeResponse) error {
+	return h.ReportAPIHandler.UpdateMeridianDescribe(ctx, in, out)
+}
+
 func (h *reportAPIHandler) GetPhysicalList(ctx context.Context, in *emptypb.Empty, out *GetPhysicalListResponse) error {
 	return h.ReportAPIHandler.GetPhysicalList(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetPhysicalDescribe(ctx context.Context, in *GetPhysicalDescribeRequest, out *GetPhysicalDescribeResponse) error {
+	return h.ReportAPIHandler.GetPhysicalDescribe(ctx, in, out)
+}
+
+func (h *reportAPIHandler) UpdatePhysicalDescribe(ctx context.Context, in *UpdatePhysicalDescribeRequest, out *UpdatePhysicalDescribeResponse) error {
+	return h.ReportAPIHandler.UpdatePhysicalDescribe(ctx, in, out)
 }
 
 func (h *reportAPIHandler) GetRiskCommodityList(ctx context.Context, in *GetRiskCommodityListRequest, out *GetRiskCommodityListResponse) error {

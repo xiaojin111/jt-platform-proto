@@ -38,8 +38,16 @@ service ReportAPI {
   rpc UpdateRiskDescribe(UpdateRiskDescribeRequest)returns(UpdateRiskDescribeResponse);
   //获取经络列表
   rpc GetMeridianList(google.protobuf.Empty)returns(GetMeridianListResponse);
+  //获取经络描述
+  rpc GetMeridianDescribe(GetMeridianDescribeRequest)returns(GetMeridianDescribeResponse);
+  //更新经络描述
+  rpc UpdateMeridianDescribe(UpdateMeridianDescribeRequest)returns(UpdateMeridianDescribeResponse);
   //获取体质列表
   rpc GetPhysicalList(google.protobuf.Empty)returns(GetPhysicalListResponse);
+  //获取体质描述
+  rpc GetPhysicalDescribe(GetPhysicalDescribeRequest)returns(GetPhysicalDescribeResponse);
+  //更新体质描述
+  rpc UpdatePhysicalDescribe(UpdatePhysicalDescribeRequest)returns(UpdatePhysicalDescribeResponse);
   //获取推荐商品列表
   rpc GetRiskCommodityList(GetRiskCommodityListRequest)returns(GetRiskCommodityListResponse);
   //编辑报告显示内容
@@ -499,13 +507,97 @@ message MeridianMsg{
   string meridian_name = 2;
 }
 
+//获取经络描述请求
+message GetMeridianDescribeRequest{
+  //经络id
+  string meridian_id = 1;
+  //应用id
+  string application_id = 2;
+}
+//获取经络描述响应
+message GetMeridianDescribeResponse{
+  //经络id
+  string meridian_id = 1;
+  //应用id
+  string application_id = 2;
+  //风险描述
+  string describe = 3;
+  //遵行
+  string walk = 4;
+  //主治概要
+  string summary = 5;
+  //失衡原因
+  string reason = 6;
+  //表现
+  string performance = 7;
+}
+//更新经络描述请求
+message UpdateMeridianDescribeRequest{
+  //经络id
+  string meridian_id = 1;
+  //应用id
+  string application_id = 2;
+  //风险描述
+  string describe = 3;
+  //遵行
+  string walk = 4;
+  //主治概要
+  string summary = 5;
+  //失衡原因
+  string reason = 6;
+  //表现
+  string performance = 7;
+}
+//更新经络描述响应
+message UpdateMeridianDescribeResponse{
+  //经络id
+  string meridian_id = 1;
+}
+
 //获取体质列表
 message GetPhysicalListResponse{
   repeated PhysicalMsg list = 1;
 }
 message PhysicalMsg{
+  //体质id
   string physical_dialectics_cate_key = 1;
   string physical_dialectics_cate_name = 2;
+}
+
+//获取体质描述请求
+message GetPhysicalDescribeRequest{
+  //体质id
+  string physical_dialectics_cate_key = 1;
+  //应用id
+  string application_id = 2;
+}
+//获取体质描述响应
+message GetPhysicalDescribeResponse{
+  //体质id
+  string physical_dialectics_cate_key = 1;
+  //应用id
+  string application_id = 2;
+  //体征
+  string signs = 3;
+  //调理方法
+  string conditioning = 4;
+}
+
+//更新体质描述请求
+message UpdatePhysicalDescribeRequest{
+  //体质id
+  string physical_dialectics_cate_key = 1;
+  //应用id
+  string application_id = 2;
+  //体征
+  string signs = 3;
+  //调理方法
+  string conditioning = 4;
+}
+//更新体质描述响应
+message UpdatePhysicalDescribeResponse{
+  //体质id
+  string physical_dialectics_cate_key = 1;
 }
 
 //获取推荐商品列表请求
