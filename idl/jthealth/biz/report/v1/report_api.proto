@@ -169,6 +169,8 @@ message GetReportRequest {
   string report_id = 1;
   // 回答的问题，是模块名到回答的问题的映射关系
   map<string, AnswerList> module_answers = 3;
+  //应用id
+  string application_id = 4;
 }
 // 一个模块的回答清单
 message AnswerList {
