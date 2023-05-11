@@ -25,6 +25,8 @@ service ReportAPI {
   rpc SubmitPulseTest(SubmitPulseTestRequest) returns(SubmitPulseTestResponse);
   // GetReport 获取阶梯报告.
   rpc GetReport(GetReportRequest) returns(GetReportResponse);
+  // GetJTReport获取经通天下报告
+  rpc GetJTReport(GetJTReportRequest) returns(GetJTReportResponse);
   // GetMealSuggestion 通过体质获得膳食建议.
   rpc GetMealSuggestion(GetMealSuggestionRequest)returns(GetMealSuggestionResponse);
 
@@ -171,7 +173,20 @@ message GetReportRequest {
   map<string, AnswerList> module_answers = 3;
   //应用id
   string application_id = 4;
+
 }
+//获取经通天下报告请求
+message GetJTReportRequest {
+  // 报告ID
+  string report_id = 1;
+  // 回答的问题，是模块名到回答的问题的映射关系
+  map<string, AnswerList> module_answers = 3;
+  //应用id
+  string application_id = 4;
+  //应急态问题
+  string emergency_number = 5;
+}
+
 // 一个模块的回答清单
 message AnswerList {
   // 回答的问题列表
@@ -188,6 +203,21 @@ message Answer {
 
 // 获取阶梯报告响应
 message GetReportResponse {
+  // 是否是完整的报告
+  bool is_complete_report = 1;
+
+  // 是否还需要回答问题
+  bool has_questions = 2;
+
+  // 提问的问题，是模块名到提问的问题的映射关系
+  map<string, QuestionList> module_questions = 3;
+
+  // 报告内容
+  HealthReport report = 4;
+}
+
+//获取经通天下报告响应
+message GetJTReportResponse {
   // 是否是完整的报告
   bool is_complete_report = 1;
 
