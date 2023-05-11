@@ -307,6 +307,27 @@ message HealthReport {
   repeated string report_remark = 26;
   //健康年龄高于当前健康年龄的比例
   float healthy_age_height_proportion = 27;
+  //高风险指标
+  repeated HeightRiskInfo height_risk_list = 28;
+}
+//高风险指标
+message HeightRiskInfo{
+  // 风险名称
+  string risk_name = 1;
+  // 风险指数
+  int32 index_value = 2;
+  //程度
+  int32 type_number = 3;
+  //可能原因
+  string possible_reason_of_health = 4;
+  //改善建议
+  string guiding_suggestions_of_health = 5;
+  //风险定义
+  string  risk_definition = 6;
+  //风险评估参考
+  string risk_assessment = 7;
+  //风险标识
+  string risk_key = 8;
 }
 //经络
 message MeridianItems {
