@@ -89,6 +89,10 @@ type ReportAPIService interface {
 	ListDaysReports(ctx context.Context, in *ListDaysReportsRequest, opts ...client.CallOption) (*ListDaysReportsResponse, error)
 	//近一周报告
 	ListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, opts ...client.CallOption) (*ListWeekDaysReportsResponse, error)
+	//ListMonthlyReportDays
+	ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...client.CallOption) (*ListMonthlyReportDaysResponse, error)
+	// ListReports 查看测量记录.
+	ListReports(ctx context.Context, in *ListReportsRequest, opts ...client.CallOption) (*ListReportsResponse, error)
 }
 
 type reportAPIService struct {
@@ -323,6 +327,26 @@ func (c *reportAPIService) ListWeekDaysReports(ctx context.Context, in *ListWeek
 	return out, nil
 }
 
+func (c *reportAPIService) ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...client.CallOption) (*ListMonthlyReportDaysResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.ListMonthlyReportDays", in)
+	out := new(ListMonthlyReportDaysResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) ListReports(ctx context.Context, in *ListReportsRequest, opts ...client.CallOption) (*ListReportsResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.ListReports", in)
+	out := new(ListReportsResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ReportAPI service
 
 type ReportAPIHandler interface {
@@ -370,6 +394,10 @@ type ReportAPIHandler interface {
 	ListDaysReports(context.Context, *ListDaysReportsRequest, *ListDaysReportsResponse) error
 	//近一周报告
 	ListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest, *ListWeekDaysReportsResponse) error
+	//ListMonthlyReportDays
+	ListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest, *ListMonthlyReportDaysResponse) error
+	// ListReports 查看测量记录.
+	ListReports(context.Context, *ListReportsRequest, *ListReportsResponse) error
 }
 
 func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...server.HandlerOption) error {
@@ -396,6 +424,8 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 		GetComparisonReportNew(ctx context.Context, in *GetComparisonReportNewRequest, out *GetComparisonReportNewResponse) error
 		ListDaysReports(ctx context.Context, in *ListDaysReportsRequest, out *ListDaysReportsResponse) error
 		ListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, out *ListWeekDaysReportsResponse) error
+		ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, out *ListMonthlyReportDaysResponse) error
+		ListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error
 	}
 	type ReportAPI struct {
 		reportAPI
@@ -494,4 +524,12 @@ func (h *reportAPIHandler) ListDaysReports(ctx context.Context, in *ListDaysRepo
 
 func (h *reportAPIHandler) ListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, out *ListWeekDaysReportsResponse) error {
 	return h.ReportAPIHandler.ListWeekDaysReports(ctx, in, out)
+}
+
+func (h *reportAPIHandler) ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, out *ListMonthlyReportDaysResponse) error {
+	return h.ReportAPIHandler.ListMonthlyReportDays(ctx, in, out)
+}
+
+func (h *reportAPIHandler) ListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error {
+	return h.ReportAPIHandler.ListReports(ctx, in, out)
 }

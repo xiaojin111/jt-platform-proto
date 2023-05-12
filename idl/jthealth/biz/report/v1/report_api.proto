@@ -67,6 +67,11 @@ service ReportAPI {
   rpc ListDaysReports(ListDaysReportsRequest) returns (ListDaysReportsResponse);
   //近一周报告
   rpc ListWeekDaysReports(ListWeekDaysReportsRequest) returns (ListWeekDaysReportsResponse);
+  //ListMonthlyReportDays
+  rpc ListMonthlyReportDays(ListMonthlyReportDaysRequest)returns(ListMonthlyReportDaysResponse);
+  // ListReports 查看测量记录.
+  rpc ListReports(ListReportsRequest) returns(ListReportsResponse);
+
 
 }
 // 提交一般形式的采样数据的请求
@@ -971,4 +976,55 @@ message ListWeekDaysReportsRequest {
 //列举近一周报告响应
 message ListWeekDaysReportsResponse {
   repeated DaysReport days_report = 1;
+}
+// 获取月测量报告天数请求
+message ListMonthlyReportDaysRequest {
+  // 用户档案ID
+  string user_profile_id = 1;
+  // 年
+  int32 year = 2;
+  // 月
+  int32 month = 3;
+  // 当前时区
+  string time_zone = 4;
+}
+
+// 获取月测量报告天数响应
+message ListMonthlyReportDaysResponse {
+  // 所有有记录的日期
+  repeated google.protobuf.Timestamp days = 1;
+  google.protobuf.Timestamp last_time = 2;
+}
+// 测量记录管理模块请求
+message ListReportsRequest {
+  // 搜索条件
+  SearchCondition search_condition = 1;
+  // 分页
+  Pagination pagination = 2;
+  // 是否是后台管理请求
+  bool is_system = 3;
+
+}
+message Pagination {
+  // 分页偏移量
+  int32 offset = 1;
+  // 期望分页查询记录的数量
+  int32 size = 2;
+}
+
+// SearchCondition 报告搜索条件.
+message SearchCondition {
+  // 用户档案ID
+  string user_profile_id = 2;
+  // 时间查询左边界
+  google.protobuf.Timestamp start_time = 3;
+  // 时间查询右边界
+  google.protobuf.Timestamp end_time = 4;
+}
+// 测量记录管理模块响应
+message ListReportsResponse {
+  // 过滤出的报告结果
+  repeated HealthReport health_reports = 1;
+  // 总条数
+  int32 total_count = 100;
 }

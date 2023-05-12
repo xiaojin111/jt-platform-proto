@@ -62,6 +62,10 @@ type ReportAPIClient interface {
 	ListDaysReports(ctx context.Context, in *ListDaysReportsRequest, opts ...grpc.CallOption) (*ListDaysReportsResponse, error)
 	//近一周报告
 	ListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, opts ...grpc.CallOption) (*ListWeekDaysReportsResponse, error)
+	//ListMonthlyReportDays
+	ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...grpc.CallOption) (*ListMonthlyReportDaysResponse, error)
+	// ListReports 查看测量记录.
+	ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error)
 }
 
 type reportAPIClient struct {
@@ -270,6 +274,24 @@ func (c *reportAPIClient) ListWeekDaysReports(ctx context.Context, in *ListWeekD
 	return out, nil
 }
 
+func (c *reportAPIClient) ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...grpc.CallOption) (*ListMonthlyReportDaysResponse, error) {
+	out := new(ListMonthlyReportDaysResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/ListMonthlyReportDays", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error) {
+	out := new(ListReportsResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/ListReports", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReportAPIServer is the server API for ReportAPI service.
 // All implementations must embed UnimplementedReportAPIServer
 // for forward compatibility
@@ -318,6 +340,10 @@ type ReportAPIServer interface {
 	ListDaysReports(context.Context, *ListDaysReportsRequest) (*ListDaysReportsResponse, error)
 	//近一周报告
 	ListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest) (*ListWeekDaysReportsResponse, error)
+	//ListMonthlyReportDays
+	ListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest) (*ListMonthlyReportDaysResponse, error)
+	// ListReports 查看测量记录.
+	ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error)
 	mustEmbedUnimplementedReportAPIServer()
 }
 
@@ -390,6 +416,12 @@ func (UnimplementedReportAPIServer) ListDaysReports(context.Context, *ListDaysRe
 }
 func (UnimplementedReportAPIServer) ListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest) (*ListWeekDaysReportsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWeekDaysReports not implemented")
+}
+func (UnimplementedReportAPIServer) ListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest) (*ListMonthlyReportDaysResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMonthlyReportDays not implemented")
+}
+func (UnimplementedReportAPIServer) ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListReports not implemented")
 }
 func (UnimplementedReportAPIServer) mustEmbedUnimplementedReportAPIServer() {}
 
@@ -800,6 +832,42 @@ func _ReportAPI_ListWeekDaysReports_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportAPI_ListMonthlyReportDays_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMonthlyReportDaysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).ListMonthlyReportDays(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/ListMonthlyReportDays",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).ListMonthlyReportDays(ctx, req.(*ListMonthlyReportDaysRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_ListReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListReportsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).ListReports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/ListReports",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).ListReports(ctx, req.(*ListReportsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.report.v1.ReportAPI",
 	HandlerType: (*ReportAPIServer)(nil),
@@ -891,6 +959,14 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListWeekDaysReports",
 			Handler:    _ReportAPI_ListWeekDaysReports_Handler,
+		},
+		{
+			MethodName: "ListMonthlyReportDays",
+			Handler:    _ReportAPI_ListMonthlyReportDays_Handler,
+		},
+		{
+			MethodName: "ListReports",
+			Handler:    _ReportAPI_ListReports_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
