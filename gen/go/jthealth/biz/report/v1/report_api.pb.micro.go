@@ -93,6 +93,8 @@ type ReportAPIService interface {
 	ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...client.CallOption) (*ListMonthlyReportDaysResponse, error)
 	// ListReports 查看测量记录.
 	ListReports(ctx context.Context, in *ListReportsRequest, opts ...client.CallOption) (*ListReportsResponse, error)
+	//获取18大风险详情
+	GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...client.CallOption) (*GetRiskDetailByKeyResponse, error)
 }
 
 type reportAPIService struct {
@@ -347,6 +349,16 @@ func (c *reportAPIService) ListReports(ctx context.Context, in *ListReportsReque
 	return out, nil
 }
 
+func (c *reportAPIService) GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...client.CallOption) (*GetRiskDetailByKeyResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetRiskDetailByKey", in)
+	out := new(GetRiskDetailByKeyResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ReportAPI service
 
 type ReportAPIHandler interface {
@@ -398,6 +410,8 @@ type ReportAPIHandler interface {
 	ListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest, *ListMonthlyReportDaysResponse) error
 	// ListReports 查看测量记录.
 	ListReports(context.Context, *ListReportsRequest, *ListReportsResponse) error
+	//获取18大风险详情
+	GetRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest, *GetRiskDetailByKeyResponse) error
 }
 
 func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...server.HandlerOption) error {
@@ -426,6 +440,7 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 		ListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, out *ListWeekDaysReportsResponse) error
 		ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, out *ListMonthlyReportDaysResponse) error
 		ListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error
+		GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, out *GetRiskDetailByKeyResponse) error
 	}
 	type ReportAPI struct {
 		reportAPI
@@ -532,4 +547,8 @@ func (h *reportAPIHandler) ListMonthlyReportDays(ctx context.Context, in *ListMo
 
 func (h *reportAPIHandler) ListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error {
 	return h.ReportAPIHandler.ListReports(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, out *GetRiskDetailByKeyResponse) error {
+	return h.ReportAPIHandler.GetRiskDetailByKey(ctx, in, out)
 }
