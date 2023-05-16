@@ -143,7 +143,7 @@ func (x *SignInByPhoneCodeResponse) GetIsCompleted() string {
 	return ""
 }
 
-// 获取用户信息
+//获取用户信息
 type GetUserInfosByIdRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -428,7 +428,7 @@ func (x *GetUserInfosByIdResponse) GetUserType() string {
 	return ""
 }
 
-// UpdateUserInfos  更改用户信息
+//UpdateUserInfos  更改用户信息
 type UpdateUserInfosRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -595,7 +595,7 @@ func (x *UpdateUserInfosResponse) GetEmail() string {
 	return ""
 }
 
-// SignInByPassWord 账号密码登录
+//SignInByPassWord 账号密码登录
 type SignInByPassWordRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -706,7 +706,7 @@ func (x *SignInByPassWordResponse) GetRole() string {
 	return ""
 }
 
-// 应用申请
+//应用申请
 type ApplyApplicationRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -825,7 +825,7 @@ func (x *ApplyApplicationResponse) GetStatus() string {
 	return ""
 }
 
-// 获取应用列表
+//获取应用列表
 type GetApplicationInfoRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1062,7 +1062,7 @@ func (x *AppRoleMsg) GetName() string {
 	return ""
 }
 
-// 单个应用详情
+//单个应用详情
 type GetApplicationDetailsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1221,7 +1221,7 @@ func (x *GetApplicationDetailsResponse) GetIsWeek() string {
 	return ""
 }
 
-// 获取应用通过appid
+//获取应用通过appid
 type GetApplicationByAppIdRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1356,7 +1356,7 @@ func (x *GetApplicationByAppIdResponse) GetApplicationId() string {
 	return ""
 }
 
-// 创建用户档案
+//创建用户档案
 type CreatedUserProfileRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1723,7 +1723,7 @@ func (x *ApplyFeatureAuditResponse) GetStatus() string {
 	return ""
 }
 
-// GetUserInfosList 获取用户信息列表
+//GetUserInfosList 获取用户信息列表
 type GetUserInfosListRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1985,7 +1985,7 @@ func (x *UserMsg) GetAppKey() string {
 	return ""
 }
 
-// 获取用户信息通过appKey
+//获取用户信息通过appKey
 type GetUserInfosByAppKeyRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2081,7 +2081,7 @@ func (x *GetUserInfosByAppKeyResponse) GetUserMsg() *UserMsg {
 	return nil
 }
 
-// 获取审核列表
+//获取审核列表
 type GetFeatureAuditListRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2320,7 +2320,7 @@ func (x *FeatureAuditMsg) GetUserId() string {
 	return ""
 }
 
-// 应用功能审核
+//应用功能审核
 type UpdateFeatureAuditRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2423,7 +2423,7 @@ func (*UpdateFeatureAuditResponse) Descriptor() ([]byte, []int) {
 	return file_jthealth_biz_user_v1_user_api_proto_rawDescGZIP(), []int{31}
 }
 
-// 重置app_secret
+//重置app_secret
 type RestAppSecretByIdRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2518,7 +2518,7 @@ func (x *RestAppSecretByIdResponse) GetAppSecret() string {
 	return ""
 }
 
-// 获取消息通知请求
+//获取消息通知请求
 type GetNotifyListRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2590,7 +2590,7 @@ func (x *GetNotifyListRequest) GetNotifyId() string {
 	return ""
 }
 
-// 获取消息通知响应
+//获取消息通知响应
 type GetNotifyListResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2734,7 +2734,7 @@ func (x *NotifyMsg) GetCreatedAt() string {
 	return ""
 }
 
-// 发送通知请求
+//发送通知请求
 type SendNotifyRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2798,7 +2798,7 @@ func (x *SendNotifyRequest) GetDetail() string {
 	return ""
 }
 
-// 发送通知响应
+//发送通知响应
 type SendNotifyResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3172,7 +3172,7 @@ func (x *UserProfile) GetApplicationId() string {
 	return ""
 }
 
-// 手机号验证码登录请求
+//手机号验证码登录请求
 type JingTongSignInByPhoneCodeRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3230,7 +3230,7 @@ func (x *JingTongSignInByPhoneCodeRequest) GetSmsCode() string {
 	return ""
 }
 
-// 手机号验证码登录响应
+//手机号验证码登录响应
 type JingTongSignInByPhoneCodeResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3326,7 +3326,7 @@ func (x *JingTongSignInByPhoneCodeResponse) GetBirthday() string {
 	return ""
 }
 
-// 微信授权登录请求
+//微信授权登录请求
 type JingTongSignInByWechatMiniProgramRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3374,7 +3374,7 @@ func (x *JingTongSignInByWechatMiniProgramRequest) GetCode() string {
 	return ""
 }
 
-// 微信授权登录响应
+//微信授权登录响应
 type JingTongSignInByWechatMiniProgramResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3470,7 +3470,7 @@ func (x *JingTongSignInByWechatMiniProgramResponse) GetBirthday() string {
 	return ""
 }
 
-// 获取用户信息请求
+//获取用户信息请求
 type JingTongGetUserProfileRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3518,7 +3518,7 @@ func (x *JingTongGetUserProfileRequest) GetUserId() string {
 	return ""
 }
 
-// 获取用户信息响应
+//获取用户信息响应
 type JingTongGetUserProfileResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

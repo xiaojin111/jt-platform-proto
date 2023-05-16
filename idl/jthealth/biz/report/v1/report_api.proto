@@ -25,8 +25,7 @@ service ReportAPI {
   rpc SubmitPulseTest(SubmitPulseTestRequest) returns(SubmitPulseTestResponse);
   // GetReport 获取阶梯报告.
   rpc GetReport(GetReportRequest) returns(GetReportResponse);
-  // GetJTReport获取经通天下报告
-  rpc GetJTReport(GetJTReportRequest) returns(GetJTReportResponse);
+
   // GetMealSuggestion 通过体质获得膳食建议.
   rpc GetMealSuggestion(GetMealSuggestionRequest)returns(GetMealSuggestionResponse);
 
@@ -67,12 +66,22 @@ service ReportAPI {
   rpc ListDaysReports(ListDaysReportsRequest) returns (ListDaysReportsResponse);
   //近一周报告
   rpc ListWeekDaysReports(ListWeekDaysReportsRequest) returns (ListWeekDaysReportsResponse);
+
+  /*************************经通天下小程序************************/
+  // SubmitPulseTest 提交采样数据.
+  rpc JTSubmitPulseTest(SubmitPulseTestRequest) returns(SubmitPulseTestResponse);
+  // GetJTReport获取经通天下报告
+  rpc GetJTReport(GetJTReportRequest) returns(GetJTReportResponse);
+  //近两天报告
+  rpc GetJTListDaysReports(ListDaysReportsRequest) returns (ListDaysReportsResponse);
+  //近一周报告
+  rpc GetJTListWeekDaysReports(ListWeekDaysReportsRequest) returns (ListWeekDaysReportsResponse);
   //ListMonthlyReportDays
-  rpc ListMonthlyReportDays(ListMonthlyReportDaysRequest)returns(ListMonthlyReportDaysResponse);
+  rpc GetJTListMonthlyReportDays(ListMonthlyReportDaysRequest)returns(ListMonthlyReportDaysResponse);
   // ListReports 查看测量记录.
-  rpc ListReports(ListReportsRequest) returns(ListReportsResponse);
+  rpc GetJTListReports(ListReportsRequest) returns(ListReportsResponse);
   //获取18大风险详情
-  rpc GetRiskDetailByKey(GetRiskDetailByKeyRequest)returns(GetRiskDetailByKeyResponse);
+  rpc GetJTRiskDetailByKey(GetRiskDetailByKeyRequest)returns(GetRiskDetailByKeyResponse);
 
 
 }
