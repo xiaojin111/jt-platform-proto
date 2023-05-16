@@ -71,6 +71,8 @@ service ReportAPI {
   rpc ListMonthlyReportDays(ListMonthlyReportDaysRequest)returns(ListMonthlyReportDaysResponse);
   // ListReports 查看测量记录.
   rpc ListReports(ListReportsRequest) returns(ListReportsResponse);
+  //获取18大风险详情
+  rpc GetRiskDetailByKey(GetRiskDetailByKeyRequest)returns(GetRiskDetailByKeyResponse);
 
 
 }
@@ -1027,4 +1029,20 @@ message ListReportsResponse {
   repeated HealthReport health_reports = 1;
   // 总条数
   int32 total_count = 100;
+}
+
+//获取18大风险详情
+message GetRiskDetailByKeyRequest{
+  string risk_key = 1;
+  string type_number = 2;
+}
+message GetRiskDetailByKeyResponse{
+  //风险定义
+  string risk_definition = 1;
+  //风险评估参考
+  string risk_assessment = 2;
+  //可能原因
+  string possible_reason_of_health = 3;
+  //改善建议
+  string guiding_suggestions_of_health = 4;
 }

@@ -66,6 +66,8 @@ type ReportAPIClient interface {
 	ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...grpc.CallOption) (*ListMonthlyReportDaysResponse, error)
 	// ListReports 查看测量记录.
 	ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error)
+	//获取18大风险详情
+	GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...grpc.CallOption) (*GetRiskDetailByKeyResponse, error)
 }
 
 type reportAPIClient struct {
@@ -292,6 +294,15 @@ func (c *reportAPIClient) ListReports(ctx context.Context, in *ListReportsReques
 	return out, nil
 }
 
+func (c *reportAPIClient) GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...grpc.CallOption) (*GetRiskDetailByKeyResponse, error) {
+	out := new(GetRiskDetailByKeyResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetRiskDetailByKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReportAPIServer is the server API for ReportAPI service.
 // All implementations must embed UnimplementedReportAPIServer
 // for forward compatibility
@@ -344,6 +355,8 @@ type ReportAPIServer interface {
 	ListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest) (*ListMonthlyReportDaysResponse, error)
 	// ListReports 查看测量记录.
 	ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error)
+	//获取18大风险详情
+	GetRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest) (*GetRiskDetailByKeyResponse, error)
 	mustEmbedUnimplementedReportAPIServer()
 }
 
@@ -422,6 +435,9 @@ func (UnimplementedReportAPIServer) ListMonthlyReportDays(context.Context, *List
 }
 func (UnimplementedReportAPIServer) ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListReports not implemented")
+}
+func (UnimplementedReportAPIServer) GetRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest) (*GetRiskDetailByKeyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRiskDetailByKey not implemented")
 }
 func (UnimplementedReportAPIServer) mustEmbedUnimplementedReportAPIServer() {}
 
@@ -868,6 +884,24 @@ func _ReportAPI_ListReports_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportAPI_GetRiskDetailByKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRiskDetailByKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetRiskDetailByKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetRiskDetailByKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetRiskDetailByKey(ctx, req.(*GetRiskDetailByKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.report.v1.ReportAPI",
 	HandlerType: (*ReportAPIServer)(nil),
@@ -967,6 +1001,10 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListReports",
 			Handler:    _ReportAPI_ListReports_Handler,
+		},
+		{
+			MethodName: "GetRiskDetailByKey",
+			Handler:    _ReportAPI_GetRiskDetailByKey_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
