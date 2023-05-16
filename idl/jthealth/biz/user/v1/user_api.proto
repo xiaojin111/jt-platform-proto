@@ -61,6 +61,12 @@ service UserAPI {
   // 提交用户档案
   rpc SubmitUserProfile(SubmitUserProfileRequest)returns(SubmitUserProfileResponse);
 
+
+  //---------------------经通天下------------------
+  //手机号验证码登录
+  rpc JingTongSignInByPhoneCode(JingTongSignInByPhoneCodeRequest)returns(JingTongSignInByPhoneCodeResponse);
+  //微信授权登录
+  rpc JingTongSignInByWechatMiniProgram(JingTongSignInByWechatMiniProgramRequest)returns(JingTongSignInByWechatMiniProgramResponse);
 }
 
 // 手机号验证码登录请求
@@ -422,4 +428,39 @@ message UserProfile {
   string client_id = 9;
   //应用id
   string application_id = 12;
+}
+
+
+
+//手机号验证码登录请求
+message JingTongSignInByPhoneCodeRequest{
+  // 手机号
+  string phone = 1;
+  // 验证码
+  string sms_code = 2;
+}
+//手机号验证码登录响应
+message JingTongSignInByPhoneCodeResponse{
+  string user_id = 1;
+  string phone = 2;
+  string nickname = 3;
+  string avatar_url = 4;
+  int32 hand = 5;
+  int32 gender = 6;
+  string birthday = 7;
+}
+
+//微信授权登录请求
+message JingTongSignInByWechatMiniProgramRequest{
+  string code = 1;
+}
+//微信授权登录响应
+message JingTongSignInByWechatMiniProgramResponse{
+  string user_id = 1;
+  string phone = 2;
+  string nickname = 3;
+  string avatar_url = 4;
+  int32 hand = 5;
+  int32 gender = 6;
+  string birthday = 7;
 }

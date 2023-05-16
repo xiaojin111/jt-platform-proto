@@ -57,6 +57,11 @@ type UserAPIClient interface {
 	GetUserProfile(ctx context.Context, in *GetUserProfileRequest, opts ...grpc.CallOption) (*GetUserProfileResponse, error)
 	// 提交用户档案
 	SubmitUserProfile(ctx context.Context, in *SubmitUserProfileRequest, opts ...grpc.CallOption) (*SubmitUserProfileResponse, error)
+	//---------------------经通天下------------------
+	//手机号验证码登录
+	JingTongSignInByPhoneCode(ctx context.Context, in *JingTongSignInByPhoneCodeRequest, opts ...grpc.CallOption) (*JingTongSignInByPhoneCodeResponse, error)
+	//微信授权登录
+	JingTongSignInByWechatMiniProgram(ctx context.Context, in *JingTongSignInByWechatMiniProgramRequest, opts ...grpc.CallOption) (*JingTongSignInByWechatMiniProgramResponse, error)
 }
 
 type userAPIClient struct {
@@ -238,6 +243,24 @@ func (c *userAPIClient) SubmitUserProfile(ctx context.Context, in *SubmitUserPro
 	return out, nil
 }
 
+func (c *userAPIClient) JingTongSignInByPhoneCode(ctx context.Context, in *JingTongSignInByPhoneCodeRequest, opts ...grpc.CallOption) (*JingTongSignInByPhoneCodeResponse, error) {
+	out := new(JingTongSignInByPhoneCodeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/JingTongSignInByPhoneCode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIClient) JingTongSignInByWechatMiniProgram(ctx context.Context, in *JingTongSignInByWechatMiniProgramRequest, opts ...grpc.CallOption) (*JingTongSignInByWechatMiniProgramResponse, error) {
+	out := new(JingTongSignInByWechatMiniProgramResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/JingTongSignInByWechatMiniProgram", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserAPIServer is the server API for UserAPI service.
 // All implementations must embed UnimplementedUserAPIServer
 // for forward compatibility
@@ -282,6 +305,11 @@ type UserAPIServer interface {
 	GetUserProfile(context.Context, *GetUserProfileRequest) (*GetUserProfileResponse, error)
 	// 提交用户档案
 	SubmitUserProfile(context.Context, *SubmitUserProfileRequest) (*SubmitUserProfileResponse, error)
+	//---------------------经通天下------------------
+	//手机号验证码登录
+	JingTongSignInByPhoneCode(context.Context, *JingTongSignInByPhoneCodeRequest) (*JingTongSignInByPhoneCodeResponse, error)
+	//微信授权登录
+	JingTongSignInByWechatMiniProgram(context.Context, *JingTongSignInByWechatMiniProgramRequest) (*JingTongSignInByWechatMiniProgramResponse, error)
 	mustEmbedUnimplementedUserAPIServer()
 }
 
@@ -345,6 +373,12 @@ func (UnimplementedUserAPIServer) GetUserProfile(context.Context, *GetUserProfil
 }
 func (UnimplementedUserAPIServer) SubmitUserProfile(context.Context, *SubmitUserProfileRequest) (*SubmitUserProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubmitUserProfile not implemented")
+}
+func (UnimplementedUserAPIServer) JingTongSignInByPhoneCode(context.Context, *JingTongSignInByPhoneCodeRequest) (*JingTongSignInByPhoneCodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JingTongSignInByPhoneCode not implemented")
+}
+func (UnimplementedUserAPIServer) JingTongSignInByWechatMiniProgram(context.Context, *JingTongSignInByWechatMiniProgramRequest) (*JingTongSignInByWechatMiniProgramResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JingTongSignInByWechatMiniProgram not implemented")
 }
 func (UnimplementedUserAPIServer) mustEmbedUnimplementedUserAPIServer() {}
 
@@ -701,6 +735,42 @@ func _UserAPI_SubmitUserProfile_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_JingTongSignInByPhoneCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JingTongSignInByPhoneCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).JingTongSignInByPhoneCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/JingTongSignInByPhoneCode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).JingTongSignInByPhoneCode(ctx, req.(*JingTongSignInByPhoneCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAPI_JingTongSignInByWechatMiniProgram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JingTongSignInByWechatMiniProgramRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).JingTongSignInByWechatMiniProgram(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/JingTongSignInByWechatMiniProgram",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).JingTongSignInByWechatMiniProgram(ctx, req.(*JingTongSignInByWechatMiniProgramRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.UserAPI",
 	HandlerType: (*UserAPIServer)(nil),
@@ -780,6 +850,14 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SubmitUserProfile",
 			Handler:    _UserAPI_SubmitUserProfile_Handler,
+		},
+		{
+			MethodName: "JingTongSignInByPhoneCode",
+			Handler:    _UserAPI_JingTongSignInByPhoneCode_Handler,
+		},
+		{
+			MethodName: "JingTongSignInByWechatMiniProgram",
+			Handler:    _UserAPI_JingTongSignInByWechatMiniProgram_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
