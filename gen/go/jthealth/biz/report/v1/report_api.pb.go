@@ -6255,7 +6255,7 @@ func (x *ListReportsResponse) GetTotalCount() int32 {
 	return 0
 }
 
-//获取18大风险详情
+// 获取18大风险详情
 type GetRiskDetailByKeyRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

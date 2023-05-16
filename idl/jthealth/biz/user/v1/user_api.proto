@@ -67,6 +67,8 @@ service UserAPI {
   rpc JingTongSignInByPhoneCode(JingTongSignInByPhoneCodeRequest)returns(JingTongSignInByPhoneCodeResponse);
   //微信授权登录
   rpc JingTongSignInByWechatMiniProgram(JingTongSignInByWechatMiniProgramRequest)returns(JingTongSignInByWechatMiniProgramResponse);
+  //获取用户信息
+  rpc JingTongGetUserProfile(JingTongGetUserProfileRequest) returns(JingTongGetUserProfileResponse);
 }
 
 // 手机号验证码登录请求
@@ -456,6 +458,21 @@ message JingTongSignInByWechatMiniProgramRequest{
 }
 //微信授权登录响应
 message JingTongSignInByWechatMiniProgramResponse{
+  string user_id = 1;
+  string phone = 2;
+  string nickname = 3;
+  string avatar_url = 4;
+  int32 hand = 5;
+  int32 gender = 6;
+  string birthday = 7;
+}
+
+//获取用户信息请求
+message JingTongGetUserProfileRequest{
+  string user_id = 1;
+}
+//获取用户信息响应
+message JingTongGetUserProfileResponse{
   string user_id = 1;
   string phone = 2;
   string nickname = 3;

@@ -88,6 +88,8 @@ type UserAPIService interface {
 	JingTongSignInByPhoneCode(ctx context.Context, in *JingTongSignInByPhoneCodeRequest, opts ...client.CallOption) (*JingTongSignInByPhoneCodeResponse, error)
 	//微信授权登录
 	JingTongSignInByWechatMiniProgram(ctx context.Context, in *JingTongSignInByWechatMiniProgramRequest, opts ...client.CallOption) (*JingTongSignInByWechatMiniProgramResponse, error)
+	//获取用户信息
+	JingTongGetUserProfile(ctx context.Context, in *JingTongGetUserProfileRequest, opts ...client.CallOption) (*JingTongGetUserProfileResponse, error)
 }
 
 type userAPIService struct {
@@ -312,6 +314,16 @@ func (c *userAPIService) JingTongSignInByWechatMiniProgram(ctx context.Context, 
 	return out, nil
 }
 
+func (c *userAPIService) JingTongGetUserProfile(ctx context.Context, in *JingTongGetUserProfileRequest, opts ...client.CallOption) (*JingTongGetUserProfileResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.JingTongGetUserProfile", in)
+	out := new(JingTongGetUserProfileResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
@@ -360,6 +372,8 @@ type UserAPIHandler interface {
 	JingTongSignInByPhoneCode(context.Context, *JingTongSignInByPhoneCodeRequest, *JingTongSignInByPhoneCodeResponse) error
 	//微信授权登录
 	JingTongSignInByWechatMiniProgram(context.Context, *JingTongSignInByWechatMiniProgramRequest, *JingTongSignInByWechatMiniProgramResponse) error
+	//获取用户信息
+	JingTongGetUserProfile(context.Context, *JingTongGetUserProfileRequest, *JingTongGetUserProfileResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
@@ -385,6 +399,7 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		SubmitUserProfile(ctx context.Context, in *SubmitUserProfileRequest, out *SubmitUserProfileResponse) error
 		JingTongSignInByPhoneCode(ctx context.Context, in *JingTongSignInByPhoneCodeRequest, out *JingTongSignInByPhoneCodeResponse) error
 		JingTongSignInByWechatMiniProgram(ctx context.Context, in *JingTongSignInByWechatMiniProgramRequest, out *JingTongSignInByWechatMiniProgramResponse) error
+		JingTongGetUserProfile(ctx context.Context, in *JingTongGetUserProfileRequest, out *JingTongGetUserProfileResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -479,4 +494,8 @@ func (h *userAPIHandler) JingTongSignInByPhoneCode(ctx context.Context, in *Jing
 
 func (h *userAPIHandler) JingTongSignInByWechatMiniProgram(ctx context.Context, in *JingTongSignInByWechatMiniProgramRequest, out *JingTongSignInByWechatMiniProgramResponse) error {
 	return h.UserAPIHandler.JingTongSignInByWechatMiniProgram(ctx, in, out)
+}
+
+func (h *userAPIHandler) JingTongGetUserProfile(ctx context.Context, in *JingTongGetUserProfileRequest, out *JingTongGetUserProfileResponse) error {
+	return h.UserAPIHandler.JingTongGetUserProfile(ctx, in, out)
 }

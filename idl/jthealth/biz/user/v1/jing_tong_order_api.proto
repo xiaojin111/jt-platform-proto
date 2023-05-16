@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+
+package jthealth.biz.user.v1;
+
+option csharp_namespace = "Jthealth.Biz.User.V1";
+option go_package =
+    "github.com/jinmukeji/jt-proto/gen/go/jthealth/biz/user/v1;userv1";
+option java_multiple_files = true;
+option java_outer_classname = "UserProto";
+option java_package = "com.jthealth.biz.user.v1";
+option objc_class_prefix = "JBU";
+option php_namespace = "Jthealth\\Biz\\User\\V1";
+
+import "google/protobuf/timestamp.proto";
+
+
+
+service JingTongOrderAPI{
+
+}
