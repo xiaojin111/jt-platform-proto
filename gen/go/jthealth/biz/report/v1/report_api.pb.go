@@ -716,7 +716,7 @@ func (x *GetReportRequest) GetApplicationId() string {
 	return ""
 }
 
-//获取经通天下报告请求
+// 获取经通天下报告请求
 type GetJTReportRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -975,7 +975,7 @@ func (x *GetReportResponse) GetReport() *HealthReport {
 	return nil
 }
 
-//获取经通天下报告响应
+// 获取经通天下报告响应
 type GetJTReportResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1508,7 +1508,7 @@ func (x *HealthReport) GetHeightRiskList() []*HeightRiskInfo {
 	return nil
 }
 
-//高风险指标
+// 高风险指标
 type HeightRiskInfo struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1620,7 +1620,7 @@ func (x *HeightRiskInfo) GetRiskKey() string {
 	return ""
 }
 
-//经络
+// 经络
 type MeridianItems struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2499,7 +2499,7 @@ func (x *ImageResource) GetPreviewUrl() string {
 	return ""
 }
 
-//创建风险推荐商品请求
+// 创建风险推荐商品请求
 type CreateRiskCommodityRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2593,7 +2593,7 @@ func (x *CreateRiskCommodityRequest) GetUrl() string {
 	return ""
 }
 
-//创建风险推荐商品响应
+// 创建风险推荐商品响应
 type CreateRiskCommodityResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2642,7 +2642,7 @@ func (x *CreateRiskCommodityResponse) GetRiskCommodityId() string {
 	return ""
 }
 
-//获取风险列表响应
+// 获取风险列表响应
 type GetRiskListResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2747,7 +2747,7 @@ func (x *RiskMsg) GetRiskName() string {
 	return ""
 }
 
-//获取风险描述请求
+// 获取风险描述请求
 type GetRiskDescribeRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2805,7 +2805,7 @@ func (x *GetRiskDescribeRequest) GetApplicationId() string {
 	return ""
 }
 
-//获取风险描述响应
+// 获取风险描述响应
 type GetRiskDescribeResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2890,7 +2890,7 @@ func (x *GetRiskDescribeResponse) GetReason() string {
 	return ""
 }
 
-//更新风险描述请求
+// 更新风险描述请求
 type UpdateRiskDescribeRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2975,7 +2975,7 @@ func (x *UpdateRiskDescribeRequest) GetReason() string {
 	return ""
 }
 
-//更新风险描述响应
+// 更新风险描述响应
 type UpdateRiskDescribeResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3024,7 +3024,7 @@ func (x *UpdateRiskDescribeResponse) GetRiskId() string {
 	return ""
 }
 
-//获取经络列表响应
+// 获取经络列表响应
 type GetMeridianListResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3129,7 +3129,7 @@ func (x *MeridianMsg) GetMeridianName() string {
 	return ""
 }
 
-//获取经络描述请求
+// 获取经络描述请求
 type GetMeridianDescribeRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3187,7 +3187,7 @@ func (x *GetMeridianDescribeRequest) GetApplicationId() string {
 	return ""
 }
 
-//获取经络描述响应
+// 获取经络描述响应
 type GetMeridianDescribeResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3290,7 +3290,7 @@ func (x *GetMeridianDescribeResponse) GetPerformance() string {
 	return ""
 }
 
-//更新经络描述请求
+// 更新经络描述请求
 type UpdateMeridianDescribeRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3393,7 +3393,7 @@ func (x *UpdateMeridianDescribeRequest) GetPerformance() string {
 	return ""
 }
 
-//更新经络描述响应
+// 更新经络描述响应
 type UpdateMeridianDescribeResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3442,7 +3442,7 @@ func (x *UpdateMeridianDescribeResponse) GetMeridianId() string {
 	return ""
 }
 
-//获取体质列表
+// 获取体质列表
 type GetPhysicalListResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3546,7 +3546,7 @@ func (x *PhysicalMsg) GetPhysicalDialecticsCateName() string {
 	return ""
 }
 
-//获取体质描述请求
+// 获取体质描述请求
 type GetPhysicalDescribeRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3604,7 +3604,7 @@ func (x *GetPhysicalDescribeRequest) GetApplicationId() string {
 	return ""
 }
 
-//获取体质描述响应
+// 获取体质描述响应
 type GetPhysicalDescribeResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3680,7 +3680,7 @@ func (x *GetPhysicalDescribeResponse) GetConditioning() string {
 	return ""
 }
 
-//更新体质描述请求
+// 更新体质描述请求
 type UpdatePhysicalDescribeRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3756,7 +3756,7 @@ func (x *UpdatePhysicalDescribeRequest) GetConditioning() string {
 	return ""
 }
 
-//更新体质描述响应
+// 更新体质描述响应
 type UpdatePhysicalDescribeResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3805,7 +3805,7 @@ func (x *UpdatePhysicalDescribeResponse) GetPhysicalDialecticsCateKey() string {
 	return ""
 }
 
-//获取推荐商品列表请求
+// 获取推荐商品列表请求
 type GetRiskCommodityListRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3881,7 +3881,7 @@ func (x *GetRiskCommodityListRequest) GetDegree() int32 {
 	return 0
 }
 
-//获取推荐商品列表响应
+// 获取推荐商品列表响应
 type GetRiskCommodityListResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4022,7 +4022,7 @@ func (x *RiskCommodityMsg) GetUrl() string {
 	return ""
 }
 
-//编辑报告显示内容请求
+// 编辑报告显示内容请求
 type EditReportShowRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4296,7 +4296,7 @@ func (x *EditReportShowRequest) GetIsSuggest() string {
 	return ""
 }
 
-//编辑报告显示内容响应
+// 编辑报告显示内容响应
 type EditReportShowResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4345,7 +4345,7 @@ func (x *EditReportShowResponse) GetApplicationId() string {
 	return ""
 }
 
-//获取报告显示内容请求
+// 获取报告显示内容请求
 type GetReportShowRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4394,7 +4394,7 @@ func (x *GetReportShowRequest) GetApplicationId() string {
 	return ""
 }
 
-//获取报告显示内容响应
+// 获取报告显示内容响应
 type GetReportShowResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4668,7 +4668,7 @@ func (x *GetReportShowResponse) GetIsSuggest() string {
 	return ""
 }
 
-//编辑报告对比显示功能请求
+// 编辑报告对比显示功能请求
 type EditReportComparedShowRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4735,7 +4735,7 @@ func (x *EditReportComparedShowRequest) GetIsWeek() string {
 	return ""
 }
 
-//编辑报告对比显示功能响应
+// 编辑报告对比显示功能响应
 type EditReportComparedShowResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4784,7 +4784,7 @@ func (x *EditReportComparedShowResponse) GetApplicationId() string {
 	return ""
 }
 
-//获取报告对比显示功能请求
+// 获取报告对比显示功能请求
 type GetReportComparedShowRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4833,7 +4833,7 @@ func (x *GetReportComparedShowRequest) GetApplicationId() string {
 	return ""
 }
 
-//获取报告对比显示功能响应
+// 获取报告对比显示功能响应
 type GetReportComparedShowResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5623,7 +5623,7 @@ func (x *Comparison) GetTrend() string {
 	return ""
 }
 
-//列举近两天报告请求
+// 列举近两天报告请求
 type ListDaysReportsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5671,7 +5671,7 @@ func (x *ListDaysReportsRequest) GetUserProfileId() string {
 	return ""
 }
 
-//列举近两天报告响应
+// 列举近两天报告响应
 type ListDaysReportsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5719,7 +5719,7 @@ func (x *ListDaysReportsResponse) GetDaysReport() []*DaysReport {
 	return nil
 }
 
-//一天的报告列表
+// 一天的报告列表
 type DaysReport struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5777,7 +5777,7 @@ func (x *DaysReport) GetHealthReports() []*HealthReport {
 	return nil
 }
 
-//列举近一周报告请求
+// 列举近一周报告请求
 type ListWeekDaysReportsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5825,7 +5825,7 @@ func (x *ListWeekDaysReportsRequest) GetUserProfileId() string {
 	return ""
 }
 
-//列举近一周报告响应
+// 列举近一周报告响应
 type ListWeekDaysReportsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -6255,7 +6255,7 @@ func (x *ListReportsResponse) GetTotalCount() int32 {
 	return 0
 }
 
-//获取18大风险详情
+// 获取18大风险详情
 type GetRiskDetailByKeyRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
