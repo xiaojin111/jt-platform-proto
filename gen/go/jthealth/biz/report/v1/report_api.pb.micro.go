@@ -49,8 +49,6 @@ type ReportAPIService interface {
 	SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...client.CallOption) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(ctx context.Context, in *GetReportRequest, opts ...client.CallOption) (*GetReportResponse, error)
-	// GetJTReport获取经通天下报告
-	GetJTReport(ctx context.Context, in *GetJTReportRequest, opts ...client.CallOption) (*GetJTReportResponse, error)
 	// GetMealSuggestion 通过体质获得膳食建议.
 	GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, opts ...client.CallOption) (*GetMealSuggestionResponse, error)
 	//创建风险推荐商品
@@ -89,12 +87,20 @@ type ReportAPIService interface {
 	ListDaysReports(ctx context.Context, in *ListDaysReportsRequest, opts ...client.CallOption) (*ListDaysReportsResponse, error)
 	//近一周报告
 	ListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, opts ...client.CallOption) (*ListWeekDaysReportsResponse, error)
+	// SubmitPulseTest 提交采样数据.
+	JTSubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...client.CallOption) (*SubmitPulseTestResponse, error)
+	// GetJTReport获取经通天下报告
+	GetJTReport(ctx context.Context, in *GetJTReportRequest, opts ...client.CallOption) (*GetJTReportResponse, error)
+	//近两天报告
+	GetJTListDaysReports(ctx context.Context, in *ListDaysReportsRequest, opts ...client.CallOption) (*ListDaysReportsResponse, error)
+	//近一周报告
+	GetJTListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, opts ...client.CallOption) (*ListWeekDaysReportsResponse, error)
 	//ListMonthlyReportDays
-	ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...client.CallOption) (*ListMonthlyReportDaysResponse, error)
+	GetJTListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...client.CallOption) (*ListMonthlyReportDaysResponse, error)
 	// ListReports 查看测量记录.
-	ListReports(ctx context.Context, in *ListReportsRequest, opts ...client.CallOption) (*ListReportsResponse, error)
+	GetJTListReports(ctx context.Context, in *ListReportsRequest, opts ...client.CallOption) (*ListReportsResponse, error)
 	//获取18大风险详情
-	GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...client.CallOption) (*GetRiskDetailByKeyResponse, error)
+	GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...client.CallOption) (*GetRiskDetailByKeyResponse, error)
 }
 
 type reportAPIService struct {
@@ -122,16 +128,6 @@ func (c *reportAPIService) SubmitPulseTest(ctx context.Context, in *SubmitPulseT
 func (c *reportAPIService) GetReport(ctx context.Context, in *GetReportRequest, opts ...client.CallOption) (*GetReportResponse, error) {
 	req := c.c.NewRequest(c.name, "ReportAPI.GetReport", in)
 	out := new(GetReportResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *reportAPIService) GetJTReport(ctx context.Context, in *GetJTReportRequest, opts ...client.CallOption) (*GetJTReportResponse, error) {
-	req := c.c.NewRequest(c.name, "ReportAPI.GetJTReport", in)
-	out := new(GetJTReportResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -329,8 +325,48 @@ func (c *reportAPIService) ListWeekDaysReports(ctx context.Context, in *ListWeek
 	return out, nil
 }
 
-func (c *reportAPIService) ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...client.CallOption) (*ListMonthlyReportDaysResponse, error) {
-	req := c.c.NewRequest(c.name, "ReportAPI.ListMonthlyReportDays", in)
+func (c *reportAPIService) JTSubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...client.CallOption) (*SubmitPulseTestResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.JTSubmitPulseTest", in)
+	out := new(SubmitPulseTestResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetJTReport(ctx context.Context, in *GetJTReportRequest, opts ...client.CallOption) (*GetJTReportResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetJTReport", in)
+	out := new(GetJTReportResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetJTListDaysReports(ctx context.Context, in *ListDaysReportsRequest, opts ...client.CallOption) (*ListDaysReportsResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetJTListDaysReports", in)
+	out := new(ListDaysReportsResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetJTListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, opts ...client.CallOption) (*ListWeekDaysReportsResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetJTListWeekDaysReports", in)
+	out := new(ListWeekDaysReportsResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIService) GetJTListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...client.CallOption) (*ListMonthlyReportDaysResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetJTListMonthlyReportDays", in)
 	out := new(ListMonthlyReportDaysResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -339,8 +375,8 @@ func (c *reportAPIService) ListMonthlyReportDays(ctx context.Context, in *ListMo
 	return out, nil
 }
 
-func (c *reportAPIService) ListReports(ctx context.Context, in *ListReportsRequest, opts ...client.CallOption) (*ListReportsResponse, error) {
-	req := c.c.NewRequest(c.name, "ReportAPI.ListReports", in)
+func (c *reportAPIService) GetJTListReports(ctx context.Context, in *ListReportsRequest, opts ...client.CallOption) (*ListReportsResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetJTListReports", in)
 	out := new(ListReportsResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -349,8 +385,8 @@ func (c *reportAPIService) ListReports(ctx context.Context, in *ListReportsReque
 	return out, nil
 }
 
-func (c *reportAPIService) GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...client.CallOption) (*GetRiskDetailByKeyResponse, error) {
-	req := c.c.NewRequest(c.name, "ReportAPI.GetRiskDetailByKey", in)
+func (c *reportAPIService) GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...client.CallOption) (*GetRiskDetailByKeyResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.GetJTRiskDetailByKey", in)
 	out := new(GetRiskDetailByKeyResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -366,8 +402,6 @@ type ReportAPIHandler interface {
 	SubmitPulseTest(context.Context, *SubmitPulseTestRequest, *SubmitPulseTestResponse) error
 	// GetReport 获取阶梯报告.
 	GetReport(context.Context, *GetReportRequest, *GetReportResponse) error
-	// GetJTReport获取经通天下报告
-	GetJTReport(context.Context, *GetJTReportRequest, *GetJTReportResponse) error
 	// GetMealSuggestion 通过体质获得膳食建议.
 	GetMealSuggestion(context.Context, *GetMealSuggestionRequest, *GetMealSuggestionResponse) error
 	//创建风险推荐商品
@@ -406,19 +440,26 @@ type ReportAPIHandler interface {
 	ListDaysReports(context.Context, *ListDaysReportsRequest, *ListDaysReportsResponse) error
 	//近一周报告
 	ListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest, *ListWeekDaysReportsResponse) error
+	// SubmitPulseTest 提交采样数据.
+	JTSubmitPulseTest(context.Context, *SubmitPulseTestRequest, *SubmitPulseTestResponse) error
+	// GetJTReport获取经通天下报告
+	GetJTReport(context.Context, *GetJTReportRequest, *GetJTReportResponse) error
+	//近两天报告
+	GetJTListDaysReports(context.Context, *ListDaysReportsRequest, *ListDaysReportsResponse) error
+	//近一周报告
+	GetJTListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest, *ListWeekDaysReportsResponse) error
 	//ListMonthlyReportDays
-	ListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest, *ListMonthlyReportDaysResponse) error
+	GetJTListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest, *ListMonthlyReportDaysResponse) error
 	// ListReports 查看测量记录.
-	ListReports(context.Context, *ListReportsRequest, *ListReportsResponse) error
+	GetJTListReports(context.Context, *ListReportsRequest, *ListReportsResponse) error
 	//获取18大风险详情
-	GetRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest, *GetRiskDetailByKeyResponse) error
+	GetJTRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest, *GetRiskDetailByKeyResponse) error
 }
 
 func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...server.HandlerOption) error {
 	type reportAPI interface {
 		SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, out *SubmitPulseTestResponse) error
 		GetReport(ctx context.Context, in *GetReportRequest, out *GetReportResponse) error
-		GetJTReport(ctx context.Context, in *GetJTReportRequest, out *GetJTReportResponse) error
 		GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, out *GetMealSuggestionResponse) error
 		CreateRiskCommodity(ctx context.Context, in *CreateRiskCommodityRequest, out *CreateRiskCommodityResponse) error
 		GetRiskList(ctx context.Context, in *emptypb.Empty, out *GetRiskListResponse) error
@@ -438,9 +479,13 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 		GetComparisonReportNew(ctx context.Context, in *GetComparisonReportNewRequest, out *GetComparisonReportNewResponse) error
 		ListDaysReports(ctx context.Context, in *ListDaysReportsRequest, out *ListDaysReportsResponse) error
 		ListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, out *ListWeekDaysReportsResponse) error
-		ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, out *ListMonthlyReportDaysResponse) error
-		ListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error
-		GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, out *GetRiskDetailByKeyResponse) error
+		JTSubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, out *SubmitPulseTestResponse) error
+		GetJTReport(ctx context.Context, in *GetJTReportRequest, out *GetJTReportResponse) error
+		GetJTListDaysReports(ctx context.Context, in *ListDaysReportsRequest, out *ListDaysReportsResponse) error
+		GetJTListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, out *ListWeekDaysReportsResponse) error
+		GetJTListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, out *ListMonthlyReportDaysResponse) error
+		GetJTListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error
+		GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, out *GetRiskDetailByKeyResponse) error
 	}
 	type ReportAPI struct {
 		reportAPI
@@ -459,10 +504,6 @@ func (h *reportAPIHandler) SubmitPulseTest(ctx context.Context, in *SubmitPulseT
 
 func (h *reportAPIHandler) GetReport(ctx context.Context, in *GetReportRequest, out *GetReportResponse) error {
 	return h.ReportAPIHandler.GetReport(ctx, in, out)
-}
-
-func (h *reportAPIHandler) GetJTReport(ctx context.Context, in *GetJTReportRequest, out *GetJTReportResponse) error {
-	return h.ReportAPIHandler.GetJTReport(ctx, in, out)
 }
 
 func (h *reportAPIHandler) GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, out *GetMealSuggestionResponse) error {
@@ -541,14 +582,30 @@ func (h *reportAPIHandler) ListWeekDaysReports(ctx context.Context, in *ListWeek
 	return h.ReportAPIHandler.ListWeekDaysReports(ctx, in, out)
 }
 
-func (h *reportAPIHandler) ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, out *ListMonthlyReportDaysResponse) error {
-	return h.ReportAPIHandler.ListMonthlyReportDays(ctx, in, out)
+func (h *reportAPIHandler) JTSubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, out *SubmitPulseTestResponse) error {
+	return h.ReportAPIHandler.JTSubmitPulseTest(ctx, in, out)
 }
 
-func (h *reportAPIHandler) ListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error {
-	return h.ReportAPIHandler.ListReports(ctx, in, out)
+func (h *reportAPIHandler) GetJTReport(ctx context.Context, in *GetJTReportRequest, out *GetJTReportResponse) error {
+	return h.ReportAPIHandler.GetJTReport(ctx, in, out)
 }
 
-func (h *reportAPIHandler) GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, out *GetRiskDetailByKeyResponse) error {
-	return h.ReportAPIHandler.GetRiskDetailByKey(ctx, in, out)
+func (h *reportAPIHandler) GetJTListDaysReports(ctx context.Context, in *ListDaysReportsRequest, out *ListDaysReportsResponse) error {
+	return h.ReportAPIHandler.GetJTListDaysReports(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetJTListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, out *ListWeekDaysReportsResponse) error {
+	return h.ReportAPIHandler.GetJTListWeekDaysReports(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetJTListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, out *ListMonthlyReportDaysResponse) error {
+	return h.ReportAPIHandler.GetJTListMonthlyReportDays(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetJTListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error {
+	return h.ReportAPIHandler.GetJTListReports(ctx, in, out)
+}
+
+func (h *reportAPIHandler) GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, out *GetRiskDetailByKeyResponse) error {
+	return h.ReportAPIHandler.GetJTRiskDetailByKey(ctx, in, out)
 }

@@ -22,8 +22,6 @@ type ReportAPIClient interface {
 	SubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...grpc.CallOption) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(ctx context.Context, in *GetReportRequest, opts ...grpc.CallOption) (*GetReportResponse, error)
-	// GetJTReport获取经通天下报告
-	GetJTReport(ctx context.Context, in *GetJTReportRequest, opts ...grpc.CallOption) (*GetJTReportResponse, error)
 	// GetMealSuggestion 通过体质获得膳食建议.
 	GetMealSuggestion(ctx context.Context, in *GetMealSuggestionRequest, opts ...grpc.CallOption) (*GetMealSuggestionResponse, error)
 	//创建风险推荐商品
@@ -62,12 +60,20 @@ type ReportAPIClient interface {
 	ListDaysReports(ctx context.Context, in *ListDaysReportsRequest, opts ...grpc.CallOption) (*ListDaysReportsResponse, error)
 	//近一周报告
 	ListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, opts ...grpc.CallOption) (*ListWeekDaysReportsResponse, error)
+	// SubmitPulseTest 提交采样数据.
+	JTSubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...grpc.CallOption) (*SubmitPulseTestResponse, error)
+	// GetJTReport获取经通天下报告
+	GetJTReport(ctx context.Context, in *GetJTReportRequest, opts ...grpc.CallOption) (*GetJTReportResponse, error)
+	//近两天报告
+	GetJTListDaysReports(ctx context.Context, in *ListDaysReportsRequest, opts ...grpc.CallOption) (*ListDaysReportsResponse, error)
+	//近一周报告
+	GetJTListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, opts ...grpc.CallOption) (*ListWeekDaysReportsResponse, error)
 	//ListMonthlyReportDays
-	ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...grpc.CallOption) (*ListMonthlyReportDaysResponse, error)
+	GetJTListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...grpc.CallOption) (*ListMonthlyReportDaysResponse, error)
 	// ListReports 查看测量记录.
-	ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error)
+	GetJTListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error)
 	//获取18大风险详情
-	GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...grpc.CallOption) (*GetRiskDetailByKeyResponse, error)
+	GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...grpc.CallOption) (*GetRiskDetailByKeyResponse, error)
 }
 
 type reportAPIClient struct {
@@ -90,15 +96,6 @@ func (c *reportAPIClient) SubmitPulseTest(ctx context.Context, in *SubmitPulseTe
 func (c *reportAPIClient) GetReport(ctx context.Context, in *GetReportRequest, opts ...grpc.CallOption) (*GetReportResponse, error) {
 	out := new(GetReportResponse)
 	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetReport", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *reportAPIClient) GetJTReport(ctx context.Context, in *GetJTReportRequest, opts ...grpc.CallOption) (*GetJTReportResponse, error) {
-	out := new(GetJTReportResponse)
-	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetJTReport", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -276,27 +273,63 @@ func (c *reportAPIClient) ListWeekDaysReports(ctx context.Context, in *ListWeekD
 	return out, nil
 }
 
-func (c *reportAPIClient) ListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...grpc.CallOption) (*ListMonthlyReportDaysResponse, error) {
+func (c *reportAPIClient) JTSubmitPulseTest(ctx context.Context, in *SubmitPulseTestRequest, opts ...grpc.CallOption) (*SubmitPulseTestResponse, error) {
+	out := new(SubmitPulseTestResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/JTSubmitPulseTest", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetJTReport(ctx context.Context, in *GetJTReportRequest, opts ...grpc.CallOption) (*GetJTReportResponse, error) {
+	out := new(GetJTReportResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetJTReport", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetJTListDaysReports(ctx context.Context, in *ListDaysReportsRequest, opts ...grpc.CallOption) (*ListDaysReportsResponse, error) {
+	out := new(ListDaysReportsResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetJTListDaysReports", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetJTListWeekDaysReports(ctx context.Context, in *ListWeekDaysReportsRequest, opts ...grpc.CallOption) (*ListWeekDaysReportsResponse, error) {
+	out := new(ListWeekDaysReportsResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetJTListWeekDaysReports", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportAPIClient) GetJTListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, opts ...grpc.CallOption) (*ListMonthlyReportDaysResponse, error) {
 	out := new(ListMonthlyReportDaysResponse)
-	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/ListMonthlyReportDays", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetJTListMonthlyReportDays", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *reportAPIClient) ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error) {
+func (c *reportAPIClient) GetJTListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error) {
 	out := new(ListReportsResponse)
-	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/ListReports", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetJTListReports", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *reportAPIClient) GetRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...grpc.CallOption) (*GetRiskDetailByKeyResponse, error) {
+func (c *reportAPIClient) GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...grpc.CallOption) (*GetRiskDetailByKeyResponse, error) {
 	out := new(GetRiskDetailByKeyResponse)
-	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetRiskDetailByKey", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/GetJTRiskDetailByKey", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -311,8 +344,6 @@ type ReportAPIServer interface {
 	SubmitPulseTest(context.Context, *SubmitPulseTestRequest) (*SubmitPulseTestResponse, error)
 	// GetReport 获取阶梯报告.
 	GetReport(context.Context, *GetReportRequest) (*GetReportResponse, error)
-	// GetJTReport获取经通天下报告
-	GetJTReport(context.Context, *GetJTReportRequest) (*GetJTReportResponse, error)
 	// GetMealSuggestion 通过体质获得膳食建议.
 	GetMealSuggestion(context.Context, *GetMealSuggestionRequest) (*GetMealSuggestionResponse, error)
 	//创建风险推荐商品
@@ -351,12 +382,20 @@ type ReportAPIServer interface {
 	ListDaysReports(context.Context, *ListDaysReportsRequest) (*ListDaysReportsResponse, error)
 	//近一周报告
 	ListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest) (*ListWeekDaysReportsResponse, error)
+	// SubmitPulseTest 提交采样数据.
+	JTSubmitPulseTest(context.Context, *SubmitPulseTestRequest) (*SubmitPulseTestResponse, error)
+	// GetJTReport获取经通天下报告
+	GetJTReport(context.Context, *GetJTReportRequest) (*GetJTReportResponse, error)
+	//近两天报告
+	GetJTListDaysReports(context.Context, *ListDaysReportsRequest) (*ListDaysReportsResponse, error)
+	//近一周报告
+	GetJTListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest) (*ListWeekDaysReportsResponse, error)
 	//ListMonthlyReportDays
-	ListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest) (*ListMonthlyReportDaysResponse, error)
+	GetJTListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest) (*ListMonthlyReportDaysResponse, error)
 	// ListReports 查看测量记录.
-	ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error)
+	GetJTListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error)
 	//获取18大风险详情
-	GetRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest) (*GetRiskDetailByKeyResponse, error)
+	GetJTRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest) (*GetRiskDetailByKeyResponse, error)
 	mustEmbedUnimplementedReportAPIServer()
 }
 
@@ -369,9 +408,6 @@ func (UnimplementedReportAPIServer) SubmitPulseTest(context.Context, *SubmitPuls
 }
 func (UnimplementedReportAPIServer) GetReport(context.Context, *GetReportRequest) (*GetReportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReport not implemented")
-}
-func (UnimplementedReportAPIServer) GetJTReport(context.Context, *GetJTReportRequest) (*GetJTReportResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetJTReport not implemented")
 }
 func (UnimplementedReportAPIServer) GetMealSuggestion(context.Context, *GetMealSuggestionRequest) (*GetMealSuggestionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMealSuggestion not implemented")
@@ -430,14 +466,26 @@ func (UnimplementedReportAPIServer) ListDaysReports(context.Context, *ListDaysRe
 func (UnimplementedReportAPIServer) ListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest) (*ListWeekDaysReportsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWeekDaysReports not implemented")
 }
-func (UnimplementedReportAPIServer) ListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest) (*ListMonthlyReportDaysResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListMonthlyReportDays not implemented")
+func (UnimplementedReportAPIServer) JTSubmitPulseTest(context.Context, *SubmitPulseTestRequest) (*SubmitPulseTestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JTSubmitPulseTest not implemented")
 }
-func (UnimplementedReportAPIServer) ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListReports not implemented")
+func (UnimplementedReportAPIServer) GetJTReport(context.Context, *GetJTReportRequest) (*GetJTReportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJTReport not implemented")
 }
-func (UnimplementedReportAPIServer) GetRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest) (*GetRiskDetailByKeyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRiskDetailByKey not implemented")
+func (UnimplementedReportAPIServer) GetJTListDaysReports(context.Context, *ListDaysReportsRequest) (*ListDaysReportsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJTListDaysReports not implemented")
+}
+func (UnimplementedReportAPIServer) GetJTListWeekDaysReports(context.Context, *ListWeekDaysReportsRequest) (*ListWeekDaysReportsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJTListWeekDaysReports not implemented")
+}
+func (UnimplementedReportAPIServer) GetJTListMonthlyReportDays(context.Context, *ListMonthlyReportDaysRequest) (*ListMonthlyReportDaysResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJTListMonthlyReportDays not implemented")
+}
+func (UnimplementedReportAPIServer) GetJTListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJTListReports not implemented")
+}
+func (UnimplementedReportAPIServer) GetJTRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest) (*GetRiskDetailByKeyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJTRiskDetailByKey not implemented")
 }
 func (UnimplementedReportAPIServer) mustEmbedUnimplementedReportAPIServer() {}
 
@@ -484,24 +532,6 @@ func _ReportAPI_GetReport_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ReportAPIServer).GetReport(ctx, req.(*GetReportRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ReportAPI_GetJTReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetJTReportRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ReportAPIServer).GetJTReport(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetJTReport",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReportAPIServer).GetJTReport(ctx, req.(*GetJTReportRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -848,56 +878,128 @@ func _ReportAPI_ListWeekDaysReports_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ReportAPI_ListMonthlyReportDays_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ReportAPI_JTSubmitPulseTest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitPulseTestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).JTSubmitPulseTest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/JTSubmitPulseTest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).JTSubmitPulseTest(ctx, req.(*SubmitPulseTestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetJTReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJTReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetJTReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetJTReport",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetJTReport(ctx, req.(*GetJTReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetJTListDaysReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDaysReportsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetJTListDaysReports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetJTListDaysReports",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetJTListDaysReports(ctx, req.(*ListDaysReportsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetJTListWeekDaysReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListWeekDaysReportsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).GetJTListWeekDaysReports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetJTListWeekDaysReports",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).GetJTListWeekDaysReports(ctx, req.(*ListWeekDaysReportsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportAPI_GetJTListMonthlyReportDays_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListMonthlyReportDaysRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ReportAPIServer).ListMonthlyReportDays(ctx, in)
+		return srv.(ReportAPIServer).GetJTListMonthlyReportDays(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/jthealth.biz.report.v1.ReportAPI/ListMonthlyReportDays",
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetJTListMonthlyReportDays",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReportAPIServer).ListMonthlyReportDays(ctx, req.(*ListMonthlyReportDaysRequest))
+		return srv.(ReportAPIServer).GetJTListMonthlyReportDays(ctx, req.(*ListMonthlyReportDaysRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ReportAPI_ListReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ReportAPI_GetJTListReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListReportsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ReportAPIServer).ListReports(ctx, in)
+		return srv.(ReportAPIServer).GetJTListReports(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/jthealth.biz.report.v1.ReportAPI/ListReports",
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetJTListReports",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReportAPIServer).ListReports(ctx, req.(*ListReportsRequest))
+		return srv.(ReportAPIServer).GetJTListReports(ctx, req.(*ListReportsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ReportAPI_GetRiskDetailByKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ReportAPI_GetJTRiskDetailByKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetRiskDetailByKeyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ReportAPIServer).GetRiskDetailByKey(ctx, in)
+		return srv.(ReportAPIServer).GetJTRiskDetailByKey(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetRiskDetailByKey",
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/GetJTRiskDetailByKey",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReportAPIServer).GetRiskDetailByKey(ctx, req.(*GetRiskDetailByKeyRequest))
+		return srv.(ReportAPIServer).GetJTRiskDetailByKey(ctx, req.(*GetRiskDetailByKeyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -913,10 +1015,6 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetReport",
 			Handler:    _ReportAPI_GetReport_Handler,
-		},
-		{
-			MethodName: "GetJTReport",
-			Handler:    _ReportAPI_GetJTReport_Handler,
 		},
 		{
 			MethodName: "GetMealSuggestion",
@@ -995,16 +1093,32 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 			Handler:    _ReportAPI_ListWeekDaysReports_Handler,
 		},
 		{
-			MethodName: "ListMonthlyReportDays",
-			Handler:    _ReportAPI_ListMonthlyReportDays_Handler,
+			MethodName: "JTSubmitPulseTest",
+			Handler:    _ReportAPI_JTSubmitPulseTest_Handler,
 		},
 		{
-			MethodName: "ListReports",
-			Handler:    _ReportAPI_ListReports_Handler,
+			MethodName: "GetJTReport",
+			Handler:    _ReportAPI_GetJTReport_Handler,
 		},
 		{
-			MethodName: "GetRiskDetailByKey",
-			Handler:    _ReportAPI_GetRiskDetailByKey_Handler,
+			MethodName: "GetJTListDaysReports",
+			Handler:    _ReportAPI_GetJTListDaysReports_Handler,
+		},
+		{
+			MethodName: "GetJTListWeekDaysReports",
+			Handler:    _ReportAPI_GetJTListWeekDaysReports_Handler,
+		},
+		{
+			MethodName: "GetJTListMonthlyReportDays",
+			Handler:    _ReportAPI_GetJTListMonthlyReportDays_Handler,
+		},
+		{
+			MethodName: "GetJTListReports",
+			Handler:    _ReportAPI_GetJTListReports_Handler,
+		},
+		{
+			MethodName: "GetJTRiskDetailByKey",
+			Handler:    _ReportAPI_GetJTRiskDetailByKey_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
