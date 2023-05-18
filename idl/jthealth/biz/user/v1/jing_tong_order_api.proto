@@ -17,5 +17,64 @@ import "google/protobuf/timestamp.proto";
 
 
 service JingTongOrderAPI{
+  //获取用户剩余测量次数
+  rpc JingTongMeasurementCount(JingTongMeasurementCountRequest)returns(JingTongMeasurementCountResponse);
+  //获取用户openId
+  rpc JingTongGetWxMiniProOpenIdByCode(JingTongGetWxMiniProOpenIdByCodeRequest)returns(JingTongGetWxMiniProOpenIdByCodeResponse);
+  //创建订单
+  rpc JingTongCreateOrder(JingTongCreateOrderRequest)returns(JingTongCreateOrderResponse);
+  //微信支付通知
+  rpc JingTongNotify(JingTongNotifyRequest)returns(JingTongNotifyResponse);
+
+}
+
+//获取用户剩余测量次数请求
+message JingTongMeasurementCountRequest{
+  string user_id = 1;
+}
+//获取用户剩余测量次数响应
+message JingTongMeasurementCountResponse{
+  int32 count = 1;
+}
+
+//获取用户openId请求
+message JingTongGetWxMiniProOpenIdByCodeRequest{
+  string user_id = 1;
+  string code = 2;
+}
+//获取用户openId响应
+message JingTongGetWxMiniProOpenIdByCodeResponse{
+  string open_id = 1;
+}
+
+//创建订单请求
+message JingTongCreateOrderRequest{
+  // 用户ID
+  string user_id = 1;
+  // 微信小程序openid
+  string open_id = 2;
+}
+//创建订单响应
+message JingTongCreateOrderResponse{
+  // 系统订单号
+  string order_id = 1;
+  string app_id = 2;
+  string partner_id = 3;
+  string prepay_id = 4;
+  //暂填写固定值Sign=WXPay
+  string package = 5;
+  string nonce_str = 6;
+  string timestamp = 7;
+  string sign = 8;
+  string wx_order_url = 9;
+}
+
+//微信支付通知请求
+message JingTongNotifyRequest{
+  string body = 1;
+  string headers = 2;
+}
+//微信支付通知响应
+message JingTongNotifyResponse{
 
 }

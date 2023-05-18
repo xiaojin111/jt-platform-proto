@@ -43,6 +43,14 @@ func NewJingTongOrderAPIEndpoints() []*api.Endpoint {
 // Client API for JingTongOrderAPI service
 
 type JingTongOrderAPIService interface {
+	//获取用户剩余测量次数
+	JingTongMeasurementCount(ctx context.Context, in *JingTongMeasurementCountRequest, opts ...client.CallOption) (*JingTongMeasurementCountResponse, error)
+	//获取用户openId
+	JingTongGetWxMiniProOpenIdByCode(ctx context.Context, in *JingTongGetWxMiniProOpenIdByCodeRequest, opts ...client.CallOption) (*JingTongGetWxMiniProOpenIdByCodeResponse, error)
+	//创建订单
+	JingTongCreateOrder(ctx context.Context, in *JingTongCreateOrderRequest, opts ...client.CallOption) (*JingTongCreateOrderResponse, error)
+	//微信支付通知
+	JingTongNotify(ctx context.Context, in *JingTongNotifyRequest, opts ...client.CallOption) (*JingTongNotifyResponse, error)
 }
 
 type jingTongOrderAPIService struct {
@@ -57,13 +65,65 @@ func NewJingTongOrderAPIService(name string, c client.Client) JingTongOrderAPISe
 	}
 }
 
+func (c *jingTongOrderAPIService) JingTongMeasurementCount(ctx context.Context, in *JingTongMeasurementCountRequest, opts ...client.CallOption) (*JingTongMeasurementCountResponse, error) {
+	req := c.c.NewRequest(c.name, "JingTongOrderAPI.JingTongMeasurementCount", in)
+	out := new(JingTongMeasurementCountResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jingTongOrderAPIService) JingTongGetWxMiniProOpenIdByCode(ctx context.Context, in *JingTongGetWxMiniProOpenIdByCodeRequest, opts ...client.CallOption) (*JingTongGetWxMiniProOpenIdByCodeResponse, error) {
+	req := c.c.NewRequest(c.name, "JingTongOrderAPI.JingTongGetWxMiniProOpenIdByCode", in)
+	out := new(JingTongGetWxMiniProOpenIdByCodeResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jingTongOrderAPIService) JingTongCreateOrder(ctx context.Context, in *JingTongCreateOrderRequest, opts ...client.CallOption) (*JingTongCreateOrderResponse, error) {
+	req := c.c.NewRequest(c.name, "JingTongOrderAPI.JingTongCreateOrder", in)
+	out := new(JingTongCreateOrderResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jingTongOrderAPIService) JingTongNotify(ctx context.Context, in *JingTongNotifyRequest, opts ...client.CallOption) (*JingTongNotifyResponse, error) {
+	req := c.c.NewRequest(c.name, "JingTongOrderAPI.JingTongNotify", in)
+	out := new(JingTongNotifyResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for JingTongOrderAPI service
 
 type JingTongOrderAPIHandler interface {
+	//获取用户剩余测量次数
+	JingTongMeasurementCount(context.Context, *JingTongMeasurementCountRequest, *JingTongMeasurementCountResponse) error
+	//获取用户openId
+	JingTongGetWxMiniProOpenIdByCode(context.Context, *JingTongGetWxMiniProOpenIdByCodeRequest, *JingTongGetWxMiniProOpenIdByCodeResponse) error
+	//创建订单
+	JingTongCreateOrder(context.Context, *JingTongCreateOrderRequest, *JingTongCreateOrderResponse) error
+	//微信支付通知
+	JingTongNotify(context.Context, *JingTongNotifyRequest, *JingTongNotifyResponse) error
 }
 
 func RegisterJingTongOrderAPIHandler(s server.Server, hdlr JingTongOrderAPIHandler, opts ...server.HandlerOption) error {
 	type jingTongOrderAPI interface {
+		JingTongMeasurementCount(ctx context.Context, in *JingTongMeasurementCountRequest, out *JingTongMeasurementCountResponse) error
+		JingTongGetWxMiniProOpenIdByCode(ctx context.Context, in *JingTongGetWxMiniProOpenIdByCodeRequest, out *JingTongGetWxMiniProOpenIdByCodeResponse) error
+		JingTongCreateOrder(ctx context.Context, in *JingTongCreateOrderRequest, out *JingTongCreateOrderResponse) error
+		JingTongNotify(ctx context.Context, in *JingTongNotifyRequest, out *JingTongNotifyResponse) error
 	}
 	type JingTongOrderAPI struct {
 		jingTongOrderAPI
@@ -74,4 +134,20 @@ func RegisterJingTongOrderAPIHandler(s server.Server, hdlr JingTongOrderAPIHandl
 
 type jingTongOrderAPIHandler struct {
 	JingTongOrderAPIHandler
+}
+
+func (h *jingTongOrderAPIHandler) JingTongMeasurementCount(ctx context.Context, in *JingTongMeasurementCountRequest, out *JingTongMeasurementCountResponse) error {
+	return h.JingTongOrderAPIHandler.JingTongMeasurementCount(ctx, in, out)
+}
+
+func (h *jingTongOrderAPIHandler) JingTongGetWxMiniProOpenIdByCode(ctx context.Context, in *JingTongGetWxMiniProOpenIdByCodeRequest, out *JingTongGetWxMiniProOpenIdByCodeResponse) error {
+	return h.JingTongOrderAPIHandler.JingTongGetWxMiniProOpenIdByCode(ctx, in, out)
+}
+
+func (h *jingTongOrderAPIHandler) JingTongCreateOrder(ctx context.Context, in *JingTongCreateOrderRequest, out *JingTongCreateOrderResponse) error {
+	return h.JingTongOrderAPIHandler.JingTongCreateOrder(ctx, in, out)
+}
+
+func (h *jingTongOrderAPIHandler) JingTongNotify(ctx context.Context, in *JingTongNotifyRequest, out *JingTongNotifyResponse) error {
+	return h.JingTongOrderAPIHandler.JingTongNotify(ctx, in, out)
 }

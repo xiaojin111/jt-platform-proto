@@ -450,6 +450,7 @@ message JingTongSignInByPhoneCodeResponse{
   int32 hand = 5;
   int32 gender = 6;
   string birthday = 7;
+  string open_id = 8;
 }
 
 //微信授权登录请求
@@ -465,6 +466,7 @@ message JingTongSignInByWechatMiniProgramResponse{
   int32 hand = 5;
   int32 gender = 6;
   string birthday = 7;
+  string open_id = 8;
 }
 
 //获取用户信息请求
@@ -480,4 +482,5 @@ message JingTongGetUserProfileResponse{
   int32 hand = 5;
   int32 gender = 6;
   string birthday = 7;
+  string open_id = 8;
 }
