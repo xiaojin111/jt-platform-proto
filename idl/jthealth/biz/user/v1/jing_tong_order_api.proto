@@ -25,7 +25,8 @@ service JingTongOrderAPI{
   rpc JingTongCreateOrder(JingTongCreateOrderRequest)returns(JingTongCreateOrderResponse);
   //微信支付通知
   rpc JingTongNotify(JingTongNotifyRequest)returns(JingTongNotifyResponse);
-
+  //获取订单列表
+  rpc JingTongGetOrderList(JingTongGetOrderListRequest)returns(JingTongGetOrderListResponse);
 }
 
 //获取用户剩余测量次数请求
@@ -78,3 +79,31 @@ message JingTongNotifyRequest{
 message JingTongNotifyResponse{
 
 }
+
+//获取订单列表请求
+message JingTongGetOrderListRequest{
+  int32 page_num = 1 ;
+  int32 page_size = 2 ;
+  string user_id = 3;
+  string order_id = 4;
+}
+//获取订单列表响应
+message JingTongGetOrderListResponse{
+  int32 page_num = 1;
+  int32 page_size = 2;
+  int32 total = 3;
+  //用户列表
+  repeated JingTongOrderMsg list = 4;
+}
+message JingTongOrderMsg{
+  // 系统订单号
+  string order_id = 1;
+  //支付金额
+  double price = 2;
+  //支付时间
+  string pay_time = 3;
+}
+
+
+
+

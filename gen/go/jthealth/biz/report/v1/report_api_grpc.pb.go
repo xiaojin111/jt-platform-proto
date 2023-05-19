@@ -74,6 +74,8 @@ type ReportAPIClient interface {
 	GetJTListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error)
 	//获取18大风险详情
 	GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...grpc.CallOption) (*GetRiskDetailByKeyResponse, error)
+	//获取最近测量时间
+	JingTongRecentlyMeasurementTime(ctx context.Context, in *JingTongRecentlyMeasurementTimeRequest, opts ...grpc.CallOption) (*JingTongRecentlyMeasurementTimeResponse, error)
 }
 
 type reportAPIClient struct {
@@ -336,6 +338,15 @@ func (c *reportAPIClient) GetJTRiskDetailByKey(ctx context.Context, in *GetRiskD
 	return out, nil
 }
 
+func (c *reportAPIClient) JingTongRecentlyMeasurementTime(ctx context.Context, in *JingTongRecentlyMeasurementTimeRequest, opts ...grpc.CallOption) (*JingTongRecentlyMeasurementTimeResponse, error) {
+	out := new(JingTongRecentlyMeasurementTimeResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.report.v1.ReportAPI/JingTongRecentlyMeasurementTime", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReportAPIServer is the server API for ReportAPI service.
 // All implementations must embed UnimplementedReportAPIServer
 // for forward compatibility
@@ -396,6 +407,8 @@ type ReportAPIServer interface {
 	GetJTListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error)
 	//获取18大风险详情
 	GetJTRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest) (*GetRiskDetailByKeyResponse, error)
+	//获取最近测量时间
+	JingTongRecentlyMeasurementTime(context.Context, *JingTongRecentlyMeasurementTimeRequest) (*JingTongRecentlyMeasurementTimeResponse, error)
 	mustEmbedUnimplementedReportAPIServer()
 }
 
@@ -486,6 +499,9 @@ func (UnimplementedReportAPIServer) GetJTListReports(context.Context, *ListRepor
 }
 func (UnimplementedReportAPIServer) GetJTRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest) (*GetRiskDetailByKeyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetJTRiskDetailByKey not implemented")
+}
+func (UnimplementedReportAPIServer) JingTongRecentlyMeasurementTime(context.Context, *JingTongRecentlyMeasurementTimeRequest) (*JingTongRecentlyMeasurementTimeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JingTongRecentlyMeasurementTime not implemented")
 }
 func (UnimplementedReportAPIServer) mustEmbedUnimplementedReportAPIServer() {}
 
@@ -1004,6 +1020,24 @@ func _ReportAPI_GetJTRiskDetailByKey_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportAPI_JingTongRecentlyMeasurementTime_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JingTongRecentlyMeasurementTimeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportAPIServer).JingTongRecentlyMeasurementTime(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.report.v1.ReportAPI/JingTongRecentlyMeasurementTime",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportAPIServer).JingTongRecentlyMeasurementTime(ctx, req.(*JingTongRecentlyMeasurementTimeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.report.v1.ReportAPI",
 	HandlerType: (*ReportAPIServer)(nil),
@@ -1119,6 +1153,10 @@ var _ReportAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetJTRiskDetailByKey",
 			Handler:    _ReportAPI_GetJTRiskDetailByKey_Handler,
+		},
+		{
+			MethodName: "JingTongRecentlyMeasurementTime",
+			Handler:    _ReportAPI_JingTongRecentlyMeasurementTime_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

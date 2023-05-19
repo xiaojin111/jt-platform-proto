@@ -101,6 +101,8 @@ type ReportAPIService interface {
 	GetJTListReports(ctx context.Context, in *ListReportsRequest, opts ...client.CallOption) (*ListReportsResponse, error)
 	//获取18大风险详情
 	GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, opts ...client.CallOption) (*GetRiskDetailByKeyResponse, error)
+	//获取最近测量时间
+	JingTongRecentlyMeasurementTime(ctx context.Context, in *JingTongRecentlyMeasurementTimeRequest, opts ...client.CallOption) (*JingTongRecentlyMeasurementTimeResponse, error)
 }
 
 type reportAPIService struct {
@@ -395,6 +397,16 @@ func (c *reportAPIService) GetJTRiskDetailByKey(ctx context.Context, in *GetRisk
 	return out, nil
 }
 
+func (c *reportAPIService) JingTongRecentlyMeasurementTime(ctx context.Context, in *JingTongRecentlyMeasurementTimeRequest, opts ...client.CallOption) (*JingTongRecentlyMeasurementTimeResponse, error) {
+	req := c.c.NewRequest(c.name, "ReportAPI.JingTongRecentlyMeasurementTime", in)
+	out := new(JingTongRecentlyMeasurementTimeResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ReportAPI service
 
 type ReportAPIHandler interface {
@@ -454,6 +466,8 @@ type ReportAPIHandler interface {
 	GetJTListReports(context.Context, *ListReportsRequest, *ListReportsResponse) error
 	//获取18大风险详情
 	GetJTRiskDetailByKey(context.Context, *GetRiskDetailByKeyRequest, *GetRiskDetailByKeyResponse) error
+	//获取最近测量时间
+	JingTongRecentlyMeasurementTime(context.Context, *JingTongRecentlyMeasurementTimeRequest, *JingTongRecentlyMeasurementTimeResponse) error
 }
 
 func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...server.HandlerOption) error {
@@ -486,6 +500,7 @@ func RegisterReportAPIHandler(s server.Server, hdlr ReportAPIHandler, opts ...se
 		GetJTListMonthlyReportDays(ctx context.Context, in *ListMonthlyReportDaysRequest, out *ListMonthlyReportDaysResponse) error
 		GetJTListReports(ctx context.Context, in *ListReportsRequest, out *ListReportsResponse) error
 		GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, out *GetRiskDetailByKeyResponse) error
+		JingTongRecentlyMeasurementTime(ctx context.Context, in *JingTongRecentlyMeasurementTimeRequest, out *JingTongRecentlyMeasurementTimeResponse) error
 	}
 	type ReportAPI struct {
 		reportAPI
@@ -608,4 +623,8 @@ func (h *reportAPIHandler) GetJTListReports(ctx context.Context, in *ListReports
 
 func (h *reportAPIHandler) GetJTRiskDetailByKey(ctx context.Context, in *GetRiskDetailByKeyRequest, out *GetRiskDetailByKeyResponse) error {
 	return h.ReportAPIHandler.GetJTRiskDetailByKey(ctx, in, out)
+}
+
+func (h *reportAPIHandler) JingTongRecentlyMeasurementTime(ctx context.Context, in *JingTongRecentlyMeasurementTimeRequest, out *JingTongRecentlyMeasurementTimeResponse) error {
+	return h.ReportAPIHandler.JingTongRecentlyMeasurementTime(ctx, in, out)
 }

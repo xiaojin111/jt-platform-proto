@@ -25,6 +25,8 @@ type JingTongOrderAPIClient interface {
 	JingTongCreateOrder(ctx context.Context, in *JingTongCreateOrderRequest, opts ...grpc.CallOption) (*JingTongCreateOrderResponse, error)
 	//微信支付通知
 	JingTongNotify(ctx context.Context, in *JingTongNotifyRequest, opts ...grpc.CallOption) (*JingTongNotifyResponse, error)
+	//获取订单列表
+	JingTongGetOrderList(ctx context.Context, in *JingTongGetOrderListRequest, opts ...grpc.CallOption) (*JingTongGetOrderListResponse, error)
 }
 
 type jingTongOrderAPIClient struct {
@@ -71,6 +73,15 @@ func (c *jingTongOrderAPIClient) JingTongNotify(ctx context.Context, in *JingTon
 	return out, nil
 }
 
+func (c *jingTongOrderAPIClient) JingTongGetOrderList(ctx context.Context, in *JingTongGetOrderListRequest, opts ...grpc.CallOption) (*JingTongGetOrderListResponse, error) {
+	out := new(JingTongGetOrderListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.JingTongOrderAPI/JingTongGetOrderList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // JingTongOrderAPIServer is the server API for JingTongOrderAPI service.
 // All implementations must embed UnimplementedJingTongOrderAPIServer
 // for forward compatibility
@@ -83,6 +94,8 @@ type JingTongOrderAPIServer interface {
 	JingTongCreateOrder(context.Context, *JingTongCreateOrderRequest) (*JingTongCreateOrderResponse, error)
 	//微信支付通知
 	JingTongNotify(context.Context, *JingTongNotifyRequest) (*JingTongNotifyResponse, error)
+	//获取订单列表
+	JingTongGetOrderList(context.Context, *JingTongGetOrderListRequest) (*JingTongGetOrderListResponse, error)
 	mustEmbedUnimplementedJingTongOrderAPIServer()
 }
 
@@ -101,6 +114,9 @@ func (UnimplementedJingTongOrderAPIServer) JingTongCreateOrder(context.Context, 
 }
 func (UnimplementedJingTongOrderAPIServer) JingTongNotify(context.Context, *JingTongNotifyRequest) (*JingTongNotifyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JingTongNotify not implemented")
+}
+func (UnimplementedJingTongOrderAPIServer) JingTongGetOrderList(context.Context, *JingTongGetOrderListRequest) (*JingTongGetOrderListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JingTongGetOrderList not implemented")
 }
 func (UnimplementedJingTongOrderAPIServer) mustEmbedUnimplementedJingTongOrderAPIServer() {}
 
@@ -187,6 +203,24 @@ func _JingTongOrderAPI_JingTongNotify_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JingTongOrderAPI_JingTongGetOrderList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JingTongGetOrderListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JingTongOrderAPIServer).JingTongGetOrderList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.JingTongOrderAPI/JingTongGetOrderList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JingTongOrderAPIServer).JingTongGetOrderList(ctx, req.(*JingTongGetOrderListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _JingTongOrderAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.JingTongOrderAPI",
 	HandlerType: (*JingTongOrderAPIServer)(nil),
@@ -206,6 +240,10 @@ var _JingTongOrderAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JingTongNotify",
 			Handler:    _JingTongOrderAPI_JingTongNotify_Handler,
+		},
+		{
+			MethodName: "JingTongGetOrderList",
+			Handler:    _JingTongOrderAPI_JingTongGetOrderList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

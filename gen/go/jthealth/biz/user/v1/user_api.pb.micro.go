@@ -90,6 +90,10 @@ type UserAPIService interface {
 	JingTongSignInByWechatMiniProgram(ctx context.Context, in *JingTongSignInByWechatMiniProgramRequest, opts ...client.CallOption) (*JingTongSignInByWechatMiniProgramResponse, error)
 	//获取用户信息
 	JingTongGetUserProfile(ctx context.Context, in *JingTongGetUserProfileRequest, opts ...client.CallOption) (*JingTongGetUserProfileResponse, error)
+	//更新用户信息
+	JingTongUpdateUserProfile(ctx context.Context, in *JingTongUpdateUserProfileRequest, opts ...client.CallOption) (*JingTongUpdateUserProfileResponse, error)
+	//修改手机号
+	JingTongUpdatePhone(ctx context.Context, in *JingTongUpdatePhoneRequest, opts ...client.CallOption) (*JingTongUpdatePhoneResponse, error)
 }
 
 type userAPIService struct {
@@ -324,6 +328,26 @@ func (c *userAPIService) JingTongGetUserProfile(ctx context.Context, in *JingTon
 	return out, nil
 }
 
+func (c *userAPIService) JingTongUpdateUserProfile(ctx context.Context, in *JingTongUpdateUserProfileRequest, opts ...client.CallOption) (*JingTongUpdateUserProfileResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.JingTongUpdateUserProfile", in)
+	out := new(JingTongUpdateUserProfileResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAPIService) JingTongUpdatePhone(ctx context.Context, in *JingTongUpdatePhoneRequest, opts ...client.CallOption) (*JingTongUpdatePhoneResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.JingTongUpdatePhone", in)
+	out := new(JingTongUpdatePhoneResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
@@ -374,6 +398,10 @@ type UserAPIHandler interface {
 	JingTongSignInByWechatMiniProgram(context.Context, *JingTongSignInByWechatMiniProgramRequest, *JingTongSignInByWechatMiniProgramResponse) error
 	//获取用户信息
 	JingTongGetUserProfile(context.Context, *JingTongGetUserProfileRequest, *JingTongGetUserProfileResponse) error
+	//更新用户信息
+	JingTongUpdateUserProfile(context.Context, *JingTongUpdateUserProfileRequest, *JingTongUpdateUserProfileResponse) error
+	//修改手机号
+	JingTongUpdatePhone(context.Context, *JingTongUpdatePhoneRequest, *JingTongUpdatePhoneResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
@@ -400,6 +428,8 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		JingTongSignInByPhoneCode(ctx context.Context, in *JingTongSignInByPhoneCodeRequest, out *JingTongSignInByPhoneCodeResponse) error
 		JingTongSignInByWechatMiniProgram(ctx context.Context, in *JingTongSignInByWechatMiniProgramRequest, out *JingTongSignInByWechatMiniProgramResponse) error
 		JingTongGetUserProfile(ctx context.Context, in *JingTongGetUserProfileRequest, out *JingTongGetUserProfileResponse) error
+		JingTongUpdateUserProfile(ctx context.Context, in *JingTongUpdateUserProfileRequest, out *JingTongUpdateUserProfileResponse) error
+		JingTongUpdatePhone(ctx context.Context, in *JingTongUpdatePhoneRequest, out *JingTongUpdatePhoneResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -498,4 +528,12 @@ func (h *userAPIHandler) JingTongSignInByWechatMiniProgram(ctx context.Context, 
 
 func (h *userAPIHandler) JingTongGetUserProfile(ctx context.Context, in *JingTongGetUserProfileRequest, out *JingTongGetUserProfileResponse) error {
 	return h.UserAPIHandler.JingTongGetUserProfile(ctx, in, out)
+}
+
+func (h *userAPIHandler) JingTongUpdateUserProfile(ctx context.Context, in *JingTongUpdateUserProfileRequest, out *JingTongUpdateUserProfileResponse) error {
+	return h.UserAPIHandler.JingTongUpdateUserProfile(ctx, in, out)
+}
+
+func (h *userAPIHandler) JingTongUpdatePhone(ctx context.Context, in *JingTongUpdatePhoneRequest, out *JingTongUpdatePhoneResponse) error {
+	return h.UserAPIHandler.JingTongUpdatePhone(ctx, in, out)
 }

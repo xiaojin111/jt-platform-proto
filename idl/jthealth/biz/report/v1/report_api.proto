@@ -82,6 +82,8 @@ service ReportAPI {
   rpc GetJTListReports(ListReportsRequest) returns(ListReportsResponse);
   //获取18大风险详情
   rpc GetJTRiskDetailByKey(GetRiskDetailByKeyRequest)returns(GetRiskDetailByKeyResponse);
+  //获取最近测量时间
+  rpc JingTongRecentlyMeasurementTime(JingTongRecentlyMeasurementTimeRequest)returns(JingTongRecentlyMeasurementTimeResponse);
 
 
 }
@@ -1054,4 +1056,14 @@ message GetRiskDetailByKeyResponse{
   string possible_reason_of_health = 3;
   //改善建议
   string guiding_suggestions_of_health = 4;
+}
+
+//获取最近测量时间请求
+message JingTongRecentlyMeasurementTimeRequest{
+  //用户档案id
+  string user_profile_id = 8;
+}
+//获取最近测量时间响应
+message JingTongRecentlyMeasurementTimeResponse{
+  string measurement_time = 1;
 }

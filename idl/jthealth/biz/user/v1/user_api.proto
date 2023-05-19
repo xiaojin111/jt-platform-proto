@@ -69,6 +69,11 @@ service UserAPI {
   rpc JingTongSignInByWechatMiniProgram(JingTongSignInByWechatMiniProgramRequest)returns(JingTongSignInByWechatMiniProgramResponse);
   //获取用户信息
   rpc JingTongGetUserProfile(JingTongGetUserProfileRequest) returns(JingTongGetUserProfileResponse);
+  //更新用户信息
+  rpc JingTongUpdateUserProfile(JingTongUpdateUserProfileRequest)returns(JingTongUpdateUserProfileResponse);
+  //修改手机号
+  rpc JingTongUpdatePhone(JingTongUpdatePhoneRequest)returns(JingTongUpdatePhoneResponse);
+
 }
 
 // 手机号验证码登录请求
@@ -483,4 +488,32 @@ message JingTongGetUserProfileResponse{
   int32 gender = 6;
   string birthday = 7;
   string open_id = 8;
+  //用户档案id
+  string user_profile_id = 9;
+}
+
+//更新用户信息请求
+message JingTongUpdateUserProfileRequest{
+  string user_id = 1;
+  string nickname = 3;
+  int32 hand = 5;
+  int32 gender = 6;
+  string birthday = 7;
+}
+//更新用户信息响应
+message JingTongUpdateUserProfileResponse{
+  string user_id = 1;
+}
+
+//修改手机号请求
+message JingTongUpdatePhoneRequest{
+  // 用户ID
+  string user_id = 1;
+  // 新手机号码
+  string new_phone = 5;
+}
+//修改手机号响应
+message JingTongUpdatePhoneResponse{
+  // 用户ID
+  string user_id = 1;
 }
