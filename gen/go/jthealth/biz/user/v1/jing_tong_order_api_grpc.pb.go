@@ -27,6 +27,10 @@ type JingTongOrderAPIClient interface {
 	JingTongNotify(ctx context.Context, in *JingTongNotifyRequest, opts ...grpc.CallOption) (*JingTongNotifyResponse, error)
 	//获取订单列表
 	JingTongGetOrderList(ctx context.Context, in *JingTongGetOrderListRequest, opts ...grpc.CallOption) (*JingTongGetOrderListResponse, error)
+	//首页订单统计
+	JingTongOrderStatistical(ctx context.Context, in *JingTongOrderStatisticalRequest, opts ...grpc.CallOption) (*JingTongOrderStatisticalResponse, error)
+	//后台获取订单列表
+	JingTongBGGetOrderList(ctx context.Context, in *JingTongBGGetOrderListRequest, opts ...grpc.CallOption) (*JingTongBGGetOrderListResponse, error)
 }
 
 type jingTongOrderAPIClient struct {
@@ -82,6 +86,24 @@ func (c *jingTongOrderAPIClient) JingTongGetOrderList(ctx context.Context, in *J
 	return out, nil
 }
 
+func (c *jingTongOrderAPIClient) JingTongOrderStatistical(ctx context.Context, in *JingTongOrderStatisticalRequest, opts ...grpc.CallOption) (*JingTongOrderStatisticalResponse, error) {
+	out := new(JingTongOrderStatisticalResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.JingTongOrderAPI/JingTongOrderStatistical", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jingTongOrderAPIClient) JingTongBGGetOrderList(ctx context.Context, in *JingTongBGGetOrderListRequest, opts ...grpc.CallOption) (*JingTongBGGetOrderListResponse, error) {
+	out := new(JingTongBGGetOrderListResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.JingTongOrderAPI/JingTongBGGetOrderList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // JingTongOrderAPIServer is the server API for JingTongOrderAPI service.
 // All implementations must embed UnimplementedJingTongOrderAPIServer
 // for forward compatibility
@@ -96,6 +118,10 @@ type JingTongOrderAPIServer interface {
 	JingTongNotify(context.Context, *JingTongNotifyRequest) (*JingTongNotifyResponse, error)
 	//获取订单列表
 	JingTongGetOrderList(context.Context, *JingTongGetOrderListRequest) (*JingTongGetOrderListResponse, error)
+	//首页订单统计
+	JingTongOrderStatistical(context.Context, *JingTongOrderStatisticalRequest) (*JingTongOrderStatisticalResponse, error)
+	//后台获取订单列表
+	JingTongBGGetOrderList(context.Context, *JingTongBGGetOrderListRequest) (*JingTongBGGetOrderListResponse, error)
 	mustEmbedUnimplementedJingTongOrderAPIServer()
 }
 
@@ -117,6 +143,12 @@ func (UnimplementedJingTongOrderAPIServer) JingTongNotify(context.Context, *Jing
 }
 func (UnimplementedJingTongOrderAPIServer) JingTongGetOrderList(context.Context, *JingTongGetOrderListRequest) (*JingTongGetOrderListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JingTongGetOrderList not implemented")
+}
+func (UnimplementedJingTongOrderAPIServer) JingTongOrderStatistical(context.Context, *JingTongOrderStatisticalRequest) (*JingTongOrderStatisticalResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JingTongOrderStatistical not implemented")
+}
+func (UnimplementedJingTongOrderAPIServer) JingTongBGGetOrderList(context.Context, *JingTongBGGetOrderListRequest) (*JingTongBGGetOrderListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JingTongBGGetOrderList not implemented")
 }
 func (UnimplementedJingTongOrderAPIServer) mustEmbedUnimplementedJingTongOrderAPIServer() {}
 
@@ -221,6 +253,42 @@ func _JingTongOrderAPI_JingTongGetOrderList_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JingTongOrderAPI_JingTongOrderStatistical_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JingTongOrderStatisticalRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JingTongOrderAPIServer).JingTongOrderStatistical(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.JingTongOrderAPI/JingTongOrderStatistical",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JingTongOrderAPIServer).JingTongOrderStatistical(ctx, req.(*JingTongOrderStatisticalRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JingTongOrderAPI_JingTongBGGetOrderList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JingTongBGGetOrderListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JingTongOrderAPIServer).JingTongBGGetOrderList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.JingTongOrderAPI/JingTongBGGetOrderList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JingTongOrderAPIServer).JingTongBGGetOrderList(ctx, req.(*JingTongBGGetOrderListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _JingTongOrderAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.JingTongOrderAPI",
 	HandlerType: (*JingTongOrderAPIServer)(nil),
@@ -244,6 +312,14 @@ var _JingTongOrderAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JingTongGetOrderList",
 			Handler:    _JingTongOrderAPI_JingTongGetOrderList_Handler,
+		},
+		{
+			MethodName: "JingTongOrderStatistical",
+			Handler:    _JingTongOrderAPI_JingTongOrderStatistical_Handler,
+		},
+		{
+			MethodName: "JingTongBGGetOrderList",
+			Handler:    _JingTongOrderAPI_JingTongBGGetOrderList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

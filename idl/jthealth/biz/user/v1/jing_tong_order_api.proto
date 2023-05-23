@@ -27,6 +27,10 @@ service JingTongOrderAPI{
   rpc JingTongNotify(JingTongNotifyRequest)returns(JingTongNotifyResponse);
   //获取订单列表
   rpc JingTongGetOrderList(JingTongGetOrderListRequest)returns(JingTongGetOrderListResponse);
+  //首页订单统计
+  rpc JingTongOrderStatistical(JingTongOrderStatisticalRequest)returns(JingTongOrderStatisticalResponse);
+  //后台获取订单列表
+  rpc JingTongBGGetOrderList(JingTongBGGetOrderListRequest)returns(JingTongBGGetOrderListResponse);
 }
 
 //获取用户剩余测量次数请求
@@ -102,8 +106,37 @@ message JingTongOrderMsg{
   double price = 2;
   //支付时间
   string pay_time = 3;
+  //手机号
+  string phone = 4;
 }
 
+//首页订单统计请求
+message JingTongOrderStatisticalRequest{
 
+}
+//首页订单统计响应
+message JingTongOrderStatisticalResponse{
+  double yesterday = 1;
+  double month = 2;
+  double year = 3;
+}
+
+//后台获取订单列表请求
+message JingTongBGGetOrderListRequest{
+  string phone = 1;
+  int64 start_time = 2;
+  int64 end_time = 3;
+  int32 page_num = 4;
+  int32 page_size = 5;
+}
+//后台获取订单列表响应
+message JingTongBGGetOrderListResponse{
+  int32 page_num = 1;
+  int32 page_size = 2;
+  int32 total = 3;
+  double total_amount = 4;
+  //用户列表
+  repeated JingTongOrderMsg list = 5;
+}
 
 

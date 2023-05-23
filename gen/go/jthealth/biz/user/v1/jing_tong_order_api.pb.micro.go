@@ -53,6 +53,10 @@ type JingTongOrderAPIService interface {
 	JingTongNotify(ctx context.Context, in *JingTongNotifyRequest, opts ...client.CallOption) (*JingTongNotifyResponse, error)
 	//获取订单列表
 	JingTongGetOrderList(ctx context.Context, in *JingTongGetOrderListRequest, opts ...client.CallOption) (*JingTongGetOrderListResponse, error)
+	//首页订单统计
+	JingTongOrderStatistical(ctx context.Context, in *JingTongOrderStatisticalRequest, opts ...client.CallOption) (*JingTongOrderStatisticalResponse, error)
+	//后台获取订单列表
+	JingTongBGGetOrderList(ctx context.Context, in *JingTongBGGetOrderListRequest, opts ...client.CallOption) (*JingTongBGGetOrderListResponse, error)
 }
 
 type jingTongOrderAPIService struct {
@@ -117,6 +121,26 @@ func (c *jingTongOrderAPIService) JingTongGetOrderList(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *jingTongOrderAPIService) JingTongOrderStatistical(ctx context.Context, in *JingTongOrderStatisticalRequest, opts ...client.CallOption) (*JingTongOrderStatisticalResponse, error) {
+	req := c.c.NewRequest(c.name, "JingTongOrderAPI.JingTongOrderStatistical", in)
+	out := new(JingTongOrderStatisticalResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jingTongOrderAPIService) JingTongBGGetOrderList(ctx context.Context, in *JingTongBGGetOrderListRequest, opts ...client.CallOption) (*JingTongBGGetOrderListResponse, error) {
+	req := c.c.NewRequest(c.name, "JingTongOrderAPI.JingTongBGGetOrderList", in)
+	out := new(JingTongBGGetOrderListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for JingTongOrderAPI service
 
 type JingTongOrderAPIHandler interface {
@@ -130,6 +154,10 @@ type JingTongOrderAPIHandler interface {
 	JingTongNotify(context.Context, *JingTongNotifyRequest, *JingTongNotifyResponse) error
 	//获取订单列表
 	JingTongGetOrderList(context.Context, *JingTongGetOrderListRequest, *JingTongGetOrderListResponse) error
+	//首页订单统计
+	JingTongOrderStatistical(context.Context, *JingTongOrderStatisticalRequest, *JingTongOrderStatisticalResponse) error
+	//后台获取订单列表
+	JingTongBGGetOrderList(context.Context, *JingTongBGGetOrderListRequest, *JingTongBGGetOrderListResponse) error
 }
 
 func RegisterJingTongOrderAPIHandler(s server.Server, hdlr JingTongOrderAPIHandler, opts ...server.HandlerOption) error {
@@ -139,6 +167,8 @@ func RegisterJingTongOrderAPIHandler(s server.Server, hdlr JingTongOrderAPIHandl
 		JingTongCreateOrder(ctx context.Context, in *JingTongCreateOrderRequest, out *JingTongCreateOrderResponse) error
 		JingTongNotify(ctx context.Context, in *JingTongNotifyRequest, out *JingTongNotifyResponse) error
 		JingTongGetOrderList(ctx context.Context, in *JingTongGetOrderListRequest, out *JingTongGetOrderListResponse) error
+		JingTongOrderStatistical(ctx context.Context, in *JingTongOrderStatisticalRequest, out *JingTongOrderStatisticalResponse) error
+		JingTongBGGetOrderList(ctx context.Context, in *JingTongBGGetOrderListRequest, out *JingTongBGGetOrderListResponse) error
 	}
 	type JingTongOrderAPI struct {
 		jingTongOrderAPI
@@ -169,4 +199,12 @@ func (h *jingTongOrderAPIHandler) JingTongNotify(ctx context.Context, in *JingTo
 
 func (h *jingTongOrderAPIHandler) JingTongGetOrderList(ctx context.Context, in *JingTongGetOrderListRequest, out *JingTongGetOrderListResponse) error {
 	return h.JingTongOrderAPIHandler.JingTongGetOrderList(ctx, in, out)
+}
+
+func (h *jingTongOrderAPIHandler) JingTongOrderStatistical(ctx context.Context, in *JingTongOrderStatisticalRequest, out *JingTongOrderStatisticalResponse) error {
+	return h.JingTongOrderAPIHandler.JingTongOrderStatistical(ctx, in, out)
+}
+
+func (h *jingTongOrderAPIHandler) JingTongBGGetOrderList(ctx context.Context, in *JingTongBGGetOrderListRequest, out *JingTongBGGetOrderListResponse) error {
+	return h.JingTongOrderAPIHandler.JingTongBGGetOrderList(ctx, in, out)
 }
