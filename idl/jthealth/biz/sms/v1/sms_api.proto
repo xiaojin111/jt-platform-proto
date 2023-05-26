@@ -42,6 +42,12 @@ service SmsAPI {
   // GetLastestVerificationCode 获取最新的短信.
   rpc GetLastestVerificationCode(GetLastestVerificationCodeRequest)
       returns(GetLastestVerificationCodeResponse);
+  // JingTongSendVerificationCode 发送手机验证码.
+  rpc JingTongSendVerificationCode(SendVerificationCodeRequest)
+      returns(SendVerificationCodeResponse);
+  // JingTongSendGetLastestVerificationCode 获取最新的短信.
+  rpc JingTongSendGetLastestVerificationCode(GetLastestVerificationCodeRequest)
+      returns(GetLastestVerificationCodeResponse);
 
   //SendVerificationPhoneCode 发送手机验证码登录
   rpc SendVerificationPhoneCode(SendVerificationPhoneCodeRequest)
@@ -61,7 +67,9 @@ message SendVerificationCodeRequest {
 }
 
 // 发送消息的响应
-message SendVerificationCodeResponse {}
+message SendVerificationCodeResponse {
+  string message = 1;
+}
 
 // 查看时间区间内的短信请求
 message ListVerificationCodesByTimeRangeRequest {
