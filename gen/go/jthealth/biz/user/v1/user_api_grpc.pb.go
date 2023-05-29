@@ -68,6 +68,8 @@ type UserAPIClient interface {
 	JingTongUpdateUserProfile(ctx context.Context, in *JingTongUpdateUserProfileRequest, opts ...grpc.CallOption) (*JingTongUpdateUserProfileResponse, error)
 	//修改手机号
 	JingTongUpdatePhone(ctx context.Context, in *JingTongUpdatePhoneRequest, opts ...grpc.CallOption) (*JingTongUpdatePhoneResponse, error)
+	//后台用户登录
+	JingTongBgLogin(ctx context.Context, in *JingTongBgLoginRequest, opts ...grpc.CallOption) (*JingTongBgLoginResponse, error)
 }
 
 type userAPIClient struct {
@@ -294,6 +296,15 @@ func (c *userAPIClient) JingTongUpdatePhone(ctx context.Context, in *JingTongUpd
 	return out, nil
 }
 
+func (c *userAPIClient) JingTongBgLogin(ctx context.Context, in *JingTongBgLoginRequest, opts ...grpc.CallOption) (*JingTongBgLoginResponse, error) {
+	out := new(JingTongBgLoginResponse)
+	err := c.cc.Invoke(ctx, "/jthealth.biz.user.v1.UserAPI/JingTongBgLogin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserAPIServer is the server API for UserAPI service.
 // All implementations must embed UnimplementedUserAPIServer
 // for forward compatibility
@@ -349,6 +360,8 @@ type UserAPIServer interface {
 	JingTongUpdateUserProfile(context.Context, *JingTongUpdateUserProfileRequest) (*JingTongUpdateUserProfileResponse, error)
 	//修改手机号
 	JingTongUpdatePhone(context.Context, *JingTongUpdatePhoneRequest) (*JingTongUpdatePhoneResponse, error)
+	//后台用户登录
+	JingTongBgLogin(context.Context, *JingTongBgLoginRequest) (*JingTongBgLoginResponse, error)
 	mustEmbedUnimplementedUserAPIServer()
 }
 
@@ -427,6 +440,9 @@ func (UnimplementedUserAPIServer) JingTongUpdateUserProfile(context.Context, *Ji
 }
 func (UnimplementedUserAPIServer) JingTongUpdatePhone(context.Context, *JingTongUpdatePhoneRequest) (*JingTongUpdatePhoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JingTongUpdatePhone not implemented")
+}
+func (UnimplementedUserAPIServer) JingTongBgLogin(context.Context, *JingTongBgLoginRequest) (*JingTongBgLoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JingTongBgLogin not implemented")
 }
 func (UnimplementedUserAPIServer) mustEmbedUnimplementedUserAPIServer() {}
 
@@ -873,6 +889,24 @@ func _UserAPI_JingTongUpdatePhone_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAPI_JingTongBgLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JingTongBgLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAPIServer).JingTongBgLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/jthealth.biz.user.v1.UserAPI/JingTongBgLogin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAPIServer).JingTongBgLogin(ctx, req.(*JingTongBgLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UserAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.user.v1.UserAPI",
 	HandlerType: (*UserAPIServer)(nil),
@@ -972,6 +1006,10 @@ var _UserAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JingTongUpdatePhone",
 			Handler:    _UserAPI_JingTongUpdatePhone_Handler,
+		},
+		{
+			MethodName: "JingTongBgLogin",
+			Handler:    _UserAPI_JingTongBgLogin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

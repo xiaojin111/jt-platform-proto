@@ -73,6 +73,8 @@ service UserAPI {
   rpc JingTongUpdateUserProfile(JingTongUpdateUserProfileRequest)returns(JingTongUpdateUserProfileResponse);
   //修改手机号
   rpc JingTongUpdatePhone(JingTongUpdatePhoneRequest)returns(JingTongUpdatePhoneResponse);
+  //后台用户登录
+  rpc JingTongBgLogin(JingTongBgLoginRequest)returns(JingTongBgLoginResponse);
 
 }
 
@@ -514,6 +516,17 @@ message JingTongUpdatePhoneRequest{
 }
 //修改手机号响应
 message JingTongUpdatePhoneResponse{
+  // 用户ID
+  string user_id = 1;
+}
+
+//后台用户登录请求
+message JingTongBgLoginRequest{
+  string user_name = 1;
+  string password = 2;
+}
+//后台用户登录响应
+message JingTongBgLoginResponse{
   // 用户ID
   string user_id = 1;
 }

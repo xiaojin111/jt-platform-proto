@@ -94,6 +94,8 @@ type UserAPIService interface {
 	JingTongUpdateUserProfile(ctx context.Context, in *JingTongUpdateUserProfileRequest, opts ...client.CallOption) (*JingTongUpdateUserProfileResponse, error)
 	//修改手机号
 	JingTongUpdatePhone(ctx context.Context, in *JingTongUpdatePhoneRequest, opts ...client.CallOption) (*JingTongUpdatePhoneResponse, error)
+	//后台用户登录
+	JingTongBgLogin(ctx context.Context, in *JingTongBgLoginRequest, opts ...client.CallOption) (*JingTongBgLoginResponse, error)
 }
 
 type userAPIService struct {
@@ -348,6 +350,16 @@ func (c *userAPIService) JingTongUpdatePhone(ctx context.Context, in *JingTongUp
 	return out, nil
 }
 
+func (c *userAPIService) JingTongBgLogin(ctx context.Context, in *JingTongBgLoginRequest, opts ...client.CallOption) (*JingTongBgLoginResponse, error) {
+	req := c.c.NewRequest(c.name, "UserAPI.JingTongBgLogin", in)
+	out := new(JingTongBgLoginResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserAPI service
 
 type UserAPIHandler interface {
@@ -402,6 +414,8 @@ type UserAPIHandler interface {
 	JingTongUpdateUserProfile(context.Context, *JingTongUpdateUserProfileRequest, *JingTongUpdateUserProfileResponse) error
 	//修改手机号
 	JingTongUpdatePhone(context.Context, *JingTongUpdatePhoneRequest, *JingTongUpdatePhoneResponse) error
+	//后台用户登录
+	JingTongBgLogin(context.Context, *JingTongBgLoginRequest, *JingTongBgLoginResponse) error
 }
 
 func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server.HandlerOption) error {
@@ -430,6 +444,7 @@ func RegisterUserAPIHandler(s server.Server, hdlr UserAPIHandler, opts ...server
 		JingTongGetUserProfile(ctx context.Context, in *JingTongGetUserProfileRequest, out *JingTongGetUserProfileResponse) error
 		JingTongUpdateUserProfile(ctx context.Context, in *JingTongUpdateUserProfileRequest, out *JingTongUpdateUserProfileResponse) error
 		JingTongUpdatePhone(ctx context.Context, in *JingTongUpdatePhoneRequest, out *JingTongUpdatePhoneResponse) error
+		JingTongBgLogin(ctx context.Context, in *JingTongBgLoginRequest, out *JingTongBgLoginResponse) error
 	}
 	type UserAPI struct {
 		userAPI
@@ -536,4 +551,8 @@ func (h *userAPIHandler) JingTongUpdateUserProfile(ctx context.Context, in *Jing
 
 func (h *userAPIHandler) JingTongUpdatePhone(ctx context.Context, in *JingTongUpdatePhoneRequest, out *JingTongUpdatePhoneResponse) error {
 	return h.UserAPIHandler.JingTongUpdatePhone(ctx, in, out)
+}
+
+func (h *userAPIHandler) JingTongBgLogin(ctx context.Context, in *JingTongBgLoginRequest, out *JingTongBgLoginResponse) error {
+	return h.UserAPIHandler.JingTongBgLogin(ctx, in, out)
 }
