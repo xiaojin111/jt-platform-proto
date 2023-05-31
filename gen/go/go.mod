@@ -1,4 +1,4 @@
-module github.com/jinmukeji/jt-platform-proto/gen/go
+module github.com/xiaojin111/jt-platform-proto/gen/go
 
 go 1.18
 
