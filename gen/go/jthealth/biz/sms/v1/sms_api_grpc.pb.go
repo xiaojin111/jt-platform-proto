@@ -17,18 +17,10 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SmsAPIClient interface {
-	// SendVerificationCode 发送手机验证码.
-	SendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, opts ...grpc.CallOption) (*SendVerificationCodeResponse, error)
-	// ListVerificationCodesByTimeRange 查看时间区间内的短信.
-	ListVerificationCodesByTimeRange(ctx context.Context, in *ListVerificationCodesByTimeRangeRequest, opts ...grpc.CallOption) (*ListVerificationCodesByTimeRangeResponse, error)
-	// GetLastestVerificationCode 获取最新的短信.
-	GetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, opts ...grpc.CallOption) (*GetLastestVerificationCodeResponse, error)
 	// JingTongSendVerificationCode 发送手机验证码.
 	JingTongSendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, opts ...grpc.CallOption) (*SendVerificationCodeResponse, error)
 	// JingTongSendGetLastestVerificationCode 获取最新的短信.
 	JingTongSendGetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, opts ...grpc.CallOption) (*GetLastestVerificationCodeResponse, error)
-	//SendVerificationPhoneCode 发送手机验证码登录
-	SendVerificationPhoneCode(ctx context.Context, in *SendVerificationPhoneCodeRequest, opts ...grpc.CallOption) (*SendVerificationPhoneCodeResponse, error)
 }
 
 type smsAPIClient struct {
@@ -37,33 +29,6 @@ type smsAPIClient struct {
 
 func NewSmsAPIClient(cc grpc.ClientConnInterface) SmsAPIClient {
 	return &smsAPIClient{cc}
-}
-
-func (c *smsAPIClient) SendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, opts ...grpc.CallOption) (*SendVerificationCodeResponse, error) {
-	out := new(SendVerificationCodeResponse)
-	err := c.cc.Invoke(ctx, "/jthealth.biz.sms.v1.SmsAPI/SendVerificationCode", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *smsAPIClient) ListVerificationCodesByTimeRange(ctx context.Context, in *ListVerificationCodesByTimeRangeRequest, opts ...grpc.CallOption) (*ListVerificationCodesByTimeRangeResponse, error) {
-	out := new(ListVerificationCodesByTimeRangeResponse)
-	err := c.cc.Invoke(ctx, "/jthealth.biz.sms.v1.SmsAPI/ListVerificationCodesByTimeRange", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *smsAPIClient) GetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, opts ...grpc.CallOption) (*GetLastestVerificationCodeResponse, error) {
-	out := new(GetLastestVerificationCodeResponse)
-	err := c.cc.Invoke(ctx, "/jthealth.biz.sms.v1.SmsAPI/GetLastestVerificationCode", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *smsAPIClient) JingTongSendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, opts ...grpc.CallOption) (*SendVerificationCodeResponse, error) {
@@ -84,31 +49,14 @@ func (c *smsAPIClient) JingTongSendGetLastestVerificationCode(ctx context.Contex
 	return out, nil
 }
 
-func (c *smsAPIClient) SendVerificationPhoneCode(ctx context.Context, in *SendVerificationPhoneCodeRequest, opts ...grpc.CallOption) (*SendVerificationPhoneCodeResponse, error) {
-	out := new(SendVerificationPhoneCodeResponse)
-	err := c.cc.Invoke(ctx, "/jthealth.biz.sms.v1.SmsAPI/SendVerificationPhoneCode", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // SmsAPIServer is the server API for SmsAPI service.
 // All implementations must embed UnimplementedSmsAPIServer
 // for forward compatibility
 type SmsAPIServer interface {
-	// SendVerificationCode 发送手机验证码.
-	SendVerificationCode(context.Context, *SendVerificationCodeRequest) (*SendVerificationCodeResponse, error)
-	// ListVerificationCodesByTimeRange 查看时间区间内的短信.
-	ListVerificationCodesByTimeRange(context.Context, *ListVerificationCodesByTimeRangeRequest) (*ListVerificationCodesByTimeRangeResponse, error)
-	// GetLastestVerificationCode 获取最新的短信.
-	GetLastestVerificationCode(context.Context, *GetLastestVerificationCodeRequest) (*GetLastestVerificationCodeResponse, error)
 	// JingTongSendVerificationCode 发送手机验证码.
 	JingTongSendVerificationCode(context.Context, *SendVerificationCodeRequest) (*SendVerificationCodeResponse, error)
 	// JingTongSendGetLastestVerificationCode 获取最新的短信.
 	JingTongSendGetLastestVerificationCode(context.Context, *GetLastestVerificationCodeRequest) (*GetLastestVerificationCodeResponse, error)
-	//SendVerificationPhoneCode 发送手机验证码登录
-	SendVerificationPhoneCode(context.Context, *SendVerificationPhoneCodeRequest) (*SendVerificationPhoneCodeResponse, error)
 	mustEmbedUnimplementedSmsAPIServer()
 }
 
@@ -116,23 +64,11 @@ type SmsAPIServer interface {
 type UnimplementedSmsAPIServer struct {
 }
 
-func (UnimplementedSmsAPIServer) SendVerificationCode(context.Context, *SendVerificationCodeRequest) (*SendVerificationCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendVerificationCode not implemented")
-}
-func (UnimplementedSmsAPIServer) ListVerificationCodesByTimeRange(context.Context, *ListVerificationCodesByTimeRangeRequest) (*ListVerificationCodesByTimeRangeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListVerificationCodesByTimeRange not implemented")
-}
-func (UnimplementedSmsAPIServer) GetLastestVerificationCode(context.Context, *GetLastestVerificationCodeRequest) (*GetLastestVerificationCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLastestVerificationCode not implemented")
-}
 func (UnimplementedSmsAPIServer) JingTongSendVerificationCode(context.Context, *SendVerificationCodeRequest) (*SendVerificationCodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JingTongSendVerificationCode not implemented")
 }
 func (UnimplementedSmsAPIServer) JingTongSendGetLastestVerificationCode(context.Context, *GetLastestVerificationCodeRequest) (*GetLastestVerificationCodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JingTongSendGetLastestVerificationCode not implemented")
-}
-func (UnimplementedSmsAPIServer) SendVerificationPhoneCode(context.Context, *SendVerificationPhoneCodeRequest) (*SendVerificationPhoneCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendVerificationPhoneCode not implemented")
 }
 func (UnimplementedSmsAPIServer) mustEmbedUnimplementedSmsAPIServer() {}
 
@@ -145,60 +81,6 @@ type UnsafeSmsAPIServer interface {
 
 func RegisterSmsAPIServer(s *grpc.Server, srv SmsAPIServer) {
 	s.RegisterService(&_SmsAPI_serviceDesc, srv)
-}
-
-func _SmsAPI_SendVerificationCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SendVerificationCodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SmsAPIServer).SendVerificationCode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/jthealth.biz.sms.v1.SmsAPI/SendVerificationCode",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SmsAPIServer).SendVerificationCode(ctx, req.(*SendVerificationCodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SmsAPI_ListVerificationCodesByTimeRange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListVerificationCodesByTimeRangeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SmsAPIServer).ListVerificationCodesByTimeRange(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/jthealth.biz.sms.v1.SmsAPI/ListVerificationCodesByTimeRange",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SmsAPIServer).ListVerificationCodesByTimeRange(ctx, req.(*ListVerificationCodesByTimeRangeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SmsAPI_GetLastestVerificationCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetLastestVerificationCodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SmsAPIServer).GetLastestVerificationCode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/jthealth.biz.sms.v1.SmsAPI/GetLastestVerificationCode",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SmsAPIServer).GetLastestVerificationCode(ctx, req.(*GetLastestVerificationCodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _SmsAPI_JingTongSendVerificationCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -237,40 +119,10 @@ func _SmsAPI_JingTongSendGetLastestVerificationCode_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SmsAPI_SendVerificationPhoneCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SendVerificationPhoneCodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SmsAPIServer).SendVerificationPhoneCode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/jthealth.biz.sms.v1.SmsAPI/SendVerificationPhoneCode",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SmsAPIServer).SendVerificationPhoneCode(ctx, req.(*SendVerificationPhoneCodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _SmsAPI_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "jthealth.biz.sms.v1.SmsAPI",
 	HandlerType: (*SmsAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "SendVerificationCode",
-			Handler:    _SmsAPI_SendVerificationCode_Handler,
-		},
-		{
-			MethodName: "ListVerificationCodesByTimeRange",
-			Handler:    _SmsAPI_ListVerificationCodesByTimeRange_Handler,
-		},
-		{
-			MethodName: "GetLastestVerificationCode",
-			Handler:    _SmsAPI_GetLastestVerificationCode_Handler,
-		},
 		{
 			MethodName: "JingTongSendVerificationCode",
 			Handler:    _SmsAPI_JingTongSendVerificationCode_Handler,
@@ -278,10 +130,6 @@ var _SmsAPI_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JingTongSendGetLastestVerificationCode",
 			Handler:    _SmsAPI_JingTongSendGetLastestVerificationCode_Handler,
-		},
-		{
-			MethodName: "SendVerificationPhoneCode",
-			Handler:    _SmsAPI_SendVerificationPhoneCode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -32,26 +32,12 @@ enum TemplateAction {
 }
 // SmsAPI 短信模块API.
 service SmsAPI {
-
-  // SendVerificationCode 发送手机验证码.
-  rpc SendVerificationCode(SendVerificationCodeRequest)
-      returns(SendVerificationCodeResponse);
-  // ListVerificationCodesByTimeRange 查看时间区间内的短信.
-  rpc ListVerificationCodesByTimeRange(ListVerificationCodesByTimeRangeRequest)
-      returns(ListVerificationCodesByTimeRangeResponse);
-  // GetLastestVerificationCode 获取最新的短信.
-  rpc GetLastestVerificationCode(GetLastestVerificationCodeRequest)
-      returns(GetLastestVerificationCodeResponse);
   // JingTongSendVerificationCode 发送手机验证码.
   rpc JingTongSendVerificationCode(SendVerificationCodeRequest)
       returns(SendVerificationCodeResponse);
   // JingTongSendGetLastestVerificationCode 获取最新的短信.
   rpc JingTongSendGetLastestVerificationCode(GetLastestVerificationCodeRequest)
       returns(GetLastestVerificationCodeResponse);
-
-  //SendVerificationPhoneCode 发送手机验证码登录
-  rpc SendVerificationPhoneCode(SendVerificationPhoneCodeRequest)
-      returns(SendVerificationPhoneCodeResponse);
 }
 
 // 发送消息的请求
@@ -71,23 +57,8 @@ message SendVerificationCodeResponse {
   string message = 1;
 }
 
-// 查看时间区间内的短信请求
-message ListVerificationCodesByTimeRangeRequest {
-  // 手机区号
-  string nation_code = 1;
-  // 手机号
-  string phone = 2;
-  // 开始时间
-  google.protobuf.Timestamp start_time = 3;
-  // 结束时间
-  google.protobuf.Timestamp end_time = 4;
-}
 
-// 查看时间区间内的短信响应
-message ListVerificationCodesByTimeRangeResponse {
-  // 短信信息
-  repeated SmsInfo sms_info = 1;
-}
+
 
 // 获取最新的短信请求
 message GetLastestVerificationCodeRequest {
@@ -127,16 +98,4 @@ message SmsInfo {
   string platform_type = 3;
   // 创建时间
   google.protobuf.Timestamp create_time = 4;
-}
-
-
-
-
-//SendVerificationPhoneCode 发送手机验证码登录请求
-message SendVerificationPhoneCodeRequest{
-  string phone = 1;
-}
-//SendVerificationPhoneCode 发送手机验证码登录响应
-message SendVerificationPhoneCodeResponse{
-  string message = 1;
 }

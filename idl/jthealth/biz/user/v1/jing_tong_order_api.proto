@@ -72,6 +72,7 @@ message JingTongCreateOrderResponse{
   string timestamp = 7;
   string sign = 8;
   string wx_order_url = 9;
+  double price = 10;
 }
 
 //微信支付通知请求

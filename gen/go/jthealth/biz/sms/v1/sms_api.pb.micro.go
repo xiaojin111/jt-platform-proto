@@ -43,18 +43,10 @@ func NewSmsAPIEndpoints() []*api.Endpoint {
 // Client API for SmsAPI service
 
 type SmsAPIService interface {
-	// SendVerificationCode 发送手机验证码.
-	SendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, opts ...client.CallOption) (*SendVerificationCodeResponse, error)
-	// ListVerificationCodesByTimeRange 查看时间区间内的短信.
-	ListVerificationCodesByTimeRange(ctx context.Context, in *ListVerificationCodesByTimeRangeRequest, opts ...client.CallOption) (*ListVerificationCodesByTimeRangeResponse, error)
-	// GetLastestVerificationCode 获取最新的短信.
-	GetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, opts ...client.CallOption) (*GetLastestVerificationCodeResponse, error)
 	// JingTongSendVerificationCode 发送手机验证码.
 	JingTongSendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, opts ...client.CallOption) (*SendVerificationCodeResponse, error)
 	// JingTongSendGetLastestVerificationCode 获取最新的短信.
 	JingTongSendGetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, opts ...client.CallOption) (*GetLastestVerificationCodeResponse, error)
-	//SendVerificationPhoneCode 发送手机验证码登录
-	SendVerificationPhoneCode(ctx context.Context, in *SendVerificationPhoneCodeRequest, opts ...client.CallOption) (*SendVerificationPhoneCodeResponse, error)
 }
 
 type smsAPIService struct {
@@ -67,36 +59,6 @@ func NewSmsAPIService(name string, c client.Client) SmsAPIService {
 		c:    c,
 		name: name,
 	}
-}
-
-func (c *smsAPIService) SendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, opts ...client.CallOption) (*SendVerificationCodeResponse, error) {
-	req := c.c.NewRequest(c.name, "SmsAPI.SendVerificationCode", in)
-	out := new(SendVerificationCodeResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *smsAPIService) ListVerificationCodesByTimeRange(ctx context.Context, in *ListVerificationCodesByTimeRangeRequest, opts ...client.CallOption) (*ListVerificationCodesByTimeRangeResponse, error) {
-	req := c.c.NewRequest(c.name, "SmsAPI.ListVerificationCodesByTimeRange", in)
-	out := new(ListVerificationCodesByTimeRangeResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *smsAPIService) GetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, opts ...client.CallOption) (*GetLastestVerificationCodeResponse, error) {
-	req := c.c.NewRequest(c.name, "SmsAPI.GetLastestVerificationCode", in)
-	out := new(GetLastestVerificationCodeResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *smsAPIService) JingTongSendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, opts ...client.CallOption) (*SendVerificationCodeResponse, error) {
@@ -119,41 +81,19 @@ func (c *smsAPIService) JingTongSendGetLastestVerificationCode(ctx context.Conte
 	return out, nil
 }
 
-func (c *smsAPIService) SendVerificationPhoneCode(ctx context.Context, in *SendVerificationPhoneCodeRequest, opts ...client.CallOption) (*SendVerificationPhoneCodeResponse, error) {
-	req := c.c.NewRequest(c.name, "SmsAPI.SendVerificationPhoneCode", in)
-	out := new(SendVerificationPhoneCodeResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // Server API for SmsAPI service
 
 type SmsAPIHandler interface {
-	// SendVerificationCode 发送手机验证码.
-	SendVerificationCode(context.Context, *SendVerificationCodeRequest, *SendVerificationCodeResponse) error
-	// ListVerificationCodesByTimeRange 查看时间区间内的短信.
-	ListVerificationCodesByTimeRange(context.Context, *ListVerificationCodesByTimeRangeRequest, *ListVerificationCodesByTimeRangeResponse) error
-	// GetLastestVerificationCode 获取最新的短信.
-	GetLastestVerificationCode(context.Context, *GetLastestVerificationCodeRequest, *GetLastestVerificationCodeResponse) error
 	// JingTongSendVerificationCode 发送手机验证码.
 	JingTongSendVerificationCode(context.Context, *SendVerificationCodeRequest, *SendVerificationCodeResponse) error
 	// JingTongSendGetLastestVerificationCode 获取最新的短信.
 	JingTongSendGetLastestVerificationCode(context.Context, *GetLastestVerificationCodeRequest, *GetLastestVerificationCodeResponse) error
-	//SendVerificationPhoneCode 发送手机验证码登录
-	SendVerificationPhoneCode(context.Context, *SendVerificationPhoneCodeRequest, *SendVerificationPhoneCodeResponse) error
 }
 
 func RegisterSmsAPIHandler(s server.Server, hdlr SmsAPIHandler, opts ...server.HandlerOption) error {
 	type smsAPI interface {
-		SendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, out *SendVerificationCodeResponse) error
-		ListVerificationCodesByTimeRange(ctx context.Context, in *ListVerificationCodesByTimeRangeRequest, out *ListVerificationCodesByTimeRangeResponse) error
-		GetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, out *GetLastestVerificationCodeResponse) error
 		JingTongSendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, out *SendVerificationCodeResponse) error
 		JingTongSendGetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, out *GetLastestVerificationCodeResponse) error
-		SendVerificationPhoneCode(ctx context.Context, in *SendVerificationPhoneCodeRequest, out *SendVerificationPhoneCodeResponse) error
 	}
 	type SmsAPI struct {
 		smsAPI
@@ -166,26 +106,10 @@ type smsAPIHandler struct {
 	SmsAPIHandler
 }
 
-func (h *smsAPIHandler) SendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, out *SendVerificationCodeResponse) error {
-	return h.SmsAPIHandler.SendVerificationCode(ctx, in, out)
-}
-
-func (h *smsAPIHandler) ListVerificationCodesByTimeRange(ctx context.Context, in *ListVerificationCodesByTimeRangeRequest, out *ListVerificationCodesByTimeRangeResponse) error {
-	return h.SmsAPIHandler.ListVerificationCodesByTimeRange(ctx, in, out)
-}
-
-func (h *smsAPIHandler) GetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, out *GetLastestVerificationCodeResponse) error {
-	return h.SmsAPIHandler.GetLastestVerificationCode(ctx, in, out)
-}
-
 func (h *smsAPIHandler) JingTongSendVerificationCode(ctx context.Context, in *SendVerificationCodeRequest, out *SendVerificationCodeResponse) error {
 	return h.SmsAPIHandler.JingTongSendVerificationCode(ctx, in, out)
 }
 
 func (h *smsAPIHandler) JingTongSendGetLastestVerificationCode(ctx context.Context, in *GetLastestVerificationCodeRequest, out *GetLastestVerificationCodeResponse) error {
 	return h.SmsAPIHandler.JingTongSendGetLastestVerificationCode(ctx, in, out)
-}
-
-func (h *smsAPIHandler) SendVerificationPhoneCode(ctx context.Context, in *SendVerificationPhoneCodeRequest, out *SendVerificationPhoneCodeResponse) error {
-	return h.SmsAPIHandler.SendVerificationPhoneCode(ctx, in, out)
 }
