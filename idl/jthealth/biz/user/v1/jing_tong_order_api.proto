@@ -109,6 +109,8 @@ message JingTongOrderMsg{
   string pay_time = 3;
   //手机号
   string phone = 4;
+  //微信支付订单号
+  string transaction_id = 5;
 }
 
 //首页订单统计请求
